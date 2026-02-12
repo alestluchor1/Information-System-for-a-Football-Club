@@ -1,0 +1,349 @@
+﻿<Window x:Class="InformacniSystemKlub.Windows.HlavniOkno"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Informační systém – hlavní okno"
+        WindowStartupLocation="CenterScreen"
+        Width="1200" Height="800"
+        MinWidth="900" MinHeight="600"
+        Background="{DynamicResource AppBgBrush}"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType">
+
+    <Window.Resources>
+
+        <!-- základ -->
+        <SolidColorBrush x:Key="AppBgBrush" Color="#F6F7FB"/>
+        <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="BorderBrushSoft" Color="#E4EAF3"/>
+        <SolidColorBrush x:Key="TextBrush" Color="#0B1220"/>
+        <SolidColorBrush x:Key="MutedTextBrush" Color="#64748B"/>
+
+        <!-- top bar text -->
+        <SolidColorBrush x:Key="TopBarText" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TopBarSubText" Color="#EAF0FF"/>
+
+        <!-- stejný gradient jako horní panel -->
+        <LinearGradientBrush x:Key="TopBarGradientBrush" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="#2563EB" Offset="0"/>
+            <GradientStop Color="#7C3AED" Offset="0.45"/>
+            <GradientStop Color="#F97316" Offset="1"/>
+        </LinearGradientBrush>
+
+        <!-- text na gradientu -->
+        <SolidColorBrush x:Key="OnGradientTextBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="OnGradientSubTextBrush" Color="#EAF0FF"/>
+
+        <!-- Styl horních tlačítek -->
+        <Style x:Key="TopButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="Padding" Value="16,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Root"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="12">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="Opacity" Value="0.92"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Root" Property="Opacity" Value="0.86"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Root" Property="Opacity" Value="0.55"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- malé bílé obdélníky (datum/čas) -->
+        <Style x:Key="InfoMiniCardStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="12,7"/>
+            <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSoft}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="UseLayoutRounding" Value="True"/>
+        </Style>
+
+        <!-- Jednoduchý styl dlaždic -->
+        <Style x:Key="TileButtonSimpleStyle" TargetType="Button">
+            <Setter Property="Height" Value="155"/>
+            <Setter Property="Padding" Value="14"/>
+            <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,14,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Root"
+                                CornerRadius="18"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid Margin="{TemplateBinding Padding}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="52"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0"
+                                        CornerRadius="10"
+                                        Background="{TemplateBinding BorderBrush}"/>
+
+                                <Border Grid.Column="1"
+                                        Width="42" Height="42"
+                                        CornerRadius="14"
+                                        BorderThickness="1"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        Background="#F8FAFF"
+                                        VerticalAlignment="Top"
+                                        Margin="10,0,0,0">
+                                    <TextBlock Text="{TemplateBinding Tag}"
+                                               FontSize="18"
+                                               Foreground="{TemplateBinding BorderBrush}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"/>
+                                </Border>
+
+                                <StackPanel Grid.Column="2" Margin="14,0,0,0">
+                                    <TextBlock Text="{TemplateBinding Content}"
+                                               FontSize="18"
+                                               FontWeight="SemiBold"
+                                               Foreground="{TemplateBinding Foreground}"
+                                               TextWrapping="Wrap"/>
+
+                                    <TextBlock Margin="0,7,0,0"
+                                               Text="{TemplateBinding ToolTip}"
+                                               FontSize="12.5"
+                                               Foreground="{DynamicResource MutedTextBrush}"
+                                               TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="Opacity" Value="0.96"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Root" Property="Opacity" Value="0.90"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Root" Property="Opacity" Value="0.55"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Margin="18">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- HORNÍ BAREVNÝ PANEL -->
+        <Border Grid.Row="0"
+                CornerRadius="22"
+                Padding="18"
+                Margin="0,0,0,14"
+                Background="{DynamicResource TopBarGradientBrush}">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel>
+                    <TextBlock Text="Informační systém fotbalového klubu"
+                               Foreground="{DynamicResource TopBarText}"
+                               FontSize="22"
+                               FontWeight="SemiBold"/>
+                    <TextBlock Text="Hlavní menu"
+                               Foreground="{DynamicResource TopBarSubText}"
+                               Margin="0,6,0,0"
+                               FontSize="13"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <Button Content="Režim"
+                            Background="#FFFFFF"
+                            Foreground="#0B1220"
+                            Style="{StaticResource TopButtonStyle}"
+                            Click="BtnMode_Click"
+                            Margin="0,0,10,0"/>
+                    <Button Content="Zavřít"
+                            Background="#111827"
+                            Foreground="White"
+                            Style="{StaticResource TopButtonStyle}"
+                            Click="BtnClose_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- SPODNÍ ČÁST -->
+        <Border Grid.Row="1"
+                Background="{DynamicResource SurfaceBrush}"
+                BorderBrush="{DynamicResource BorderBrushSoft}"
+                BorderThickness="1"
+                CornerRadius="22"
+                Padding="18">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Řádek Dnes: celý gradient + bílé mini-karty -->
+                <Border Grid.Row="0"
+                        Background="{DynamicResource TopBarGradientBrush}"
+                        CornerRadius="14"
+                        Padding="14"
+                        Margin="0,0,0,14">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Dnes"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource OnGradientTextBrush}"/>
+
+                        <StackPanel Grid.Column="1"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+
+                            <Border Style="{StaticResource InfoMiniCardStyle}"
+                                    Margin="0,0,10,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="📅"
+                                               Margin="0,0,6,0"
+                                               FontSize="12.5"
+                                               Foreground="{DynamicResource MutedTextBrush}"
+                                               VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="TxtDate"
+                                               FontSize="13.5"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextBrush}"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{StaticResource InfoMiniCardStyle}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="⏱"
+                                               Margin="0,0,6,0"
+                                               FontSize="12.5"
+                                               Foreground="{DynamicResource MutedTextBrush}"
+                                               VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="TxtTime"
+                                               FontSize="13.5"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextBrush}"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- 1. řada tlačítek -->
+                <UniformGrid Grid.Row="1" Columns="4" Margin="0,0,0,14">
+                    <Button Content="Hráči"
+                            Tag="👤"
+                            ToolTip="Evidence hráčů, statistiky a zdravotní stav"
+                            Style="{StaticResource TileButtonSimpleStyle}"
+                            BorderBrush="#2563EB"
+                            Click="BtnHraciClick"/>
+
+                    <Button Content="Trenéři"
+                            Tag="🎓"
+                            ToolTip="Evidence trenérů, licence a praxe"
+                            Style="{StaticResource TileButtonSimpleStyle}"
+                            BorderBrush="#7C3AED"/>
+
+                    <Button Content="Tréninky"
+                            Tag="📅"
+                            ToolTip="Plánování tréninků, docházka a náplň"
+                            Style="{StaticResource TileButtonSimpleStyle}"
+                            BorderBrush="#10B981"/>
+
+                    <Button Content="Disciplinární opatření"
+                            Tag="🟥"
+                            ToolTip="Karty, tresty a poznámky k hráčům"
+                            Style="{StaticResource TileButtonSimpleStyle}"
+                            BorderBrush="#EF4444"/>
+                </UniformGrid>
+
+                <!-- 2. řada tlačítek -->
+                <UniformGrid Grid.Row="2" Columns="4">
+                    <Button Content="Zápasy"
+                            Tag="⚽"
+                            ToolTip="Rozpis, nominace a výsledky"
+                            Style="{StaticResource TileButtonSimpleStyle}"
+                            BorderBrush="#F97316"/>
+
+                    <Button Content="Sportovní vybavení"
+                            Tag="📦"
+                            ToolTip="Evidence a správa klubového vybavení"
+                            Style="{StaticResource TileButtonSimpleStyle}"
+                            BorderBrush="#06B6D4"/>
+
+                    <Button Content="Smlouvy"
+                            Tag="📝"
+                            ToolTip="Hráčské smlouvy, výstupní klauzule, kontakt na agenta"
+                            Style="{StaticResource TileButtonSimpleStyle}"
+                            BorderBrush="#db18be"/>
+
+                    <Button Content="Notifikace"
+                            Tag="✍️"
+                            ToolTip="Oznámení klubu"
+                            Style="{StaticResource TileButtonSimpleStyle}"
+                            BorderBrush="#10de47"/>
+                </UniformGrid>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
