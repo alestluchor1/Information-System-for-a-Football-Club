@@ -1,11 +1,9 @@
 ﻿using InformacniSystemKlub.Database;
 using InformacniSystemKlub.Models; 
-using InformacniSystemKlub.Windows;
 using InformacniSystemKlub.Windows.NajdiWindows;
 using InformacniSystemKlub.Windows.PřidáníWindows;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.ObjectModel; 
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,11 +11,23 @@ using System.Windows.Media;
 
 namespace InformacniSystemKlub.Windows 
 {
+    /// <summary>
+    /// Okno pro správu hráčů (zobrazení, filtrování dle kategorií, přidání/odebrání)
+    /// Data se načítají z databázového pohledu HRACI_VIEW
+    /// </summary>
     public partial class HraciOkno : Window 
     {
+        /// <summary>
+        /// Sdílená kolekce hráčů používaná pro DataGrid
+        /// </summary>
         public static ObservableCollection<Hrac> HraciData { get; set; } = new ObservableCollection<Hrac>();
 
         private bool ready = false;
+
+        /// <summary>
+        /// Příznak, zda je aktivní vyhledávací mód
+        /// V tomto režimu není umožněno přidávání/odebírání dat
+        /// </summary>
         private bool jeVyhledavaniAktivni = false; // pro ukončení filtrování
         public HraciOkno()
         {
@@ -32,6 +42,9 @@ namespace InformacniSystemKlub.Windows
             VyberTymu();             
         }
 
+        /// <summary>
+        /// Aplikuje filtr hráčů dle zvolené položky v ComboBoxu 
+        /// </summary>
         private void VyberTymu()
         {
             int volba = cbVyberTymu.SelectedIndex;
@@ -77,6 +90,9 @@ namespace InformacniSystemKlub.Windows
             DgHraci.ItemsSource = vybraniHraci;
         }
 
+        /// <summary>
+        /// Událost změny výběru v ComboBoxu – provede znovu aplikace filtru
+        /// </summary>
         private void cbVyberTymu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ready == true)
@@ -85,6 +101,9 @@ namespace InformacniSystemKlub.Windows
             }
         }
 
+        /// <summary>
+        /// Načte hráče z databáze (pohled HRACI_VIEW) a naplní kolekci HraciData.
+        /// </summary>
         private void NactiHrace()
         {
             try
@@ -208,11 +227,18 @@ namespace InformacniSystemKlub.Windows
             }
         }
 
+        /// <summary>
+        /// Obsluha tlačítka Edituj pro úpravu údajů hráče
+        /// </summary>
         private void BtnEdituj_Click(object sender, RoutedEventArgs e)
         { 
         
         }
 
+        /// <summary>
+        /// Otevře dialog pro vyhledávání hráčů (NajdiHrace) a v případě potvrzení zobrazí filtrovaný výsledek v DataGridu
+        /// Aktivuje vyhledávací mód, dokud není režim ukončen pomocí CTRL+X.
+        /// </summary>
         private void BtnNajdi_Click(object sender, RoutedEventArgs e)
         {
             NajdiHrace najdiHrace = new NajdiHrace(HraciData);
@@ -227,7 +253,7 @@ namespace InformacniSystemKlub.Windows
                 }
 
                 MessageBox.Show(
-                    "Pokud je vyhledávací mód aktivní nemůžete přidávat ani odebírat vyhledaná data. " +
+                    "Pokud je vyhledávací mód aktivní nemůžete přidávat ani odebírat vyhledaná data " +
                     "Pro ukončení vyhledávacího módu stiskněte klávesy CTRL + X",
                     "Info", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -240,8 +266,6 @@ namespace InformacniSystemKlub.Windows
         /// <summary>
         /// Metoda slouží k zrušení vyhledávacího módu, pokud se zmáčkne klávesa CTRL + X
         /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">eventArgs</param>
         private void WindowUkonceniFiltrovani(object sender, KeyEventArgs e)
         {
             if (jeVyhledavaniAktivni && (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.X))
@@ -252,6 +276,9 @@ namespace InformacniSystemKlub.Windows
             }
         }
 
+        /// <summary>
+        /// Nastaví barevné zdroje okna podle zvoleného režimu (dark / light)
+        /// </summary>
         private void ApplyTheme(bool darkMode)
         {
             if (darkMode == true)
@@ -285,11 +312,9 @@ namespace InformacniSystemKlub.Windows
             }
         }
 
-        private void BtnMode_Click(object sender, RoutedEventArgs e)
-        {
-            ApplyTheme(HlavniOkno.jeDarkModeAktivni);
-        }
-
+        /// <summary>
+        /// Otevře dialog pro přidání hráče, uloží nového hráče do databáze a obnoví seznam
+        /// </summary>
         private void BtnPridat_Click(object sender, RoutedEventArgs e)
         {
             if (jeVyhledavaniAktivni == true)
@@ -322,7 +347,9 @@ namespace InformacniSystemKlub.Windows
             }
         }
 
-
+        /// <summary>
+        /// Smaže vybraného hráče z databáze i z lokální kolekce a aktualizuje zobrazení podle aktuálního filtru
+        /// </summary>
         private void BtnOdebrat_Click(object sender, RoutedEventArgs e)
         {
             if (jeVyhledavaniAktivni == true)
@@ -365,6 +392,9 @@ namespace InformacniSystemKlub.Windows
             }
         }
 
+        /// <summary>
+        /// Zavře okno a vrátí uživatele na předchozí obrazovku (Hlavní okno)
+        /// </summary>
         private void BtnZpet_Click(object sender, RoutedEventArgs e)
         {
             this.Close(); 

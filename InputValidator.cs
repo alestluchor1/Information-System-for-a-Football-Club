@@ -210,5 +210,65 @@ namespace InformacniSystemKlub
 
             return id;
         }
+
+        public static void ValidujTrenerskaLicence(string trenerskaLicence)
+        {
+            if (string.IsNullOrWhiteSpace(trenerskaLicence))
+            {
+                throw new Exception("Trenérská licence nesmí být prázdná!");
+            }
+
+            trenerskaLicence = trenerskaLicence.Trim();
+
+            if (trenerskaLicence.Length > 30)
+            {
+                throw new Exception("Trenérská licence může mít maximálně 30 znaků!");
+            }
+
+        }
+
+        public static void ValidujSpecializace(string specializace)
+        {
+            if (string.IsNullOrWhiteSpace(specializace))
+            {
+                throw new Exception("Specializace nesmí být prázdná!");
+            }
+
+            specializace = specializace.Trim();
+
+            if (specializace.Length > 40)
+            {
+                throw new Exception("Specializace může mít maximálně 40 znaků!");
+            }
+
+        }
+
+        public static int ValidujTreneriPocetLetPraxe(string hodnotaText, string nazevPole = "Počet let")
+        {
+            const int min = 0;
+            const int max = 100;
+
+            if (string.IsNullOrWhiteSpace(hodnotaText))
+            {
+                throw new Exception($"{nazevPole} nesmí být prázdné");
+            }
+
+            if (!int.TryParse(hodnotaText.Trim(), out int hodnota))
+            {
+                throw new Exception($"{nazevPole} musí být celé číslo");
+            }
+
+            if (hodnota < min)
+            {
+                throw new Exception($"{nazevPole} nesmí být menší než {min}");
+            }
+
+            if (hodnota > max)
+            {
+                throw new Exception($"{nazevPole} nesmí být větší než {max}");
+            }
+
+            return hodnota;
+        }
     }
 }

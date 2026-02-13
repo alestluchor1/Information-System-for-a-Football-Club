@@ -301,7 +301,8 @@
                             Tag="🎓"
                             ToolTip="Evidence trenérů, licence a praxe"
                             Style="{StaticResource TileButtonSimpleStyle}"
-                            BorderBrush="#7C3AED"/>
+                            BorderBrush="#7C3AED"
+                            Click="BtnTreneriClick"/>
 
                     <Button Content="Tréninky"
                             Tag="📅"

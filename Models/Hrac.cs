@@ -21,17 +21,6 @@ namespace InformacniSystemKlub.Models
         public int vek { get; set; }
         public char zdravotniStav { get; set; }
 
-        public Hrac(int id, int pocetVstrelenychGolu, int pocetZlutychKaret, int pocetCervenychKaret, String pozice, int vek, char zdravotniStav)
-        { 
-            this.id = id;
-            this.pocetVstrelenychGolu = pocetVstrelenychGolu;
-            this.pocetZlutychKaret = pocetZlutychKaret;
-            this.pocetCervenychKaret = pocetCervenychKaret;
-            this.pozice = pozice;
-            this.vek = vek;
-            this.zdravotniStav = zdravotniStav;
-        }
-
         public Hrac() { }
     }
 }

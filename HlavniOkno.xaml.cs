@@ -111,6 +111,24 @@ namespace InformacniSystemKlub.Windows
             this.Activate();
         }
 
+        private void BtnTreneriClick(object sender, RoutedEventArgs e)
+        {
+            var treneriOkno = new TreneriOkno();
+            treneriOkno.Owner = this;
+
+            this.Hide();
+
+            treneriOkno.Closed += TreneriOkno_Closed;
+
+            treneriOkno.Show();
+        }
+
+        private void TreneriOkno_Closed(object? sender, EventArgs e)
+        {
+            this.Show();
+            this.Activate();
+        }
+
 
 
     }

@@ -10,7 +10,7 @@ namespace InformacniSystemKlub.Database
     {
 
         /// <summary>
-        /// Odebere hráče z databáze pomocí procedury <c>PKG_HRACI.SP_ODEBER_HRACE</c>
+        /// Odebere hráče z databáze pomocí procedury <c>PKG_HRACI.SP_ADD_HRAC</c>
         /// </summary>
         public static void OdeberHrace(OracleConnection conn, Hrac hrac)
         {
