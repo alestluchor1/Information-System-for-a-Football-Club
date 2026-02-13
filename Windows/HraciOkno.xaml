@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Hráči"
+        PreviewKeyDown="WindowUkonceniFiltrovani"
         Height="650" Width="1100"
         MinHeight="450" MinWidth="850"
         WindowStartupLocation="CenterScreen"
@@ -16,9 +17,6 @@
 
     <Window.Resources>
 
-        <!-- =======================
-             THEME (LIGHT default)
-             ======================= -->
         <FontFamily x:Key="AppFont">Segoe UI</FontFamily>
 
         <SolidColorBrush x:Key="WindowBgBrush" Color="#F6F7FB"/>
@@ -33,20 +31,14 @@
         <SolidColorBrush x:Key="AccentBrush" Color="#F97316"/>
         <SolidColorBrush x:Key="AccentDarkBrush" Color="#EA580C"/>
 
-        <!-- gridlines -->
         <SolidColorBrush x:Key="GridLineBrush" Color="#E9EEF6"/>
 
-        <!-- rows -->
         <SolidColorBrush x:Key="RowHoverBrush" Color="#0F172A" Opacity="0.04"/>
         <SolidColorBrush x:Key="RowSelectedBrush" Color="#F97316" Opacity="0.18"/>
         <SolidColorBrush x:Key="RowSelectedBorderBrush" Color="#F97316" Opacity="0.55"/>
 
         <DropShadowEffect x:Key="CardShadow" BlurRadius="18" ShadowDepth="2" Opacity="0.10"/>
 
-
-        <!-- =======================
-             BUTTONS
-             ======================= -->
         <Style x:Key="BtnPrimary" TargetType="Button">
             <Setter Property="Height" Value="36"/>
             <Setter Property="MinWidth" Value="100"/>
@@ -93,10 +85,6 @@
             <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSoft}"/>
         </Style>
 
-
-        <!-- =======================
-             COMBOBOX (viditelný i v DARK)
-             ======================= -->
         <Style x:Key="ComboItemStyle" TargetType="ComboBoxItem">
             <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
             <Setter Property="Padding" Value="10,8"/>
@@ -137,36 +125,56 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="ComboBox">
                         <Grid>
-                            <Border x:Name="Bd"
-                                    CornerRadius="12"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="38"/>
-                                    </Grid.ColumnDefinitions>
+                            <ToggleButton x:Name="PART_DropDownToggle"
+                                          Focusable="False"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          Background="{TemplateBinding Background}"
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          BorderThickness="{TemplateBinding BorderThickness}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="Bd"
+                                                CornerRadius="12"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="38"/>
+                                                </Grid.ColumnDefinitions>
 
-                                    <ContentPresenter Margin="10,0,6,0"
-                                                      VerticalAlignment="Center"
-                                                      HorizontalAlignment="Left"
-                                                      Content="{TemplateBinding SelectionBoxItem}"
-                                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                                      ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                      RecognizesAccessKey="True"/>
+                                                <ContentPresenter Margin="10,0,6,0"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Left"
+                                                                  Content="{Binding SelectionBoxItem, RelativeSource={RelativeSource AncestorType=ComboBox}}"
+                                                                  ContentTemplate="{Binding SelectionBoxItemTemplate, RelativeSource={RelativeSource AncestorType=ComboBox}}"
+                                                                  ContentTemplateSelector="{Binding ItemTemplateSelector, RelativeSource={RelativeSource AncestorType=ComboBox}}"
+                                                                  RecognizesAccessKey="True"/>
 
-                                    <Border Grid.Column="1" Background="Transparent">
-                                        <Path Data="M 0 0 L 4 4 L 8 0 Z"
-                                              Width="10" Height="6"
-                                              Fill="{TemplateBinding Foreground}"
-                                              HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                                    </Border>
-                                </Grid>
-                            </Border>
+                                                <Border Grid.Column="1" Background="Transparent">
+                                                    <Path Data="M 0 0 L 4 4 L 8 0 Z"
+                                                          Width="10" Height="6"
+                                                          Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ComboBox}}"
+                                                          HorizontalAlignment="Center"
+                                                          VerticalAlignment="Center"/>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
 
-                            <Popup x:Name="Popup"
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                                            </Trigger>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter TargetName="Bd" Property="Opacity" Value="0.55"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+
+                            <Popup x:Name="PART_Popup"
                                    Placement="Bottom"
                                    IsOpen="{TemplateBinding IsDropDownOpen}"
                                    AllowsTransparency="True"
@@ -178,33 +186,16 @@
                                         BorderBrush="{DynamicResource BorderBrushSoft}"
                                         BorderThickness="1">
                                     <ScrollViewer Margin="6" CanContentScroll="True">
-                                        <StackPanel IsItemsHost="True"/>
+                                        <ItemsPresenter/>
                                     </ScrollViewer>
                                 </Border>
                             </Popup>
                         </Grid>
-
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="Bd" Property="Opacity" Value="0.55"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-
-        <!-- =======================
-             DATAGRID FIX (tohle opraví to "nesedí")
-             Děláme vlastní template headeru i buňky,
-             aby bylo zarovnání/padding 1:1 stejné.
-             ======================= -->
-
-        <!-- Header base -->
         <Style x:Key="DgHeaderBase" TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="{DynamicResource CardAltBrush}"/>
             <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
@@ -218,7 +209,6 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <!-- IMPORTANT: vlastní template -> žádný extra posun -->
                     <ControlTemplate TargetType="DataGridColumnHeader">
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -243,7 +233,6 @@
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
         </Style>
 
-        <!-- Cell base -->
         <Style x:Key="DgCellBase" TargetType="DataGridCell">
             <Setter Property="FontFamily" Value="{DynamicResource AppFont}"/>
             <Setter Property="FontSize" Value="13"/>
@@ -269,8 +258,8 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+
             <Style.Triggers>
-                <!-- odstranění default modré -->
                 <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Background" Value="{DynamicResource RowSelectedBrush}"/>
                     <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
@@ -286,7 +275,6 @@
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
         </Style>
 
-        <!-- Row -->
         <Style TargetType="DataGridRow">
             <Setter Property="MinHeight" Value="38"/>
             <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -301,7 +289,6 @@
             </Style.Triggers>
         </Style>
 
-        <!-- TextBlock v buňkách -->
         <Style TargetType="TextBlock">
             <Setter Property="Margin" Value="0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -310,15 +297,14 @@
 
     </Window.Resources>
 
-
     <Grid Margin="16">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="12"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Horní panel -->
         <Border Grid.Row="0"
                 Background="{DynamicResource CardBrush}"
                 CornerRadius="16"
@@ -343,8 +329,6 @@
                     <Button Style="{StaticResource BtnPrimary}" Content="Edituj" Margin="0,0,8,0" Click="BtnEdituj_Click"/>
                     <Button Style="{StaticResource BtnPrimary}" Content="Najdi" Margin="0,0,8,0" Click="BtnNajdi_Click"/>
 
-                    <Button Style="{StaticResource BtnPrimary}" Content="🌙" MinWidth="56" Margin="0,0,10,0" Click="BtnMode_Click"/>
-
                     <ComboBox x:Name="cbVyberTymu"
                               Style="{StaticResource CbModern}"
                               Margin="0,0,8,0"
@@ -367,8 +351,6 @@
             </Grid>
         </Border>
 
-
-        <!-- DataGrid karta -->
         <Border Grid.Row="2"
                 Background="{DynamicResource CardBrush}"
                 CornerRadius="16"
@@ -400,12 +382,10 @@
 
                 <DataGrid.Columns>
 
-                    <!-- ČÍSELNÉ: Center header + Center cell -->
                     <DataGridTextColumn Header="ID" Binding="{Binding id}" Width="70"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <!-- TEXT: Left header + Left cell -->
                     <DataGridTextColumn Header="Jméno" Binding="{Binding jmeno}" Width="*"
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
@@ -414,7 +394,6 @@
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
 
-                    <!-- ČÍSLA, ale čtou se dobře na střed (a sedí to) -->
                     <DataGridTextColumn Header="Rodné číslo" Binding="{Binding rodneCislo}" Width="150"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
@@ -423,12 +402,10 @@
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <!-- TEXT -->
                     <DataGridTextColumn Header="Pozice" Binding="{Binding pozice}" Width="2*"
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
 
-                    <!-- ČÍSELNÉ -->
                     <DataGridTextColumn Header="Věk" Binding="{Binding vek}" Width="70"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>

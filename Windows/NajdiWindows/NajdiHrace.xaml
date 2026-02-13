@@ -184,85 +184,109 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- 0 -->
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Jméno" Style="{StaticResource Lbl}"/>
-                    <TextBox x:Name="TxtJmeno" Grid.Row="0" Grid.Column="1" MaxLength="20" Style="{StaticResource Input}"/>
+                    <!-- 0 ID -->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="ID" Style="{StaticResource Lbl}"/>
+                    <TextBox x:Name="TxtId" Grid.Row="0" Grid.Column="1" MaxLength="10" Style="{StaticResource Input}"/>
 
                     <!-- 1 -->
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Příjmení" Style="{StaticResource Lbl}"/>
-                    <TextBox x:Name="TxtPrijmeni" Grid.Row="1" Grid.Column="1" MaxLength="20" Style="{StaticResource Input}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Jméno" Style="{StaticResource Lbl}"/>
+                    <TextBox x:Name="TxtJmeno" Grid.Row="1" Grid.Column="1" MaxLength="20" Style="{StaticResource Input}"/>
 
                     <!-- 2 -->
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Rodné číslo" Style="{StaticResource Lbl}"/>
-                    <TextBox x:Name="TxtRodneCislo" Grid.Row="2" Grid.Column="1" MaxLength="10" Style="{StaticResource Input}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Příjmení" Style="{StaticResource Lbl}"/>
+                    <TextBox x:Name="TxtPrijmeni" Grid.Row="2" Grid.Column="1" MaxLength="20" Style="{StaticResource Input}"/>
 
                     <!-- 3 -->
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Telefonní číslo" Style="{StaticResource Lbl}"/>
-                    <TextBox x:Name="TxtTelefonniCislo" Grid.Row="3" Grid.Column="1" MaxLength="12" Style="{StaticResource Input}"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Rodné číslo" Style="{StaticResource Lbl}"/>
+                    <TextBox x:Name="TxtRodneCislo" Grid.Row="3" Grid.Column="1" MaxLength="10" Style="{StaticResource Input}"/>
 
-                    <!-- 4 Góly (spinner min 0) -->
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Počet vstřelených gólů" Style="{StaticResource Lbl}"/>
-                    <Border Grid.Row="4" Grid.Column="1" Style="{StaticResource InputHost}">
-                        <xctk:IntegerUpDown x:Name="iudPocetGolu"
-                                            Style="{StaticResource Spin}"
-                                            Value="0"
-                                            Minimum="0"
-                                            Maximum="100"/>
-                    </Border>
+                    <!-- 4 -->
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Telefonní číslo" Style="{StaticResource Lbl}"/>
+                    <TextBox x:Name="TxtTelefonniCislo" Grid.Row="4" Grid.Column="1" MaxLength="12" Style="{StaticResource Input}"/>
 
-                    <!-- 5 Žluté karty -->
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Počet žlutých karet" Style="{StaticResource Lbl}"/>
+                    <!-- 5 Góly (spinner min 0) -->
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Počet vstřelených gólů" Style="{StaticResource Lbl}"/>
                     <Border Grid.Row="5" Grid.Column="1" Style="{StaticResource InputHost}">
-                        <xctk:IntegerUpDown x:Name="iudPocetZlutychKaret"
-                                            Style="{StaticResource Spin}"
-                                            Value="0"
-                                            Minimum="0"
-                                            Maximum="100"/>
+                        <xctk:IntegerUpDown x:Name="iudPocetGolu"
+                                              Style="{StaticResource Spin}"
+                                              Value="{x:Null}"
+                                              DefaultValue="0"
+                                              DisplayDefaultValueOnEmptyText="False"
+                                              Minimum="0"
+                                              Maximum="100"
+                                              Watermark="—"
+                                              AllowTextInput="False"
+                                              AllowSpin="True"/>
+
                     </Border>
 
-                    <!-- 6 Červené karty -->
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Počet červených karet" Style="{StaticResource Lbl}"/>
+                    <!-- 6 Žluté karty -->
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Počet žlutých karet" Style="{StaticResource Lbl}"/>
                     <Border Grid.Row="6" Grid.Column="1" Style="{StaticResource InputHost}">
-                        <xctk:IntegerUpDown x:Name="iudPocetCervenychKaret"
-                                            Style="{StaticResource Spin}"
-                                            Value="0"
-                                            Minimum="0"
-                                            Maximum="100"/>
+                        <xctk:IntegerUpDown x:Name="iudPocetZlutychKaret"
+                                              Style="{StaticResource Spin}"
+                                              Value="{x:Null}"
+                                              Minimum="0"
+                                              Maximum="100"
+                                              Watermark="—"
+                                              AllowTextInput="False"
+                                              AllowSpin="True"/>
+
                     </Border>
 
-                    <!-- 7 Zdravotní stav (A/N) -->
-                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Zdravotní stav" Style="{StaticResource Lbl}"/>
+                    <!-- 7 Červené karty -->
+                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Počet červených karet" Style="{StaticResource Lbl}"/>
                     <Border Grid.Row="7" Grid.Column="1" Style="{StaticResource InputHost}">
+                        <xctk:IntegerUpDown x:Name="iudPocetCervenychKaret"
+                                              Style="{StaticResource Spin}"
+                                              Value="{x:Null}"
+                                              Minimum="0"
+                                              Maximum="100"
+                                              Watermark="—"
+                                              AllowTextInput="False"
+                                              AllowSpin="True"/>
+
+                    </Border>
+
+                    <!-- 8 Zdravotní stav (— / A / N) -->
+                    <TextBlock Grid.Row="8" Grid.Column="0" Text="Zdravotní stav" Style="{StaticResource Lbl}"/>
+                    <Border Grid.Row="8" Grid.Column="1" Style="{StaticResource InputHost}">
                         <ComboBox x:Name="cbZdraviStav"
-                                  Background="Transparent"
-                                  BorderThickness="0"
-                                  Padding="6,0"
-                                  VerticalContentAlignment="Center"
-                                  Foreground="{StaticResource TextMain}"
-                                  SelectedIndex="0">
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Padding="6,0"
+                                    VerticalContentAlignment="Center"
+                                    Foreground="{StaticResource TextMain}"
+                                    SelectedIndex="0">
+                            <ComboBoxItem Content="—"/>
                             <ComboBoxItem Content="A"/>
                             <ComboBoxItem Content="N"/>
                         </ComboBox>
                     </Border>
 
-                    <!-- 8 Pozice -->
-                    <TextBlock Grid.Row="8" Grid.Column="0" Text="Pozice" Style="{StaticResource Lbl}"/>
-                    <TextBox x:Name="TxtPozice" Grid.Row="8" Grid.Column="1" MaxLength="50" Style="{StaticResource Input}"/>
 
-                    <!-- 9 Věk (spinner min 3) -->
-                    <TextBlock Grid.Row="9" Grid.Column="0" Text="Věk" Style="{StaticResource Lbl}"/>
-                    <Border Grid.Row="9" Grid.Column="1" Style="{StaticResource InputHost}">
+                    <!-- 9 Pozice -->
+                    <TextBlock Grid.Row="9" Grid.Column="0" Text="Pozice" Style="{StaticResource Lbl}"/>
+                    <TextBox x:Name="TxtPozice" Grid.Row="9" Grid.Column="1" MaxLength="50" Style="{StaticResource Input}"/>
+
+                    <!-- 10 Věk (spinner min 3) -->
+                    <TextBlock Grid.Row="10" Grid.Column="0" Text="Věk" Style="{StaticResource Lbl}"/>
+                    <Border Grid.Row="10" Grid.Column="1" Style="{StaticResource InputHost}">
                         <xctk:IntegerUpDown x:Name="iudVek"
-                                            Style="{StaticResource Spin}"
-                                            Value="3"
-                                            Minimum="3"
-                                            Maximum="100"/>
+                                              Style="{StaticResource Spin}"
+                                              Value="{x:Null}"
+                                              Minimum="3"
+                                              Maximum="100"
+                                              Watermark="—"
+                                              AllowTextInput="False"
+                                              AllowSpin="True"/>
                     </Border>
 
-                    <!-- 10 Tlačítko -->
-                    <Button Grid.Row="10" Grid.Column="1"
+                    <!-- 11 Tlačítko Najdi -->
+                    <Button Grid.Row="11" Grid.Column="1"
                             Content="Najdi"
                             Style="{StaticResource BtnPrimary}"
                             HorizontalAlignment="Right"

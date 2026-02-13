@@ -1,8 +1,9 @@
-﻿using System;
+﻿using InformacniSystemKlub.Database;
+using InformacniSystemKlub.Models;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using InformacniSystemKlub.Database;
-using InformacniSystemKlub.Models;
+using System.Windows.Media;
 
 namespace InformacniSystemKlub.Windows.PřidáníWindows
 {
@@ -13,6 +14,8 @@ namespace InformacniSystemKlub.Windows.PřidáníWindows
         public PridejHrace(Hrac hrac)
         {
             InitializeComponent();
+            ApplyTheme(HlavniOkno.jeDarkModeAktivni);
+
             novyHrac = hrac;
 
             if (novyHrac == null)
@@ -30,6 +33,16 @@ namespace InformacniSystemKlub.Windows.PřidáníWindows
                 InputValidator.ValidujJmeno(TxtJmeno.Text);
                 InputValidator.ValidujPrijmeni(TxtPrijmeni.Text);
                 InputValidator.ValidujRodneCislo(TxtRodneCislo.Text);
+                InputValidator.ValidujTelefonniCislo(TxtTelefonniCislo.Text);
+
+                InputValidator.ValidujPozice(TxtPozice.Text);
+
+                int goly = InputValidator.ValidujHraciSpinnerGolyKarty(iudPocetGolu.Text, "Počet vstřelených gólů");
+                int zluteKarty = InputValidator.ValidujHraciSpinnerGolyKarty(iudPocetZlutychKaret.Text, "Počet žlutých karet");
+                int cerveneKarty = InputValidator.ValidujHraciSpinnerGolyKarty(iudPocetCervenychKaret.Text, "Počet červených karet");
+                int vek = InputValidator.ValidujHraciVek(iudVek.Text, "Věk");
+
+                char stavZdravi = InputValidator.ValidujZdravotniStav(cbZdraviStav.SelectedItem);
 
                 // Uložení
                 novyHrac.jmeno = TxtJmeno.Text.Trim();
@@ -38,38 +51,62 @@ namespace InformacniSystemKlub.Windows.PřidáníWindows
                 novyHrac.pozice = TxtPozice.Text.Trim();
                 novyHrac.telefonniCislo = TxtTelefonniCislo.Text.Trim();
 
-                // Spinnery (IntegerUpDown) 
-                if (iudPocetGolu.Value == null) iudPocetGolu.Value = 0;
-                if (iudPocetZlutychKaret.Value == null) iudPocetZlutychKaret.Value = 0;
-                if (iudPocetCervenychKaret.Value == null) iudPocetCervenychKaret.Value = 0;
-                if (iudVek.Value == null) iudVek.Value = 3;
-
-                novyHrac.pocetVstrelenychGolu = (int)iudPocetGolu.Value;
-                novyHrac.pocetZlutychKaret = (int)iudPocetZlutychKaret.Value;
-                novyHrac.pocetCervenychKaret = (int)iudPocetCervenychKaret.Value;
-                novyHrac.vek = (int)iudVek.Value;
+                novyHrac.pocetVstrelenychGolu = goly;
+                novyHrac.pocetZlutychKaret = zluteKarty;
+                novyHrac.pocetCervenychKaret = cerveneKarty;
+                novyHrac.vek = vek;
 
                 novyHrac.typClena = "Hrac";
-
-                // Zdravotní stav z ComboBoxu (A/N)
-                ComboBoxItem item = cbZdraviStav.SelectedItem as ComboBoxItem;
-                if (item == null)
-                {
-                    throw new Exception("Vyber zdravotní stav (A/N)");
-                }
-
-                novyHrac.zdravotniStav = item.Content.ToString()[0];
-
+                novyHrac.zdravotniStav = stavZdravi;
 
                 MessageBox.Show("Hráč byl úspěšně přidán", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 DialogResult = true;
-                Close();
+                this.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Chyba při ukládání", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void ApplyTheme(bool darkMode)
+        {
+            if (darkMode)
+            {
+                Resources["BgApp"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x0F, 0x19));
+                Resources["Surface"] = new SolidColorBrush(Color.FromRgb(0x11, 0x18, 0x27));
+                Resources["TextMain"] = new SolidColorBrush(Color.FromRgb(0xF9, 0xFA, 0xFB));
+                Resources["BorderSoft"] = new SolidColorBrush(Color.FromRgb(0x1F, 0x29, 0x37));
+                Resources["InputBg"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x12, 0x20));
+
+                Resources["Orange"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
+                Resources["OrangeHover"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
+
+                Resources["SidebarGradient"] = new LinearGradientBrush(
+                    Color.FromRgb(0xFB, 0x92, 0x3C),
+                    Color.FromRgb(0xF9, 0x73, 0x16),
+                    90);
+            }
+            else
+            {
+                Resources["BgApp"] = new SolidColorBrush(Color.FromRgb(0xF6, 0xF7, 0xFB));
+                Resources["Surface"] = new SolidColorBrush(Color.FromRgb(0xFF, 0xFF, 0xFF));
+                Resources["TextMain"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x12, 0x20));
+                Resources["BorderSoft"] = new SolidColorBrush(Color.FromRgb(0xE5, 0xE7, 0xEB));
+                Resources["InputBg"] = new SolidColorBrush(Color.FromRgb(0xF8, 0xFA, 0xFC));
+
+                Resources["Orange"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
+                Resources["OrangeHover"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
+
+                Resources["SidebarGradient"] = new LinearGradientBrush(
+                    Color.FromRgb(0xFB, 0x92, 0x3C),
+                    Color.FromRgb(0xF9, 0x73, 0x16),
+                    90);
+            }
+        }
+
+
+
     }
 }

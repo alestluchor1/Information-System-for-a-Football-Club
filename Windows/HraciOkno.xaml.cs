@@ -1,14 +1,15 @@
 ﻿using InformacniSystemKlub.Database;
 using InformacniSystemKlub.Models; 
+using InformacniSystemKlub.Windows;
+using InformacniSystemKlub.Windows.NajdiWindows;
+using InformacniSystemKlub.Windows.PřidáníWindows;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.ObjectModel; 
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
-using InformacniSystemKlub.Windows;
-using InformacniSystemKlub.Windows.PřidáníWindows;
-using InformacniSystemKlub.Windows.NajdiWindows;
 
 namespace InformacniSystemKlub.Windows 
 {
@@ -17,7 +18,7 @@ namespace InformacniSystemKlub.Windows
         public static ObservableCollection<Hrac> HraciData { get; set; } = new ObservableCollection<Hrac>();
 
         private bool ready = false;
-
+        private bool jeVyhledavaniAktivni = false; // pro ukončení filtrování
         public HraciOkno()
         {
             InitializeComponent();
@@ -61,7 +62,7 @@ namespace InformacniSystemKlub.Windows
                         break;
 
                     case 3: // Mladší žáci
-                        if (hrac.vek >= 6 && hrac.vek < 14)
+                        if (hrac.vek >= 3 && hrac.vek < 14)
                         {
                             vybraniHraci.Add(hrac);
                         }
@@ -215,10 +216,39 @@ namespace InformacniSystemKlub.Windows
         private void BtnNajdi_Click(object sender, RoutedEventArgs e)
         {
             NajdiHrace najdiHrace = new NajdiHrace(HraciData);
+            bool? vysledekDialogu = najdiHrace.ShowDialog();
 
-            if (najdiHrace.ShowDialog() == true)
+            if (vysledekDialogu == true)
             {
-                DgHraci.ItemsSource = najdiHrace.FiltrovaniHraci;
+                if (najdiHrace.FiltrovaniHraci == null || najdiHrace.FiltrovaniHraci.Count == 0)
+                {
+                    MessageBox.Show("Nenašly se žádné záznamy se zadanými filtry", "Not found", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
+                MessageBox.Show(
+                    "Pokud je vyhledávací mód aktivní nemůžete přidávat ani odebírat vyhledaná data. " +
+                    "Pro ukončení vyhledávacího módu stiskněte klávesy CTRL + X",
+                    "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                DgHraci.ItemsSource = new ObservableCollection<Hrac>(najdiHrace.FiltrovaniHraci);
+                jeVyhledavaniAktivni = true;
+            }
+        }
+
+
+        /// <summary>
+        /// Metoda slouží k zrušení vyhledávacího módu, pokud se zmáčkne klávesa CTRL + X
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">eventArgs</param>
+        private void WindowUkonceniFiltrovani(object sender, KeyEventArgs e)
+        {
+            if (jeVyhledavaniAktivni && (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.X))
+            {
+                jeVyhledavaniAktivni = false;
+                DgHraci.ItemsSource = HraciData;
+                e.Handled = true;
             }
         }
 
@@ -262,6 +292,14 @@ namespace InformacniSystemKlub.Windows
 
         private void BtnPridat_Click(object sender, RoutedEventArgs e)
         {
+            if (jeVyhledavaniAktivni == true)
+            {
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+
             Hrac pridanyHrac = new Hrac();
             var okno = new PridejHrace(pridanyHrac);
 
@@ -276,6 +314,7 @@ namespace InformacniSystemKlub.Windows
                 DatabazeHraci.PridejHrace(conn, pridanyHrac);
 
                 NactiHrace();
+                VyberTymu();
             }
             catch (Exception ex)
             {
@@ -286,6 +325,13 @@ namespace InformacniSystemKlub.Windows
 
         private void BtnOdebrat_Click(object sender, RoutedEventArgs e)
         {
+            if (jeVyhledavaniAktivni == true)
+            {
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
             Hrac vybranyHrac = (Hrac)DgHraci.SelectedItem;
 
             if (vybranyHrac == null)
@@ -308,8 +354,10 @@ namespace InformacniSystemKlub.Windows
                 DatabazeHraci.OdeberHrace(conn, vybranyHrac);
 
                 HraciData.Remove(vybranyHrac);
+                VyberTymu(); // znovu aplikuje aktuální filtr z comboboxu
                 MessageBox.Show("Hráč byl smazán", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-                
+
+
             }
             catch (Exception ex)
             {
