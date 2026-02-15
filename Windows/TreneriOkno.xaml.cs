@@ -160,25 +160,25 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnNajdi_Click(object sender, RoutedEventArgs e)
         {
-            //NajdiTrenera najdiTrenera = new NajdiTrenera(TreneriData);
-            //bool? vysledekDialogu = najdiTrenera.ShowDialog();
+            NajdiTrenera najdiTrenera = new NajdiTrenera(TreneriData);
+            bool? vysledekDialogu = najdiTrenera.ShowDialog();
 
-            //if (vysledekDialogu == true)
-            //{
-            //    if (najdiTrenera.FiltrovaniHraci == null || najdiTrenera.FiltrovaniHraci.Count == 0)
-            //    {
-            //        MessageBox.Show("Nenašly se žádné záznamy se zadanými filtry", "Not found", MessageBoxButton.OK, MessageBoxImage.Information);
-            //        return;
-            //    }
+            if (vysledekDialogu == true)
+            {
+                if (najdiTrenera.FiltrovaniTreneri == null || najdiTrenera.FiltrovaniTreneri.Count == 0)
+                {
+                    MessageBox.Show("Nenašly se žádné záznamy se zadanými filtry", "Not found", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
 
-            //    MessageBox.Show(
-            //        "Pokud je vyhledávací mód aktivní nemůžete přidávat ani odebírat vyhledaná data " +
-            //        "Pro ukončení vyhledávacího módu stiskněte klávesy CTRL + X",
-            //        "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(
+                    "Pokud je vyhledávací mód aktivní nemůžete přidávat ani odebírat vyhledaná data " +
+                    "Pro ukončení vyhledávacího módu stiskněte klávesy CTRL + X",
+                    "Info", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            //    DgTreneri.ItemsSource = new ObservableCollection<Hrac>(najdiTrenera.FiltrovaniHraci);
-            //    jeVyhledavaniAktivni = true;
-           // }
+                DgTreneri.ItemsSource = new ObservableCollection<Trener>(najdiTrenera.FiltrovaniTreneri);
+                jeVyhledavaniAktivni = true;
+            }
         }
 
         /// <summary>

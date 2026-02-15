@@ -34,6 +34,8 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
         public NajdiHrace(ObservableCollection<Hrac> hraci)
         {
             InitializeComponent();
+            ApplyTheme(HlavniOkno.jeDarkModeAktivni);
+
             VstupniHraci = hraci;
         }
 
@@ -44,12 +46,14 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
         {
             IEnumerable<Hrac> vysledek = VstupniHraci;
 
+            // ID
             if (!string.IsNullOrWhiteSpace(TxtId.Text))
             {
                 int id = InputValidator.ValidujId(TxtId.Text.Trim());
                 vysledek = vysledek.Where(h => h.id == id);
             }
 
+            // Jméno
             if (!string.IsNullOrWhiteSpace(TxtJmeno.Text))
             {
                 var jmeno = TxtJmeno.Text.Trim();
@@ -57,6 +61,7 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
                 vysledek = vysledek.Where(h => string.Equals(h.jmeno, jmeno, StringComparison.OrdinalIgnoreCase));
             }
 
+            // Příjmení
             if (!string.IsNullOrWhiteSpace(TxtPrijmeni.Text))
             {
                 var prijmeni = TxtPrijmeni.Text.Trim();
@@ -64,6 +69,7 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
                 vysledek = vysledek.Where(h => string.Equals(h.prijmeni, prijmeni, StringComparison.OrdinalIgnoreCase));
             }
 
+            // Rodné číslo
             if (!string.IsNullOrWhiteSpace(TxtRodneCislo.Text))
             {
                 var rodneCislo = TxtRodneCislo.Text.Trim();
@@ -71,6 +77,7 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
                 vysledek = vysledek.Where(h => h.rodneCislo == rodneCislo);
             }
 
+            // Telefonní číslo
             if (!string.IsNullOrWhiteSpace(TxtTelefonniCislo.Text))
             {
                 var telefonniCislo = TxtTelefonniCislo.Text.Trim();
@@ -117,7 +124,7 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
                 vysledek = vysledek.Where(h => h.vek == vek);
             }
 
-            // Zdravotní stav (A/N) – nechávám tvoje, protože pracuje s "—"
+            // Zdravotní stav (A/N) 
             if (cbZdraviStav.SelectedItem is ComboBoxItem polozka && polozka.Content is string stavText && stavText != "—")
             {
                 char stav = stavText[0];
@@ -126,7 +133,6 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
 
             return vysledek;
         }
-
 
         /// <summary>
         /// Obsluha tlačítka "Najdi"
@@ -143,6 +149,45 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Chyba ve vstupu", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        /// <summary>
+        /// Metoda pro přepínání Light Mode / Dark Mode
+        /// </summary>
+        private void ApplyTheme(bool darkMode)
+        {
+            if (darkMode == true)
+            {
+                Resources["BgApp"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x0F, 0x19));
+                Resources["Surface"] = new SolidColorBrush(Color.FromRgb(0x11, 0x18, 0x27));
+                Resources["TextMain"] = new SolidColorBrush(Color.FromRgb(0xF9, 0xFA, 0xFB));
+                Resources["BorderSoft"] = new SolidColorBrush(Color.FromRgb(0x1F, 0x29, 0x37));
+                Resources["InputBg"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x12, 0x20));
+
+                Resources["Orange"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
+                Resources["OrangeHover"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
+
+                Resources["SidebarGradient"] = new LinearGradientBrush(
+                    Color.FromRgb(0xFB, 0x92, 0x3C),
+                    Color.FromRgb(0xF9, 0x73, 0x16),
+                    90);
+            }
+            else
+            {
+                Resources["BgApp"] = new SolidColorBrush(Color.FromRgb(0xF6, 0xF7, 0xFB));
+                Resources["Surface"] = new SolidColorBrush(Color.FromRgb(0xFF, 0xFF, 0xFF));
+                Resources["TextMain"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x12, 0x20));
+                Resources["BorderSoft"] = new SolidColorBrush(Color.FromRgb(0xE5, 0xE7, 0xEB));
+                Resources["InputBg"] = new SolidColorBrush(Color.FromRgb(0xF8, 0xFA, 0xFC));
+
+                Resources["Orange"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
+                Resources["OrangeHover"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
+
+                Resources["SidebarGradient"] = new LinearGradientBrush(
+                    Color.FromRgb(0xFB, 0x92, 0x3C),
+                    Color.FromRgb(0xF9, 0x73, 0x16),
+                    90);
             }
         }
 

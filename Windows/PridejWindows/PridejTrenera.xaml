@@ -261,7 +261,7 @@
         <Border Grid.Column="0" Background="{DynamicResource SidebarGradient}">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="24">
                 <Image Source="/Images/bigPlayer.png" Width="150" Height="150" Margin="0,0,0,24"/>
-                <TextBlock Text="Přidání Trenéra" FontSize="28" FontWeight="SemiBold"
+                <TextBlock Text="Přidání trenéra" FontSize="28" FontWeight="SemiBold"
                            Foreground="#FFFFFF" Opacity="0.95" TextAlignment="Center"/>
                 <TextBlock Text="Vyplňte údaje o trenérovi" FontSize="13"
                            Foreground="#FFF7ED" Margin="0,8,0,0" Opacity="0.9" TextAlignment="Center"/>
