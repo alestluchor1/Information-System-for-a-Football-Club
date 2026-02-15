@@ -57,5 +57,29 @@ namespace InformacniSystemKlub.Database
             }
         }
 
+        /// <summary>
+        /// Editace existujícího hráče pomocí procedury <c>PKG_HRACI.SP_UPDATE_HRAC</c> (podle IDCLENKLUBU)
+        /// </summary>
+        public static void EditaceHrace(OracleConnection conn, Hrac hrac)
+        {
+            using (var cmd = new OracleCommand("PKG_HRACI.SP_UPDATE_HRAC", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("v_idclenklubu", OracleDbType.Int32).Value = hrac.id;
+                cmd.Parameters.Add("v_rodne_cislo", OracleDbType.Varchar2).Value = hrac.rodneCislo;
+                cmd.Parameters.Add("v_jmeno", OracleDbType.Varchar2).Value = hrac.jmeno;
+                cmd.Parameters.Add("v_prijmeni", OracleDbType.Varchar2).Value = hrac.prijmeni;
+                cmd.Parameters.Add("v_telefonni_cislo", OracleDbType.Varchar2).Value = hrac.telefonniCislo;
+                cmd.Parameters.Add("v_pozice", OracleDbType.Varchar2).Value = hrac.pozice;
+                cmd.Parameters.Add("v_pocet_golu", OracleDbType.Int32).Value = hrac.pocetVstrelenychGolu;
+                cmd.Parameters.Add("v_pocet_zlute", OracleDbType.Int32).Value = hrac.pocetZlutychKaret;
+                cmd.Parameters.Add("v_pocet_cervene", OracleDbType.Int32).Value = hrac.pocetCervenychKaret;
+                cmd.Parameters.Add("v_vek", OracleDbType.Int32).Value = hrac.vek;
+                cmd.Parameters.Add("v_zdravotni_stav", OracleDbType.Char).Value = hrac.zdravotniStav;
+
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

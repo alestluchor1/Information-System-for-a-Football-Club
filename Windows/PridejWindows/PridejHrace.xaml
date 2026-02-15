@@ -317,7 +317,7 @@
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Telefonní číslo" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtTelefonniCislo" Grid.Row="3" Grid.Column="1" MaxLength="12" Style="{DynamicResource Input}"/>
 
-                    <!-- 4 Góly -->
+                    <!-- 4 -->
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Počet vstřelených gólů" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="4" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <xctk:IntegerUpDown x:Name="iudPocetGolu"
@@ -327,7 +327,7 @@
                                             Maximum="100"/>
                     </Border>
 
-                    <!-- 5 Žluté karty -->
+                    <!-- 5 -->
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Počet žlutých karet" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="5" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <xctk:IntegerUpDown x:Name="iudPocetZlutychKaret"
@@ -337,7 +337,7 @@
                                             Maximum="100"/>
                     </Border>
 
-                    <!-- 6 Červené karty -->
+                    <!-- 6 -->
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Počet červených karet" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="6" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <xctk:IntegerUpDown x:Name="iudPocetCervenychKaret"
@@ -347,7 +347,7 @@
                                             Maximum="100"/>
                     </Border>
 
-                    <!-- 7 Zdravotní stav -->
+                    <!-- 7 -->
                     <TextBlock Grid.Row="7" Grid.Column="0" Text="Zdravotní stav" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="7" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <ComboBox x:Name="cbZdraviStav"
@@ -358,11 +358,11 @@
                         </ComboBox>
                     </Border>
 
-                    <!-- 8 Pozice -->
+                    <!-- 8 -->
                     <TextBlock Grid.Row="8" Grid.Column="0" Text="Pozice" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtPozice" Grid.Row="8" Grid.Column="1" MaxLength="50" Style="{DynamicResource Input}"/>
 
-                    <!-- 9 Věk -->
+                    <!-- 9 -->
                     <TextBlock Grid.Row="9" Grid.Column="0" Text="Věk" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="9" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <xctk:IntegerUpDown x:Name="iudVek"

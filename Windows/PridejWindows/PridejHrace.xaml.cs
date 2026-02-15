@@ -7,6 +7,10 @@ using System.Windows.Media;
 
 namespace InformacniSystemKlub.Windows.PřidáníWindows
 {
+    /// <summary>
+    /// Okno pro přidání nového hráče
+    /// Po otevření se nastaví motiv (dark/light) a po uložení se provede validace vstupů
+    /// </summary>
     public partial class PridejHrace : Window
     {
         private Hrac novyHrac;
@@ -24,7 +28,10 @@ namespace InformacniSystemKlub.Windows.PřidáníWindows
             }
         }
 
-
+        /// <summary>
+        /// Obsluha tlačítka Uložit
+        /// Provede validaci všech vstupů, uloží hodnoty do objektu <see cref="Hrac"/>
+        /// </summary>
         private void BtnUlozit_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -44,7 +51,6 @@ namespace InformacniSystemKlub.Windows.PřidáníWindows
 
                 char stavZdravi = InputValidator.ValidujZdravotniStav(cbZdraviStav.SelectedItem);
 
-                // Uložení
                 novyHrac.jmeno = TxtJmeno.Text.Trim();
                 novyHrac.prijmeni = TxtPrijmeni.Text.Trim();
                 novyHrac.rodneCislo = TxtRodneCislo.Text.Trim();
@@ -70,9 +76,13 @@ namespace InformacniSystemKlub.Windows.PřidáníWindows
             }
         }
 
+        /// <summary>
+        /// Nastaví (dark / light) mode
+        /// </summary>
+        /// <param name="darkMode">True = dark mode, false = light mode</param>
         private void ApplyTheme(bool darkMode)
         {
-            if (darkMode)
+            if (darkMode == true)
             {
                 Resources["BgApp"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x0F, 0x19));
                 Resources["Surface"] = new SolidColorBrush(Color.FromRgb(0x11, 0x18, 0x27));
@@ -105,8 +115,6 @@ namespace InformacniSystemKlub.Windows.PřidáníWindows
                     90);
             }
         }
-
-
 
     }
 }

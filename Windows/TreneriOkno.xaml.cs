@@ -1,5 +1,6 @@
 ﻿using InformacniSystemKlub.Database;
 using InformacniSystemKlub.Models;
+using InformacniSystemKlub.Windows.EditujWindows;
 using InformacniSystemKlub.Windows.NajdiWindows;
 using InformacniSystemKlub.Windows.PřidáníWindows;
 using InformacniSystemKlub.Windows.PridejWindows;
@@ -47,7 +48,7 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Načte hráče z databáze (pohled TRENERI_VIEW) a naplní kolekci HraciData.
+        /// Načte hráče z databáze (pohled TRENERI_VIEW) a naplní kolekci TreneriData
         /// </summary>
         private void NactiTreneri()
         {
@@ -151,7 +152,29 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnEdituj_Click(object sender, RoutedEventArgs e)
         {
+            if (jeVyhledavaniAktivni == true)
+            {
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
 
+            Trener vybranyTrener = DgTreneri.SelectedItem as Trener;
+            if (vybranyTrener == null)
+            {
+                MessageBox.Show("Prosím vyberte trenéra, kterého chcete editovat!", "Chyba",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var dialog = new EditujTrenera(vybranyTrener);
+            bool? result = dialog.ShowDialog();
+
+            if (result == true)
+            {
+
+                DgTreneri.Items.Refresh();
+            }
         }
 
         /// <summary>

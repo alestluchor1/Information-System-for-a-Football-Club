@@ -17,7 +17,8 @@ using System.Windows.Shapes;
 namespace InformacniSystemKlub.Windows.PridejWindows
 {
     /// <summary>
-    /// Interakční logika pro PridejTrenera.xaml
+    /// Okno pro přidání nového trenéra
+    /// Při otevření se nastaví motiv (dark/light) a po uložení se provede validace vstupů
     /// </summary>
     public partial class PridejTrenera : Window
     {
@@ -37,6 +38,10 @@ namespace InformacniSystemKlub.Windows.PridejWindows
             }
         }
 
+        /// <summary>
+        /// Obsluha tlačítka Uložit
+        /// Provede validaci všech vstupů, uloží hodnoty do objektu <see cref="Trener"/>
+        /// </summary>
         private void BtnUlozit_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -51,7 +56,6 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                 InputValidator.ValidujSpecializace(TxtSpecializace.Text);
                 int pocetLetPraxe = InputValidator.ValidujTreneriPocetLetPraxe(iudPocetLetPraxe.Text);
 
-                // Uložení
                 novyTrener.Jmeno = TxtJmeno.Text.Trim();
                 novyTrener.Prijmeni = TxtPrijmeni.Text.Trim();
                 novyTrener.RodneCislo = TxtRodneCislo.Text.Trim();
@@ -72,9 +76,13 @@ namespace InformacniSystemKlub.Windows.PridejWindows
             }
         }
 
+        /// <summary>
+        /// Nastaví (dark / light) mode
+        /// </summary>
+        /// <param name="darkMode">True = dark mode, false = light mode</param>
         private void ApplyTheme(bool darkMode)
         {
-            if (darkMode)
+            if (darkMode == true)
             {
                 Resources["BgApp"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x0F, 0x19));
                 Resources["Surface"] = new SolidColorBrush(Color.FromRgb(0x11, 0x18, 0x27));

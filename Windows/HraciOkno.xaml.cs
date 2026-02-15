@@ -1,5 +1,6 @@
 ﻿using InformacniSystemKlub.Database;
-using InformacniSystemKlub.Models; 
+using InformacniSystemKlub.Models;
+using InformacniSystemKlub.Windows.EditujWindows;
 using InformacniSystemKlub.Windows.NajdiWindows;
 using InformacniSystemKlub.Windows.PřidáníWindows;
 using Oracle.ManagedDataAccess.Client;
@@ -231,9 +232,33 @@ namespace InformacniSystemKlub.Windows
         /// Obsluha tlačítka Edituj pro úpravu údajů hráče
         /// </summary>
         private void BtnEdituj_Click(object sender, RoutedEventArgs e)
-        { 
-        
+        {
+            if (jeVyhledavaniAktivni == true)
+            {
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            Hrac vybranyHrac = DgHraci.SelectedItem as Hrac;
+            if (vybranyHrac == null)
+            {
+                MessageBox.Show("Prosím vyberte hráče, kterého chcete editovat!", "Chyba",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var dialog = new EditujHrace(vybranyHrac);
+            bool? result = dialog.ShowDialog();
+
+            if (result == true)
+            {
+                VyberTymu();
+
+                DgHraci.Items.Refresh();
+            }
         }
+
 
         /// <summary>
         /// Otevře dialog pro vyhledávání hráčů (NajdiHrace) a v případě potvrzení zobrazí filtrovaný výsledek v DataGridu

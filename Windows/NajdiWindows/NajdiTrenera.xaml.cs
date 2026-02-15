@@ -53,7 +53,7 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Chyba ve vstupu", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

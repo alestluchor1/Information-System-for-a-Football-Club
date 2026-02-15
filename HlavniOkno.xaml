@@ -308,7 +308,8 @@
                             Tag="📅"
                             ToolTip="Plánování tréninků, docházka a náplň"
                             Style="{StaticResource TileButtonSimpleStyle}"
-                            BorderBrush="#10B981"/>
+                            BorderBrush="#10B981"
+                            Click="BtnTreninkyClick"/>
 
                     <Button Content="Disciplinární opatření"
                             Tag="🟥"

@@ -129,6 +129,24 @@ namespace InformacniSystemKlub.Windows
             this.Activate();
         }
 
+        private void BtnTreninkyClick(object sender, RoutedEventArgs e)
+        {
+            var treninkOkno = new TreninkOkno();
+            treninkOkno.Owner = this;
+
+            this.Hide();
+
+            treninkOkno.Closed += TreninkyOkno_Closed;
+
+            treninkOkno.Show();
+        }
+
+        private void TreninkyOkno_Closed(object? sender, EventArgs e)
+        {
+            this.Show();
+            this.Activate();
+        }
+
 
 
     }
