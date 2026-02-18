@@ -275,7 +275,8 @@
                     <DataGridTextColumn Header="Datum"
                                         Binding="{Binding Datum, StringFormat={}{0:dd.MM.yyyy}}"
                                         Width="120"
-                                        />
+                                        HeaderStyle="{StaticResource DgHeaderCenter}"
+                                        CellStyle="{StaticResource DgCellCenter}"/>
 
                     <DataGridTextColumn Header="Místo" Binding="{Binding Misto}" Width="*"
                                         HeaderStyle="{StaticResource DgHeaderLeft}"

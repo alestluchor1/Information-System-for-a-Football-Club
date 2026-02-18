@@ -193,12 +193,21 @@
         <!-- DatePicker -->
         <Style x:Key="DatePickerTheme" TargetType="DatePicker">
             <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
-            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Background" Value="{DynamicResource InputBg}"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="6,0"/>
+            <Setter Property="Padding" Value="0"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="13"/>
         </Style>
+        <!-- Text uvnitř DatePickeru pro dark mode -->
+        <Style TargetType="DatePickerTextBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
+            <Setter Property="Background" Value="{DynamicResource InputBg}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="6,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
 
         <!-- Primární tlačítko -->
         <Style x:Key="BtnPrimary" TargetType="Button">
