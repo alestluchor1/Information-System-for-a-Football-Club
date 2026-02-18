@@ -62,6 +62,13 @@ namespace InformacniSystemKlub.Windows
             
         }
 
+        private void BtnKalendarClick(object sender, RoutedEventArgs e)
+        {
+            Kalendář kalendar = new Kalendář();
+            kalendar.ShowDialog();
+
+        }
+
         private void ApplyTheme(bool darkMode)
         {
             if (darkMode == true)

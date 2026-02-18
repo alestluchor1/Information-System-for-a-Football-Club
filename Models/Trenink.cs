@@ -11,6 +11,11 @@ namespace InformacniSystemKlub.Models
         public int Id { get; set; }
 
         /// <summary>
+        /// ID trenéra
+        /// </summary>
+        public int IdTrener { get; set; }   
+
+        /// <summary>
         /// Rodné číslo trenéra
         /// </summary>
         public string RodneCislo { get; set; }

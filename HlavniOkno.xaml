@@ -319,7 +319,7 @@
                 </UniformGrid>
 
                 <!-- 2. řada tlačítek -->
-                <UniformGrid Grid.Row="2" Columns="4">
+                <UniformGrid Grid.Row="2" Columns="5">
                     <Button Content="Zápasy"
                             Tag="⚽"
                             ToolTip="Rozpis, nominace a výsledky"
@@ -343,6 +343,13 @@
                             ToolTip="Oznámení klubu"
                             Style="{StaticResource TileButtonSimpleStyle}"
                             BorderBrush="#10de47"/>
+
+                    <Button Content="Kalendář"
+                            Tag="📅"
+                            ToolTip="Plánování událostí"
+                            Style="{StaticResource TileButtonSimpleStyle}"
+                            BorderBrush="MediumPurple"
+                            Click="BtnKalendarClick"/>
                 </UniformGrid>
 
             </Grid>

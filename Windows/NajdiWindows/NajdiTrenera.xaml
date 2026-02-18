@@ -30,7 +30,7 @@
         <SolidColorBrush x:Key="OrangeHover" Color="#EA580C"/>
 
         <LinearGradientBrush x:Key="SidebarGradient" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#000000" Offset="0"/>
+            <GradientStop Color="#F97316" Offset="0"/>
             <GradientStop Color="#F97316" Offset="1"/>
         </LinearGradientBrush>
 
@@ -260,7 +260,7 @@
         <!-- Levý panel -->
         <Border Grid.Column="0" Background="{DynamicResource SidebarGradient}">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="24">
-                <Image Source="/Images/bigPlayer.png" Width="150" Height="150" Margin="0,0,0,24"/>
+                <Image Source="/Images/coach.png" Width="150" Height="150" Margin="0,0,0,24"/>
                 <TextBlock Text="Filtrování trenérů" FontSize="28" FontWeight="SemiBold"
                            Foreground="#FFFFFF" Opacity="0.95" TextAlignment="Center"/>
                 <TextBlock Text="Vyplňte údaje o trenérovi" FontSize="13"

@@ -259,7 +259,7 @@
 
                 <DataGrid.Columns>
 
-                    <DataGridTextColumn Header="ID trénink" Binding="{Binding Id}" Width="70"
+                    <DataGridTextColumn Header="ID trénink" Binding="{Binding Id}" Width="110"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
@@ -269,17 +269,19 @@
 
                     <DataGridTextColumn Header="Rodné číslo trenéra" Binding="{Binding RodneCislo}" Width="150"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
-                                        CellStyle="{StaticResource DgCellCenter}"/>
+                                        CellStyle="{StaticResource DgCellCenter}"
+                                        />
 
-                    <DataGridTextColumn Header="Datum" Binding="{Binding Datum}" Width="130"
-                                        HeaderStyle="{StaticResource DgHeaderCenter}"
-                                        CellStyle="{StaticResource DgCellCenter}"/>
+                    <DataGridTextColumn Header="Datum"
+                                        Binding="{Binding Datum, StringFormat={}{0:dd.MM.yyyy}}"
+                                        Width="120"
+                                        />
 
                     <DataGridTextColumn Header="Místo" Binding="{Binding Misto}" Width="*"
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
 
-                    <DataGridTextColumn Header="Popis" Binding="{Binding Popis}" Width="160"
+                    <DataGridTextColumn Header="Popis" Binding="{Binding Popis}" Width="200"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 

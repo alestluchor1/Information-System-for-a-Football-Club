@@ -2,15 +2,18 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using System.Globalization;
+using System.Windows.Controls;
+
 
 namespace InformacniSystemKlub
 {
     public static class InputValidator
     {
-        // Povolená písmena (včetně české diakritiky), bez mezer a bez pomlček
-        private static readonly Regex RegexPismena = new Regex(
-            @"^[A-Za-zÁÉĚÍÓÚŮÝŽŠČŘĎŤŇáéěíóúůýžščřďťň]+$"
-        );
+        // Povolená písmena 
+        private static readonly Regex RegexPismena = new Regex(@"^[A-Za-zÁÉĚÍÓÚŮÝŽŠČŘĎŤŇáéěíóúůýžščřďťň]+$", RegexOptions.Compiled);
+
+        private static readonly Regex RegexCisla = new Regex(@"^\d+$", RegexOptions.Compiled);
 
         private static readonly Regex RegexPozice = new Regex(
             @"^[A-Za-zÁÉĚÍÓÚŮÝŽŠČŘĎŤŇáéěíóúůýžščřďťň\s\-]+$"
@@ -54,10 +57,11 @@ namespace InformacniSystemKlub
                 throw new Exception("Rodné číslo musí mít přesně 10 číslic!");
             }
 
-            if (!rodneCislo.All(char.IsDigit))
+            if (!RegexCisla.IsMatch(rodneCislo))
             {
                 throw new Exception("Rodné číslo musí obsahovat pouze číslice!");
             }
+               
         }
 
         public static void ValidujTelefonniCislo(string telefonniCislo)
@@ -270,5 +274,64 @@ namespace InformacniSystemKlub
 
             return hodnota;
         }
+
+        public static void ValidujVyberTrenera(object selectedItem)
+        {
+            if (selectedItem == null)
+            {
+                throw new Exception("Vyber trenéra!");
+            }
+        }
+
+        public static DateTime ValidujDatumTreninku(DateTime? datum, string nazevPole = "Datum")
+        {
+            if (datum == null)
+            {
+                throw new Exception($"{nazevPole} nesmí být prázdné!");
+            }
+            
+            // Datum se nesmí zadat v minulosti
+            if (datum.Value.Date < DateTime.Today)
+            {
+                throw new Exception($"{nazevPole} nesmí být v minulosti!");
+            }
+
+            return datum.Value.Date;
+        }
+
+        public static string ValidujMistoTreninku(string misto, string nazevPole = "Místo")
+        {
+            if (string.IsNullOrWhiteSpace(misto))
+            {
+                throw new Exception($"{nazevPole} nesmí být prázdné!");
+            }
+
+            misto = misto.Trim();
+
+            if (misto.Length > 50)
+            {
+                throw new Exception($"{nazevPole} může mít maximálně 50 znaků!");
+            }
+
+            return misto;
+        }
+
+        public static string? ValidujPopisTreninku(string popis, string nazevPole = "Popis")
+        {
+            if (string.IsNullOrWhiteSpace(popis))
+            {
+                return null; // dovolíme NULL do DB
+            }
+
+            popis = popis.Trim();
+
+            if (popis.Length > 50)
+            {
+                throw new Exception($"{nazevPole} může mít maximálně 50 znaků!");
+            }
+
+            return popis;
+        }
+
     }
 }

@@ -10,7 +10,7 @@ namespace InformacniSystemKlub.Database
     {
 
         /// <summary>
-        /// Odebere hráče z databáze pomocí procedury <c>PKG_HRACI.SP_ADD_HRAC</c>
+        /// Odebere hráče z databáze pomocí procedury <c>PKG_HRACI.SP_ODEBER_HRACE</c>
         /// </summary>
         public static void OdeberHrace(OracleConnection conn, Hrac hrac)
         {
@@ -25,7 +25,7 @@ namespace InformacniSystemKlub.Database
         }
 
         /// <summary>
-        /// Přidá hráče z databáze pomocí procedury <c>PKG_HRACI.SP_PRIDEJ_HRACE</c>
+        /// Přidá hráče z databáze pomocí procedury <c>PKG_HRACI.SP_ADD_HRAC</c>
         /// </summary>
         public static void PridejHrace(OracleConnection conn, Hrac hrac)
         {
@@ -58,7 +58,7 @@ namespace InformacniSystemKlub.Database
         }
 
         /// <summary>
-        /// Editace existujícího hráče pomocí procedury <c>PKG_HRACI.SP_UPDATE_HRAC</c> (podle IDCLENKLUBU)
+        /// Editace existujícího hráče pomocí procedury <c>PKG_HRACI.SP_UPDATE_HRAC</c> 
         /// </summary>
         public static void EditaceHrace(OracleConnection conn, Hrac hrac)
         {

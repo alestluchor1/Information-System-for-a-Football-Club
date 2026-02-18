@@ -38,6 +38,7 @@ namespace InformacniSystemKlub.Database
                 using (var cmd = new OracleCommand("PKG_TRENERI.SP_ADD_TRENERI", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.BindByName = true;
 
                     cmd.Parameters.Add("v_idclenklubu", OracleDbType.Int32).Value = trener.Id;
                     cmd.Parameters.Add("v_rodne_cislo", OracleDbType.Varchar2).Value = trener.RodneCislo;
@@ -68,6 +69,7 @@ namespace InformacniSystemKlub.Database
                 using (var cmd = new OracleCommand("PKG_TRENERI.SP_UPDATE_TRENERI", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.BindByName = true;
 
                     cmd.Parameters.Add("v_idclenklubu", OracleDbType.Int32).Value = trener.Id;
                     cmd.Parameters.Add("v_rodne_cislo", OracleDbType.Varchar2).Value = trener.RodneCislo;
