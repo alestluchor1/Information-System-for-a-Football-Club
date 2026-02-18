@@ -1,4 +1,4 @@
-﻿<Window x:Class="InformacniSystemKlub.Windows.Kalendář"
+﻿<Window x:Class="InformacniSystemKlub.Windows.Kalendar"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -26,8 +26,7 @@
 
         <!-- stín -->
         <DropShadowEffect x:Key="CardShadow" BlurRadius="28" ShadowDepth="10" Opacity="0.18"/>
-
-        <!-- malé ikonové tlačítko -->
+        
         <Style x:Key="IconBtn" TargetType="Button">
             <Setter Property="Width" Value="44"/>
             <Setter Property="Height" Value="44"/>
@@ -83,7 +82,6 @@
             </Setter>
         </Style>
 
-        <!-- secondary button -->
         <Style x:Key="SecondaryBtn" TargetType="Button" BasedOn="{StaticResource PrimaryBtn}">
             <Setter Property="Background" Value="#22FFFFFF"/>
         </Style>
@@ -118,12 +116,10 @@
 
     </Window.Resources>
 
-    <!-- celá karta -->
     <Border Margin="12"
             CornerRadius="22"
             Background="{StaticResource White}"
-            Effect="{StaticResource CardShadow}"
-            MouseDown="Root_MouseDown">
+            Effect="{StaticResource CardShadow}">
 
         <Grid>
             <Grid.ColumnDefinitions>
@@ -131,7 +127,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- LEVÁ ČÁST -->
+            <!-- Levá část -->
             <Grid Grid.Column="0" Margin="26">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -141,7 +137,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- header měsíce -->
+                <!-- Header měsíce -->
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -152,7 +148,7 @@
                     <Button Grid.Column="0"
                             Style="{StaticResource IconBtn}"
                             Content="❮"
-                            Click="BtnPrev_Click"/>
+                            />
 
                     <StackPanel Grid.Column="1" HorizontalAlignment="Center">
                         <TextBlock x:Name="TxtMesic"
@@ -169,7 +165,7 @@
                     <Button Grid.Column="2"
                             Style="{StaticResource IconBtn}"
                             Content="❯"
-                            Click="BtnNext_Click"/>
+                            />
                 </Grid>
 
                 <!-- dny v týdnu -->
@@ -189,7 +185,7 @@
                              Columns="7"/>
             </Grid>
 
-            <!-- PRAVÁ ČÁST -->
+            <!-- Pravá část -->
             <Border Grid.Column="1"
                     Background="{StaticResource Pink}"
                     CornerRadius="0,22,22,0">
@@ -205,7 +201,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- title + close -->
+
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -232,7 +228,7 @@
                                FontSize="16"
                                Opacity="0.95"/>
 
-                    <!-- list tréninků -->
+
                     <Border Grid.Row="4"
                             CornerRadius="18"
                             Background="#22FFFFFF"
@@ -254,51 +250,21 @@
                                      Background="#00FFFFFF"
                                      BorderThickness="0"
                                      Foreground="White"
-                                     ScrollViewer.VerticalScrollBarVisibility="Auto">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border CornerRadius="14"
-                                                Background="#1FFFFFFF"
-                                                Padding="12"
-                                                Margin="0,0,0,10">
-                                            <StackPanel>
-                                                <TextBlock Text="{Binding Misto}"
-                                                           FontWeight="SemiBold"
-                                                           FontSize="14"
-                                                           Foreground="White"/>
-
-                                                <TextBlock Text="{Binding Popis}"
-                                                           Margin="0,6,0,0"
-                                                           Opacity="0.9"
-                                                           TextWrapping="Wrap"
-                                                           Foreground="White"/>
-
-                                                <!-- Pokud máš v modelu Prijmeni, tak se ukáže -->
-                                                <TextBlock Text="{Binding Prijmeni}"
-                                                           Margin="0,8,0,0"
-                                                           Opacity="0.85"
-                                                           Foreground="White"/>
-                                            </StackPanel>
-                                        </Border>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                         </Grid>
                     </Border>
 
-                    <!-- tlačítka -->
+
                     <StackPanel Grid.Row="6"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right">
 
                         <Button Content="Odebrat"
                                 Style="{StaticResource SecondaryBtn}"
-                                Margin="0,0,10,0"
-                                Click="BtnOdebrat_Click"/>
+                                Margin="0,0,10,0"/>
 
                         <Button Content="Přidat"
-                                Style="{StaticResource PrimaryBtn}"
-                                Click="BtnPridat_Click"/>
+                                Style="{StaticResource PrimaryBtn}"/>
                     </StackPanel>
                 </Grid>
             </Border>

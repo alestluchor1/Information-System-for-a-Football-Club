@@ -64,7 +64,7 @@ namespace InformacniSystemKlub.Windows
 
         private void BtnKalendarClick(object sender, RoutedEventArgs e)
         {
-            Kalendář kalendar = new Kalendář();
+            Kalendar kalendar = new Kalendar();
             kalendar.ShowDialog();
 
         }
