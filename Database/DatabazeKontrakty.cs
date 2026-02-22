@@ -30,7 +30,7 @@ namespace InformacniSystemKlub.Database
                 cmd.Parameters.Add("v_datum_konce", OracleDbType.Date).Value = kontrakt.DatumKonce.ToDateTime(TimeOnly.MinValue);
 
                 // Plat
-                cmd.Parameters.Add("v_plat", OracleDbType.Int32).Value = kontrakt.Plat;
+                cmd.Parameters.Add("v_plat", OracleDbType.Int64).Value = kontrakt.Plat;
 
                 // Telefoní číslo na agenta
                 OracleParameter parametrCisloAgenta = cmd.Parameters.Add("v_cislo_na_agenta", OracleDbType.Varchar2);
@@ -45,7 +45,7 @@ namespace InformacniSystemKlub.Database
                 }
 
                 // Výstupní klauzule
-                OracleParameter parametrVystupniKlauzule = cmd.Parameters.Add("v_vystupni_klauzule", OracleDbType.Int32);
+                OracleParameter parametrVystupniKlauzule = cmd.Parameters.Add("v_vystupni_klauzule", OracleDbType.Int64);
 
                 if (kontrakt.VystupniKlauzule == 0)
                 {

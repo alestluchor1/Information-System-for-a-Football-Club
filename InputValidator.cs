@@ -1,8 +1,9 @@
-﻿using System;
+﻿using InformacniSystemKlub.Models;
+using System;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using System.Globalization;
 using System.Windows.Controls;
 
 
@@ -333,5 +334,103 @@ namespace InformacniSystemKlub
             return popis;
         }
 
+        public static int ValidujVyberHrace(object selectedItem)
+        {
+            if (selectedItem == null)
+            {
+                throw new Exception("Vyber hráče!");
+            }
+
+            Hrac hrac = selectedItem as Hrac;
+            if (hrac == null)
+            {
+                throw new Exception("Neplatný výběr hráče!");
+            }
+
+            if (hrac.id <= 0)
+            {
+                throw new Exception("Neplatné ID hráče!");
+            }
+
+            return hrac.id;
+        }
+
+        public static void ValidujRozsahDatumuKontraktu(DateTime? datumOd, DateTime? datumDo)
+        {
+            if (datumOd == null)
+            {
+                throw new Exception("Datum od nesmí být prázdné!");
+            }
+
+            if (datumDo == null)
+            {
+                throw new Exception("Datum do nesmí být prázdné!");
+            }
+
+            DateTime od = datumOd.Value.Date;
+            DateTime doo = datumDo.Value.Date;
+
+            if (doo < od)
+            {
+                throw new Exception("Datum do nesmí být menší než datum od!");
+            }
+        }
+
+        public static long ValidujPlatKontraktuLong(string platText, string nazevPole = "Plat")
+        {
+            const long minimalniHodnota = 1;
+
+            if (string.IsNullOrWhiteSpace(platText))
+            {
+                throw new Exception($"{nazevPole} nesmí být prázdný!");
+            }
+
+            platText = platText.Trim();
+
+            if (!RegexCisla.IsMatch(platText))
+            {
+                throw new Exception($"{nazevPole} smí obsahovat pouze číslice!");
+            }
+
+            if (!long.TryParse(platText, out long plat))
+            {
+                throw new Exception($"{nazevPole} je mimo rozsah typu long!");
+            }
+
+            if (plat < minimalniHodnota)
+            {
+                throw new Exception($"{nazevPole} musí být alespoň {minimalniHodnota}!");
+            }
+
+            return plat;
+        }
+
+        public static long ValidujVystupniKlauzuliLong(string klauzuleText, string nazevPole = "Výstupní klauzule")
+        {
+            // NULL v DB povolen -> prázdné vrátíme jako 0 (ty pak dáváš DBNull.Value)
+            if (string.IsNullOrWhiteSpace(klauzuleText))
+            {
+                return 0;
+            }
+
+            klauzuleText = klauzuleText.Trim();
+
+            if (!RegexCisla.IsMatch(klauzuleText))
+            {
+                throw new Exception($"{nazevPole} smí obsahovat pouze číslice!");
+            }
+
+            if (!long.TryParse(klauzuleText, out long klauzule))
+            {
+                throw new Exception($"{nazevPole} je mimo rozsah typu long!");
+            }
+
+            if (klauzule < 0)
+            {
+                throw new Exception($"{nazevPole} nesmí být záporná!");
+            }
+
+            return klauzule;
+        }
     }
 }

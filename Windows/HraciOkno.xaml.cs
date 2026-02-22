@@ -105,7 +105,7 @@ namespace InformacniSystemKlub.Windows
         /// <summary>
         /// Načte hráče z databáze (pohled HRACI_VIEW) a naplní kolekci HraciData.
         /// </summary>
-        private void NactiHrace()
+        public static void NactiHrace()
         {
             try
             {

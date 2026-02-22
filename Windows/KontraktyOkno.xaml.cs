@@ -262,33 +262,31 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnPridat_Click(object sender, RoutedEventArgs e)
         {
-            //if (jeVyhledavaniAktivni == true)
-            //{
-            //    MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
-            //        MessageBoxButton.OK, MessageBoxImage.Information);
-            //    return;
-            //}
+            if (jeVyhledavaniAktivni == true)
+            {
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
 
+            Kontrakt pridanyKontrakt = new Kontrakt();
+            var okno = new PridejKontrakt(pridanyKontrakt);
 
-            //Trener pridanyTrener = new Trener();
-            //var okno = new PridejTrenera(pridanyTrener);
+            if (okno.ShowDialog() != true)
+            {
+                return;
+            }
 
-            //if (okno.ShowDialog() != true)
-            //{
-            //    return;
-            //}
+            try
+            {
+                var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
+                DatabazeKontrakty.PridejKontrakt(conn, pridanyKontrakt);
 
-            //try
-            //{
-            //    var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
-            //    DatabazeTreneri.PridejTrenera(conn, pridanyTrener);
-
-            //    NactiTreneri();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Chyba při přidání trenéra: {ex.Message}");
-            //}
+                NactiKontrakty();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Chyba při přidání kontraktu: {ex.Message}");
+            }
         }
 
         /// <summary>

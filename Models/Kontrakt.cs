@@ -21,11 +21,11 @@ namespace InformacniSystemKlub.Models
         /// </summary>
         public DateOnly DatumKonce { get; set; }
 
-        public int Plat { get; set; }
+        public long Plat { get; set; }
 
         public string TelCisloNaAgenta { get; set; }
 
-        public int VystupniKlauzule { get; set; }
+        public long VystupniKlauzule { get; set; }
 
         /// <summary>
         /// Hráč, ke kterému kontrakt patří
