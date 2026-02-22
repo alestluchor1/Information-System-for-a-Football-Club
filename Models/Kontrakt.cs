@@ -8,7 +8,6 @@ namespace InformacniSystemKlub.Models
 {
     public class Kontrakt
     {
-        public int IdKontrakt { get; set; }
 
         public int IdHrac { get; set; }
 

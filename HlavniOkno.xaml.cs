@@ -69,6 +69,13 @@ namespace InformacniSystemKlub.Windows
 
         }
 
+        private void BtnKontraktyClick(object sender, RoutedEventArgs e)
+        {
+            KontraktyOkno kontraktyOkno = new KontraktyOkno();
+            kontraktyOkno.ShowDialog();
+
+        }
+
         private void ApplyTheme(bool darkMode)
         {
             if (darkMode == true)

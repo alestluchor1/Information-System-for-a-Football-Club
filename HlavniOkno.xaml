@@ -336,7 +336,8 @@
                             Tag="📝"
                             ToolTip="Hráčské smlouvy, výstupní klauzule, kontakt na agenta"
                             Style="{StaticResource TileButtonSimpleStyle}"
-                            BorderBrush="#db18be"/>
+                            BorderBrush="#db18be"
+                            Click="BtnKontraktyClick"/>
 
                     <Button Content="Notifikace"
                             Tag="✍️"
