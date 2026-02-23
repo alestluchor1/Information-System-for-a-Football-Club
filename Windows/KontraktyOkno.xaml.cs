@@ -95,7 +95,7 @@ namespace InformacniSystemKlub.Windows
 
                         if (reader["PLAT"] != DBNull.Value)
                         {
-                            kontrakt.Plat = Convert.ToInt32(reader["PLAT"]);
+                            kontrakt.Plat = Convert.ToInt64(reader["PLAT"]);
                         }
                         else
                         {
@@ -113,7 +113,7 @@ namespace InformacniSystemKlub.Windows
 
                         if (reader["VYSTUPNIKLAUZULE"] != DBNull.Value)
                         {
-                            kontrakt.VystupniKlauzule = Convert.ToInt32(reader["VYSTUPNIKLAUZULE"]);
+                            kontrakt.VystupniKlauzule = Convert.ToInt64(reader["VYSTUPNIKLAUZULE"]);
                         }
                         else
                         {
@@ -156,29 +156,27 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnEdituj_Click(object sender, RoutedEventArgs e)
         {
-            //if (jeVyhledavaniAktivni == true)
-            //{
-            //    MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
-            //        MessageBoxButton.OK, MessageBoxImage.Information);
-            //    return;
-            //}
+            if (jeVyhledavaniAktivni == true)
+            {
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
 
-            //Trener vybranyTrener = DgTreneri.SelectedItem as Trener;
-            //if (vybranyTrener == null)
-            //{
-            //    MessageBox.Show("Prosím vyberte trenéra, kterého chcete editovat!", "Chyba",
-            //        MessageBoxButton.OK, MessageBoxImage.Warning);
-            //    return;
-            //}
+            Kontrakt vybranyKontrakt = DgKontrakty.SelectedItem as Kontrakt;
+            if (vybranyKontrakt == null)
+            {
+                MessageBox.Show("Prosím vyberte kontrakt, který chcete editovat!", "Chyba", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            //var dialog = new EditujTrenera(vybranyTrener);
-            //bool? result = dialog.ShowDialog();
+            var dialog = new EditujKontrakt(vybranyKontrakt);
+            bool? result = dialog.ShowDialog();
 
-            //if (result == true)
-            //{
+            if (result == true)
+            {
 
-            //    DgTreneri.Items.Refresh();
-            //}
+                DgKontrakty.Items.Refresh();
+            }
         }
 
         /// <summary>
@@ -187,25 +185,25 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnNajdi_Click(object sender, RoutedEventArgs e)
         {
-            //NajdiTrenera najdiTrenera = new NajdiTrenera(TreneriData);
-            //bool? vysledekDialogu = najdiTrenera.ShowDialog();
+            NajdiKontrakt najdiKontrakt = new NajdiKontrakt(KontraktyData);
+            bool? vysledekDialogu = najdiKontrakt.ShowDialog();
 
-            //if (vysledekDialogu == true)
-            //{
-            //    if (najdiTrenera.FiltrovaniTreneri == null || najdiTrenera.FiltrovaniTreneri.Count == 0)
-            //    {
-            //        MessageBox.Show("Nenašly se žádné záznamy se zadanými filtry", "Not found", MessageBoxButton.OK, MessageBoxImage.Information);
-            //        return;
-            //    }
+            if (vysledekDialogu == true)
+            {
+                if (najdiKontrakt.FiltrovaniKontrakty == null || najdiKontrakt.FiltrovaniKontrakty.Count == 0)
+                {
+                    MessageBox.Show("Nenašly se žádné záznamy se zadanými filtry", "Not found", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
 
-            //    MessageBox.Show(
-            //        "Pokud je vyhledávací mód aktivní nemůžete přidávat ani odebírat vyhledaná data " +
-            //        "Pro ukončení vyhledávacího módu stiskněte klávesy CTRL + X",
-            //        "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(
+                    "Pokud je vyhledávací mód aktivní nemůžete přidávat ani odebírat vyhledaná data " +
+                    "Pro ukončení vyhledávacího módu stiskněte klávesy CTRL + X",
+                    "Info", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            //    DgTreneri.ItemsSource = new ObservableCollection<Trener>(najdiTrenera.FiltrovaniTreneri);
-            //    jeVyhledavaniAktivni = true;
-            //}
+                DgKontrakty.ItemsSource = new ObservableCollection<Kontrakt>(najdiKontrakt.FiltrovaniKontrakty);
+                jeVyhledavaniAktivni = true;
+            }
         }
 
         /// <summary>
@@ -264,7 +262,8 @@ namespace InformacniSystemKlub.Windows
         {
             if (jeVyhledavaniAktivni == true)
             {
-                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
@@ -281,11 +280,17 @@ namespace InformacniSystemKlub.Windows
                 var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
                 DatabazeKontrakty.PridejKontrakt(conn, pridanyKontrakt);
 
+                MessageBox.Show("Kontrakt byl úspěšně přidán", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
+
                 NactiKontrakty();
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex.Message.Contains("ORA-20022") || ex.Message.Contains("ORA-20026"))
             {
-                MessageBox.Show($"Chyba při přidání kontraktu: {ex.Message}");
+                MessageBox.Show("Tento hráč už má kontrakt!", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Nepodařilo se přidat kontrakt", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

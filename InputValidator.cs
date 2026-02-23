@@ -407,7 +407,6 @@ namespace InformacniSystemKlub
 
         public static long ValidujVystupniKlauzuliLong(string klauzuleText, string nazevPole = "Výstupní klauzule")
         {
-            // NULL v DB povolen -> prázdné vrátíme jako 0 (ty pak dáváš DBNull.Value)
             if (string.IsNullOrWhiteSpace(klauzuleText))
             {
                 return 0;

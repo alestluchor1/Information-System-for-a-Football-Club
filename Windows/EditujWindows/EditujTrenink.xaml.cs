@@ -123,12 +123,6 @@ namespace InformacniSystemKlub.Windows.EditujWindows
             }
         }
 
-        private void BtnZrusit_Click(object sender, RoutedEventArgs e)
-        {
-            DialogResult = false;
-            this.Close();
-        }
-
         /// <summary>
         /// Nastaví zvolený režim (dark/light)
         /// </summary>

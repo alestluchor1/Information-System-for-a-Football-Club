@@ -270,19 +270,12 @@
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
-                        <!-- 0: Hráč -->
                         <RowDefinition Height="Auto"/>
-                        <!-- 1: Datum od -->
                         <RowDefinition Height="Auto"/>
-                        <!-- 2: Datum do -->
                         <RowDefinition Height="Auto"/>
-                        <!-- 3: Plat -->
                         <RowDefinition Height="Auto"/>
-                        <!-- 4: Tel. na agenta -->
                         <RowDefinition Height="Auto"/>
-                        <!-- 5: Výstupní klauzule -->
                         <RowDefinition Height="Auto"/>
-                        <!-- 6: Tlačítka -->
                     </Grid.RowDefinitions>
 
                     <!-- 0: Hráč -->
@@ -323,7 +316,7 @@
                              MaxLength="12"
                              Style="{DynamicResource Input}"/>
 
-                    <!-- 5: Výstupní klauzule (číslo, může být prázdné/0) -->
+                    <!-- 5: Výstupní klauzule (číslo, může být prázdné) -->
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Výstupní klauzule" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtVystupniKlauzule"
                              Grid.Row="5" Grid.Column="1"

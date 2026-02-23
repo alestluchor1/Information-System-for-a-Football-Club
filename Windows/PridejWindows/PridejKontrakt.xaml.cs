@@ -51,9 +51,6 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                 }
 
                 cbHrac.ItemsSource = HraciOkno.HraciData;
-
-                // Ty máš v Hrac malé názvy (jmeno/prijmeni), DisplayMemberPath musí sedět:
-                // Pokud máš property "prijmeni", nech takhle. Pokud máš "Prijmeni", změň na "Prijmeni".
                 cbHrac.DisplayMemberPath = "prijmeni";
 
                 if (cbHrac.Items.Count > 0)
@@ -98,7 +95,7 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                 novyKontrakt.TelCisloNaAgenta = telAgenta;
                 novyKontrakt.VystupniKlauzule = vystupniKlauzule;
 
-                MessageBox.Show("Kontrakt byl úspěšně přidán", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
+               // MessageBox.Show("Kontrakt byl úspěšně přidán", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 DialogResult = true;
                 this.Close();
