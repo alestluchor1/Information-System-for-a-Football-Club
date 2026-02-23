@@ -33,6 +33,7 @@ namespace InformacniSystemKlub.Windows.EditujWindows
             dpDatumOd.SelectedDate = editovanyKontrakt.DatumZacatku.ToDateTime(TimeOnly.MinValue);
             dpDatumDo.SelectedDate = editovanyKontrakt.DatumKonce.ToDateTime(TimeOnly.MinValue);
 
+            TxtTelAgenta.Text = editovanyKontrakt.TelCisloNaAgenta.ToString();
             TxtPlat.Text = editovanyKontrakt.Plat.ToString();
 
             if (editovanyKontrakt.VystupniKlauzule == 0)
