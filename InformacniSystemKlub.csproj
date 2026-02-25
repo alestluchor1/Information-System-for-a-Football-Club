@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="Images\bigPlayer.png" />
+    <None Remove="Images\card.png" />
     <None Remove="Images\coach.png" />
     <None Remove="Images\contract.png" />
     <None Remove="Images\training.png" />
@@ -23,6 +24,9 @@
 
   <ItemGroup>
     <Resource Include="Images\bigPlayer.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\card.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\coach.png">

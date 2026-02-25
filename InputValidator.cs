@@ -431,5 +431,32 @@ namespace InformacniSystemKlub
 
             return klauzule;
         }
+
+        public static DateTime ValidujDatumUkonceniOpatreni(DateTime? datum)
+        {
+            if (datum == null)
+            {
+                throw new Exception("Datum ukončení nesmí být prázdné!");
+            }
+
+            return datum.Value.Date;
+        }
+
+        public static string ValidujDuvodOpatreni(string duvod)
+        {
+            if (string.IsNullOrWhiteSpace(duvod))
+            {
+                throw new Exception("Důvod nesmí být prázdný!");
+            }
+
+            duvod = duvod.Trim();
+
+            if (duvod.Length > 50)
+            {
+                throw new Exception("Může být zadáno maximálně 50 znaků!");
+            }
+
+            return duvod;
+        }
     }
 }

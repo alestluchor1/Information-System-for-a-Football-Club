@@ -315,7 +315,8 @@
                             Tag="🟥"
                             ToolTip="Karty, tresty a poznámky k hráčům"
                             Style="{StaticResource TileButtonSimpleStyle}"
-                            BorderBrush="#EF4444"/>
+                            BorderBrush="#EF4444"
+                            Click="BtnOpatreniClick"/>
                 </UniformGrid>
 
                 <!-- 2. řada tlačítek -->

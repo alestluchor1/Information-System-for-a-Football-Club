@@ -76,6 +76,13 @@ namespace InformacniSystemKlub.Windows
 
         }
 
+        private void BtnOpatreniClick(object sender, RoutedEventArgs e)
+        {
+            OpatreniOkno opatreniOkno = new OpatreniOkno();
+            opatreniOkno.ShowDialog();
+
+        }
+
         private void ApplyTheme(bool darkMode)
         {
             if (darkMode == true)
