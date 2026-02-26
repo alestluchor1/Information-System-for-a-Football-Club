@@ -94,8 +94,6 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                 novyOpatreni.DatumUkonceniOpatreni = datumUkonceni;
                 novyOpatreni.Duvod = duvod;
 
-                MessageBox.Show("Opatření bylo úspěšně přidáno", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
-
                 DialogResult = true;
                 this.Close();
             }

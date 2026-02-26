@@ -128,33 +128,32 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Obsluha tlačítka Edituj pro úpravu údajů tréninku
+        /// Obsluha tlačítka Edituj pro úpravu údajů opatření
         /// </summary>
         private void BtnEdituj_Click(object sender, RoutedEventArgs e)
         {
-            //if (jeVyhledavaniAktivni == true)
-            //{
-            //    MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
-            //        MessageBoxButton.OK, MessageBoxImage.Information);
-            //    return;
-            //}
+            if (jeVyhledavaniAktivni == true)
+            {
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
 
-            //Trenink vybranyTrenink = DgTreninky.SelectedItem as Trenink;
-            //if (vybranyTrenink == null)
-            //{
-            //    MessageBox.Show("Prosím vyberte trénink, který chcete editovat!", "Chyba",
-            //        MessageBoxButton.OK, MessageBoxImage.Warning);
-            //    return;
-            //}
+            DisciplinarniOpatreni vybranyOpatreni = DgOpatreni.SelectedItem as DisciplinarniOpatreni;
+            if (vybranyOpatreni == null)
+            {
+                MessageBox.Show("Prosím vyberte disciplinární opatření, který chcete editovat!", "Chyba", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            //var dialog = new EditujTrenink(vybranyTrenink);
-            //bool? result = dialog.ShowDialog();
+            var dialog = new EditujOpatreni(vybranyOpatreni);
+            bool? result = dialog.ShowDialog();
 
-            //if (result == true)
-            //{
+            if (result == true)
+            {
 
-            //    DgTreninky.Items.Refresh();
-            //}
+                DgOpatreni.Items.Refresh();
+            }
         }
 
         /// <summary>
@@ -234,35 +233,50 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Otevře dialog pro přidání opatření, uloží nový opatření do databáze a obnoví seznam
+        /// Otevře dialog pro přidání opatření, uloží nové opatření do databáze a obnoví seznam
         /// </summary>
         private void BtnPridat_Click(object sender, RoutedEventArgs e)
         {
-            if (jeVyhledavaniAktivni == true)
-            {
-                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-
-            DisciplinarniOpatreni pridanyOpatreni = new DisciplinarniOpatreni();
-            var okno = new PridejOpatreni(pridanyOpatreni);
-
-            if (okno.ShowDialog() != true)
-            {
-                return;
-            }
-
             try
             {
+                if (jeVyhledavaniAktivni == true)
+                {
+                    MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
+                DisciplinarniOpatreni pridanyOpatreni = new DisciplinarniOpatreni();
+                var okno = new PridejOpatreni(pridanyOpatreni);
+
+                if (okno.ShowDialog() != true)
+                {
+                    return;
+                }
+
+                foreach (var opatreni in DisciplinarniOpatreniData)
+                {
+                    if (opatreni.IdHrac == pridanyOpatreni.IdHrac)
+                    {
+                        MessageBox.Show("Tento hráč už má opatření!", "Upozornění", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
+                }
+
                 var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
                 DatabazeOpatreni.PridejOpatreni(conn, pridanyOpatreni);
 
                 NactiDisciplinarniOpatreni();
+
+                MessageBox.Show("Opatření bylo úspěšně přidáno", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (OracleException ex)
+            {
+                MessageBox.Show("Chyba databáze při přidání opatření:\n" + ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Chyba při přidání tréninku: {ex.Message}");
+                MessageBox.Show("Chyba při přidání opatření:\n" + ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -302,8 +316,6 @@ namespace InformacniSystemKlub.Windows
                 DisciplinarniOpatreniData.Remove(vybranyOpatreni);
 
                 MessageBox.Show("Disciplinární opatření bylo smazáno", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-
-
             }
             catch (Exception ex)
             {
