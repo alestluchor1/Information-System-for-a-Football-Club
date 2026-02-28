@@ -20,6 +20,16 @@ namespace InformacniSystemKlub
             @"^[A-Za-zÁÉĚÍÓÚŮÝŽŠČŘĎŤŇáéěíóúůýžščřďťň\s\-]+$"
         );
 
+        private static readonly Regex RegexNazevTymu = new Regex(
+            @"^[A-Za-zÁÉĚÍÓÚŮÝŽŠČŘĎŤŇáéěíóúůýžščřďťň0-9\s\.\-]+$",
+        RegexOptions.Compiled
+        );
+
+        private static readonly Regex RegexVysledekZapasu = new Regex(
+            @"^\d{1,2}:\d{1,2}$",
+            RegexOptions.Compiled
+        );
+
         public static void ValidujJmeno(string jmeno)
         {
             if (string.IsNullOrWhiteSpace(jmeno))
@@ -457,6 +467,141 @@ namespace InformacniSystemKlub
             }
 
             return duvod;
+        }
+
+        // Zápasy
+
+        public static DateTime ValidujDatumZapasu(DateTime? datum, string nazevPole = "Datum zápasu")
+        {
+            if (datum == null)
+            {
+                throw new Exception($"{nazevPole} nesmí být prázdné!");
+            }
+
+            return datum.Value.Date;
+        }
+
+        public static string ValidujNazevTymu(string tym, string nazevPole = "Název týmu")
+        {
+            if (string.IsNullOrWhiteSpace(tym))
+            {
+                throw new Exception($"{nazevPole} nesmí být prázdný!");
+            }
+
+            tym = tym.Trim();
+
+            if (tym.Length > 30)
+            {
+                throw new Exception($"{nazevPole} může mít maximálně 30 znaků!");
+            }
+
+            if (!RegexNazevTymu.IsMatch(tym))
+            {
+                throw new Exception($"{nazevPole} může obsahovat pouze písmena, číslice, mezery, tečku a pomlčku!");
+            }
+
+            return tym;
+        }
+
+        public static void ValidujRozdilneTymy(string domaciTym, string hosteTym)
+        {
+            if (string.IsNullOrWhiteSpace(domaciTym) || string.IsNullOrWhiteSpace(hosteTym))
+            {
+                throw new Exception("Domácí tým i hosté musí být vyplněni!");
+            }
+
+            if (domaciTym.Trim().Equals(hosteTym.Trim(), StringComparison.OrdinalIgnoreCase))
+            {
+                throw new Exception("Domácí tým a hosté nemohou být stejní!");
+            }
+        }
+
+        public static string ValidujTypSouteze(object selectedItem)
+        {
+            ComboBoxItem item = selectedItem as ComboBoxItem;
+            if (item == null || item.Content == null)
+            {
+                throw new Exception("Vyber typ soutěže!");
+            }
+
+            string typSouteze = item.Content.ToString().Trim();
+
+            if (typSouteze != "LIGA" &&
+                typSouteze != "POHÁR" &&
+                typSouteze != "DIVIZE" &&
+                typSouteze != "KRAJ" &&
+                typSouteze != "OKRES")
+            {
+                throw new Exception("Neplatný typ soutěže!");
+            }
+
+            return typSouteze;
+        }
+
+        public static string ValidujStavZapasu(object selectedItem)
+        {
+            ComboBoxItem item = selectedItem as ComboBoxItem;
+            if (item == null || item.Content == null)
+            {
+                throw new Exception("Vyber stav zápasu!");
+            }
+
+            string stavZapasu = item.Content.ToString().Trim();
+
+            if (stavZapasu != "ODEHRÁNO" && stavZapasu != "BUDE SE HRÁT")
+            {
+                throw new Exception("Neplatný stav zápasu!");
+            }
+
+            return stavZapasu;
+        }
+
+        public static string? ValidujVysledekZapasu(string vysledek)
+        {
+  
+            if (string.IsNullOrWhiteSpace(vysledek))
+            {
+                throw new Exception("Výsledek nesmí být prázdný, pokud je zápas odehrán!");
+            }
+
+            vysledek = vysledek.Trim();
+
+            if (vysledek.Length > 5)
+            {
+                throw new Exception("Výsledek může mít maximálně 5 znaků!");
+            }
+
+            if (!RegexVysledekZapasu.IsMatch(vysledek))
+            {
+                throw new Exception("Výsledek musí být ve formátu např. 2:1 nebo 10:0!");
+            }
+
+            return vysledek;
+        }
+
+        public static int? ValidujPocetKaretZapasu(string hodnotaText, string stavZapasu, string nazevPole)
+        {
+            if (stavZapasu == "BUDE SE HRÁT")
+            {
+                return null;
+            }
+
+            if (string.IsNullOrWhiteSpace(hodnotaText))
+            {
+                throw new Exception($"{nazevPole} nesmí být prázdný!");
+            }
+
+            if (!int.TryParse(hodnotaText.Trim(), out int hodnota))
+            {
+                throw new Exception($"{nazevPole} musí být celé číslo!");
+            }
+
+            if (hodnota < 0)
+            {
+                throw new Exception($"{nazevPole} nesmí být záporný!");
+            }
+
+            return hodnota;
         }
     }
 }

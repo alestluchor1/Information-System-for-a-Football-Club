@@ -264,32 +264,32 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnPridat_Click(object sender, RoutedEventArgs e)
         {
-            //if (jeVyhledavaniAktivni == true)
-            //{
-            //    MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
-            //        MessageBoxButton.OK, MessageBoxImage.Information);
-            //    return;
-            //}
+            if (jeVyhledavaniAktivni == true)
+            {
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
 
-            //Zapas pridanyZapas = new Zapas();
-            //var okno = new PridejZapas(pridanyZapas);
+            Zapas pridanyZapas = new Zapas();
+            var okno = new PridejZapas(pridanyZapas);
 
-            //if (okno.ShowDialog() != true)
-            //{
-            //    return;
-            //}
+            if (okno.ShowDialog() != true)
+            {
+                return;
+            }
 
-            //try
-            //{
-            //    var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
-            //    DatabazeZapasy.PridejZapas(conn, pridanyZapas);
+            try
+            {
+                var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
+                DatabazeZapasy.PridejZapas(conn, pridanyZapas);
 
-            //    NactiZapasy();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Chyba při přidání zápasu: {ex.Message}");
-            //}
+                NactiZapasy();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Chyba při přidání zápasu: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -297,44 +297,44 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnOdebrat_Click(object sender, RoutedEventArgs e)
         {
-            //if (jeVyhledavaniAktivni == true)
-            //{
-            //    MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
-            //        MessageBoxButton.OK, MessageBoxImage.Information);
-            //    return;
-            //}
+            if (jeVyhledavaniAktivni == true)
+            {
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
 
-            //Zapas vybranyZapas = (Zapas)DgZapasy.SelectedItem;
+            Zapas vybranyZapas = (Zapas)DgZapasy.SelectedItem;
 
-            //if (vybranyZapas == null)
-            //{
-            //    MessageBox.Show("Vyberte zápas !", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //    return;
-            //}
+            if (vybranyZapas == null)
+            {
+                MessageBox.Show("Vyberte zápas !", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            //var result = MessageBox.Show("Opravdu chcete smazat vybraný zápas?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            var result = MessageBox.Show("Opravdu chcete smazat vybraný zápas?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
-            //if (result == MessageBoxResult.No)
-            //{
-            //    return;
-            //}
+            if (result == MessageBoxResult.No)
+            {
+                return;
+            }
 
-            //try
-            //{
-            //    var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
+            try
+            {
+                var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
 
-            //    DatabazeZapasy.OdeberZapas(conn, vybranyZapas);
+                DatabazeZapasy.OdeberZapas(conn, vybranyZapas);
 
-            //    ZapasyData.Remove(vybranyZapas);
+                ZapasyData.Remove(vybranyZapas);
 
-            //    MessageBox.Show("Zápas byl smazán", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Zápas byl smazán", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
 
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Chyba při mazání zápasu: {ex.Message}");
-            //}
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Chyba při mazání zápasu: {ex.Message}");
+            }
         }
 
         /// <summary>

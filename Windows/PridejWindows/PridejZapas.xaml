@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InformacniSystemKlub.Windows.PridejWindows"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Přidání zápasu"
         WindowStartupLocation="CenterScreen"
@@ -81,6 +82,16 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Margin" Value="0,6,0,6"/>
             <Setter Property="Padding" Value="8,0"/>
+        </Style>
+
+        <Style x:Key="Spin" TargetType="{x:Type xctk:IntegerUpDown}">
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="4,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
         </Style>
 
         <Style x:Key="ComboTheme" TargetType="ComboBox">
@@ -236,6 +247,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <!-- Levý panel -->
         <Border Grid.Column="0" Background="{DynamicResource SidebarGradient}">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="24">
                 <Image Source="/Images/match.png" Width="150" Height="150" Margin="0,0,0,24"/>
@@ -254,6 +266,7 @@
             </StackPanel>
         </Border>
 
+        <!-- Pravý panel -->
         <Border Grid.Column="1"
                 Background="{DynamicResource Surface}"
                 CornerRadius="24"
@@ -339,18 +352,22 @@
                              Style="{DynamicResource Input}"/>
 
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Počet žlutých karet" Style="{DynamicResource Lbl}"/>
-                    <TextBox x:Name="TxtPocetZlutychKaret"
-                             Grid.Row="6"
-                             Grid.Column="1"
-                             MaxLength="2"
-                             Style="{DynamicResource Input}"/>
+                    <Border Grid.Row="6" Grid.Column="1" Style="{DynamicResource InputHost}">
+                        <xctk:IntegerUpDown x:Name="iudPocetZlutychKaret"
+                                            Style="{DynamicResource Spin}"
+                                            Value="0"
+                                            Minimum="0"
+                                            Maximum="50"/>
+                    </Border>
 
                     <TextBlock Grid.Row="7" Grid.Column="0" Text="Počet červených karet" Style="{DynamicResource Lbl}"/>
-                    <TextBox x:Name="TxtPocetCervenychKaret"
-                             Grid.Row="7"
-                             Grid.Column="1"
-                             MaxLength="2"
-                             Style="{DynamicResource Input}"/>
+                    <Border Grid.Row="7" Grid.Column="1" Style="{DynamicResource InputHost}">
+                        <xctk:IntegerUpDown x:Name="iudPocetCervenychKaret"
+                                            Style="{DynamicResource Spin}"
+                                            Value="0"
+                                            Minimum="0"
+                                            Maximum="20"/>
+                    </Border>
 
                     <Button Grid.Row="8" Grid.Column="1"
                             Content="Přidat"

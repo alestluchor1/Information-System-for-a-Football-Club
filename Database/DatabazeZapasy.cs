@@ -23,6 +23,9 @@ namespace InformacniSystemKlub.Database
                     cmd.Parameters.Add("v_id_typ_souteze", OracleDbType.Int32).Value = (int)zapas.IdTypSouteze;
                     cmd.Parameters.Add("v_domaci_tym", OracleDbType.Varchar2).Value = zapas.DomaciTym;
                     cmd.Parameters.Add("v_hoste_tym", OracleDbType.Varchar2).Value = zapas.HosteTym;
+                    cmd.Parameters.Add("v_vysledek ", OracleDbType.Varchar2).Value = zapas.Vysledek;
+                    cmd.Parameters.Add("v_pocet_zlutych_karet", OracleDbType.Int32).Value = zapas.PocetZlutychKaret;
+                    cmd.Parameters.Add("v_pocet_cervenych_karet", OracleDbType.Int32).Value = zapas.PocetCervenychKaret;
 
                     cmd.ExecuteNonQuery();
                 }
@@ -71,6 +74,9 @@ namespace InformacniSystemKlub.Database
                     cmd.Parameters.Add("v_id_typ_souteze", OracleDbType.Int32).Value = (int)zapas.IdTypSouteze;
                     cmd.Parameters.Add("v_domaci_tym", OracleDbType.Varchar2).Value = zapas.DomaciTym;
                     cmd.Parameters.Add("v_hoste_tym", OracleDbType.Varchar2).Value = zapas.HosteTym;
+                    cmd.Parameters.Add("v_vysledek ", OracleDbType.Varchar2).Value = zapas.Vysledek;
+                    cmd.Parameters.Add("v_pocet_zlutych_karet", OracleDbType.Int32).Value = zapas.PocetZlutychKaret;
+                    cmd.Parameters.Add("v_pocet_cervenych_karet", OracleDbType.Int32).Value = zapas.PocetCervenychKaret;
 
                     cmd.ExecuteNonQuery();
                 }
