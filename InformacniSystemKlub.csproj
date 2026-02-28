@@ -13,6 +13,7 @@
     <None Remove="Images\card.png" />
     <None Remove="Images\coach.png" />
     <None Remove="Images\contract.png" />
+    <None Remove="Images\match.png" />
     <None Remove="Images\training.png" />
   </ItemGroup>
 
@@ -33,6 +34,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\contract.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\match.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\training.png">

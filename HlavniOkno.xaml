@@ -325,13 +325,15 @@
                             Tag="⚽"
                             ToolTip="Rozpis, nominace a výsledky"
                             Style="{StaticResource TileButtonSimpleStyle}"
-                            BorderBrush="#F97316"/>
+                            BorderBrush="#F97316"
+                            Click="BtnZapasy_Click"/>
 
                     <Button Content="Sportovní vybavení"
                             Tag="📦"
                             ToolTip="Evidence a správa klubového vybavení"
                             Style="{StaticResource TileButtonSimpleStyle}"
-                            BorderBrush="#06B6D4"/>
+                            BorderBrush="#06B6D4"
+                            Click="BtnSestava_Click"/>
 
                     <Button Content="Smlouvy"
                             Tag="📝"

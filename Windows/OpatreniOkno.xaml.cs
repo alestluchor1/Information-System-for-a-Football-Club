@@ -157,30 +157,30 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Otevře dialog pro vyhledávání tréninků
+        /// Otevře dialog pro vyhledávání opatření
         /// Aktivuje vyhledávací mód, dokud není režim ukončen pomocí CTRL+X.
         /// </summary>
         private void BtnNajdi_Click(object sender, RoutedEventArgs e)
         {
-            //NajdiTrenink najdiTrenink = new NajdiTrenink(TreninkyData);
-            //bool? vysledekDialogu = najdiTrenink.ShowDialog();
+            NajdiOpatreni najdiOpatreni = new NajdiOpatreni(DisciplinarniOpatreniData);
+            bool? vysledekDialogu = najdiOpatreni.ShowDialog();
 
-            //if (vysledekDialogu == true)
-            //{
-            //    if (najdiTrenink.FiltrovaniTreninky == null || najdiTrenink.FiltrovaniTreninky.Count == 0)
-            //    {
-            //        MessageBox.Show("Nenašly se žádné záznamy se zadanými filtry", "Not found", MessageBoxButton.OK, MessageBoxImage.Information);
-            //        return;
-            //    }
+            if (vysledekDialogu == true)
+            {
+                if (najdiOpatreni.FiltrovaniDisciplinarniOpatreni == null || najdiOpatreni.FiltrovaniDisciplinarniOpatreni.Count == 0)
+                {
+                    MessageBox.Show("Nenašly se žádné záznamy se zadanými filtry", "Not found", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
 
-            //    MessageBox.Show(
-            //        "Pokud je vyhledávací mód aktivní nemůžete přidávat ani odebírat vyhledaná data " +
-            //        "Pro ukončení vyhledávacího módu stiskněte klávesy CTRL + X",
-            //        "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(
+                    "Pokud je vyhledávací mód aktivní nemůžete přidávat ani odebírat vyhledaná data " +
+                    "Pro ukončení vyhledávacího módu stiskněte klávesy CTRL + X",
+                    "Info", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            //    DgTreninky.ItemsSource = new ObservableCollection<Trenink>(najdiTrenink.FiltrovaniTreninky);
-            //    jeVyhledavaniAktivni = true;
-            //}
+                DgOpatreni.ItemsSource = new ObservableCollection<DisciplinarniOpatreni>(najdiOpatreni.FiltrovaniDisciplinarniOpatreni);
+                jeVyhledavaniAktivni = true;
+            }
         }
 
         /// <summary>

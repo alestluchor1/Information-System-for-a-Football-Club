@@ -69,6 +69,17 @@ namespace InformacniSystemKlub.Windows
 
         }
 
+        private void BtnZapasy_Click(object sender, RoutedEventArgs e)
+        {
+            ZapasyOkno zapasyOkno = new ZapasyOkno();
+            zapasyOkno.ShowDialog();
+        }
+
+        private void BtnSestava_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
         private void BtnKontraktyClick(object sender, RoutedEventArgs e)
         {
             KontraktyOkno kontraktyOkno = new KontraktyOkno();

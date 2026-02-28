@@ -6,7 +6,7 @@ using System.Data;
 
 namespace InformacniSystemKlub.Database
 {
-    public class DatabazeHraci
+    public static class DatabazeHraci
     {
 
         /// <summary>
