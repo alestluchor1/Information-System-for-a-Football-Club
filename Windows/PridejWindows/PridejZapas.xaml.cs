@@ -82,8 +82,7 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                 {
                     if (novyZapas.Datum < DateTime.Today)
                     {
-                        MessageBox.Show(
-                            "Nelze přidat neodehraný zápas s minulým datem!", "Warning", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Nelze přidat neodehraný zápas s minulým datem!", "Warning", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                     else
