@@ -189,25 +189,25 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnNajdi_Click(object sender, RoutedEventArgs e)
         {
-            //NajdiZapas najdiZapas = new NajdiZapas(ZapasyData);
-            //bool? vysledekDialogu = najdiZapas.ShowDialog();
+            NajdiZapas najdiZapas = new NajdiZapas(ZapasyData);
+            bool? vysledekDialogu = najdiZapas.ShowDialog();
 
-            //if (vysledekDialogu == true)
-            //{
-            //    if (najdiZapas.FiltrovaniZapasy == null || najdiZapas.FiltrovaniZapasy.Count == 0)
-            //    {
-            //        MessageBox.Show("Nenašly se žádné záznamy se zadanými filtry", "Not found", MessageBoxButton.OK, MessageBoxImage.Information);
-            //        return;
-            //    }
+            if (vysledekDialogu == true)
+            {
+                if (najdiZapas.FiltrovaniZapasy == null || najdiZapas.FiltrovaniZapasy.Count == 0)
+                {
+                    MessageBox.Show("Nenašly se žádné záznamy se zadanými filtry", "Not found", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
 
-            //    MessageBox.Show(
-            //        "Pokud je vyhledávací mód aktivní nemůžete přidávat ani odebírat vyhledaná data " +
-            //        "Pro ukončení vyhledávacího módu stiskněte klávesy CTRL + X",
-            //        "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(
+                    "Pokud je vyhledávací mód aktivní nemůžete přidávat ani odebírat vyhledaná data " +
+                    "Pro ukončení vyhledávacího módu stiskněte klávesy CTRL + X",
+                    "Info", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            //    DgZapasy.ItemsSource = new ObservableCollection<Trenink>(najdiZapas.FiltrovaniZapasy);
-            //    jeVyhledavaniAktivni = true;
-            //}
+                DgZapasy.ItemsSource = new ObservableCollection<Zapas>(najdiZapas.FiltrovaniZapasy);
+                jeVyhledavaniAktivni = true;
+            }
         }
 
         /// <summary>
