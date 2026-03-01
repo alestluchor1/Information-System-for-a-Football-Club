@@ -208,6 +208,81 @@
             </Setter>
         </Style>
 
+        <!-- DatePickerTextBox -->
+        <Style x:Key="DatePickerTextBoxStyle" TargetType="{x:Type DatePickerTextBox}">
+            <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
+            <Setter Property="Background" Value="{DynamicResource InputBg}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="6,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DatePickerTextBox}">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="Transparent"
+                                BorderThickness="0">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="0"
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- DatePicker -->
+        <Style x:Key="DatePickerTheme" TargetType="{x:Type DatePicker}">
+            <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
+            <Setter Property="Background" Value="{DynamicResource InputBg}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DatePicker}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="32"/>
+                            </Grid.ColumnDefinitions>
+
+                            <DatePickerTextBox x:Name="PART_TextBox"
+                                               Style="{StaticResource DatePickerTextBoxStyle}"
+                                               Background="{TemplateBinding Background}"
+                                               Foreground="{TemplateBinding Foreground}"/>
+
+                            <Button Grid.Column="1"
+                                    x:Name="PART_Button"
+                                    Focusable="False"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0">
+                                <Path Data="M 0 0 L 6 6 L 12 0 Z"
+                                      Fill="{DynamicResource TextMain}"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                            </Button>
+
+                            <Popup x:Name="PART_Popup"
+                                   Placement="Bottom"
+                                   AllowsTransparency="True"
+                                   IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}">
+                                <Border Background="{DynamicResource Surface}"
+                                        BorderBrush="{DynamicResource BorderSoft}"
+                                        BorderThickness="1"
+                                        CornerRadius="12"
+                                        Padding="8">
+                                    <Calendar Foreground="{DynamicResource TextMain}"
+                                              Background="{DynamicResource Surface}"/>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="BtnPrimary" TargetType="Button">
             <Setter Property="Height" Value="42"/>
             <Setter Property="Width" Value="140"/>
@@ -298,14 +373,18 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
+                    <!-- 0 Datum zápasu -->
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Datum zápasu" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="0" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <DatePicker x:Name="DpDatum"
+                                    Style="{DynamicResource DatePickerTheme}"
+                                    Background="{DynamicResource InputBg}"
+                                    Foreground="{DynamicResource TextMain}"
                                     BorderThickness="0"
-                                    Background="Transparent"
                                     VerticalContentAlignment="Center"/>
                     </Border>
 
+                    <!-- 1 Typ soutěže -->
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Typ soutěže" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="1" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <ComboBox x:Name="CbTypSouteze"
@@ -319,6 +398,7 @@
                         </ComboBox>
                     </Border>
 
+                    <!-- 2 Stav zápasu -->
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Stav zápasu" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="2" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <ComboBox x:Name="CbStavZapasu"
@@ -330,6 +410,7 @@
                         </ComboBox>
                     </Border>
 
+                    <!-- 3 Domácí tým -->
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Domácí tým" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtDomaciTym"
                              Grid.Row="3"
@@ -337,6 +418,7 @@
                              MaxLength="30"
                              Style="{DynamicResource Input}"/>
 
+                    <!-- 4 Hosté tým -->
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Hosté" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtHosteTym"
                              Grid.Row="4"
@@ -344,6 +426,7 @@
                              MaxLength="30"
                              Style="{DynamicResource Input}"/>
 
+                    <!-- 5 Výsledek -->
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Výsledek" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtVysledek"
                              Grid.Row="5"
@@ -351,6 +434,7 @@
                              MaxLength="5"
                              Style="{DynamicResource Input}"/>
 
+                    <!-- 6 Žluté karty-->
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Počet žlutých karet" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="6" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <xctk:IntegerUpDown x:Name="iudPocetZlutychKaret"
@@ -360,6 +444,7 @@
                                             Maximum="99"/>
                     </Border>
 
+                    <!-- 7 Červené karty -->
                     <TextBlock Grid.Row="7" Grid.Column="0" Text="Počet červených karet" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="7" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <xctk:IntegerUpDown x:Name="iudPocetCervenychKaret"
@@ -369,6 +454,7 @@
                                             Maximum="99"/>
                     </Border>
 
+                    <!-- 8 Tlačítko -->
                     <Button Grid.Row="8" Grid.Column="1"
                             Content="Přidat"
                             Style="{DynamicResource BtnPrimary}"
