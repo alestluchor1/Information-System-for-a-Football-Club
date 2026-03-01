@@ -159,28 +159,28 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnEdituj_Click(object sender, RoutedEventArgs e)
         {
-            //if (jeVyhledavaniAktivni == true)
-            //{
-            //    MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
-            //        MessageBoxButton.OK, MessageBoxImage.Information);
-            //    return;
-            //}
+            if (jeVyhledavaniAktivni == true)
+            {
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
 
-            //Zapas vybranyZapas= DgZapasy.SelectedItem as Zapas;
-            //if (vybranyZapas == null)
-            //{
-            //    MessageBox.Show("Prosím vyberte zápas, který chcete editovat!", "Chyba", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //    return;
-            //}
+            Zapas vybranyZapas = DgZapasy.SelectedItem as Zapas;
+            if (vybranyZapas == null)
+            {
+                MessageBox.Show("Prosím vyberte zápas, který chcete editovat!", "Chyba", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            //var dialog = new EditujZapas(vybranyZapas);
-            //bool? result = dialog.ShowDialog();
+            var dialog = new EditujZapas(vybranyZapas);
+            bool? result = dialog.ShowDialog();
 
-            //if (result == true)
-            //{
+            if (result == true)
+            {
 
-            //    DgZapasy.Items.Refresh();
-            //}
+                DgZapasy.Items.Refresh();
+            }
         }
 
         /// <summary>

@@ -357,7 +357,7 @@
                                             Style="{DynamicResource Spin}"
                                             Value="0"
                                             Minimum="0"
-                                            Maximum="50"/>
+                                            Maximum="99"/>
                     </Border>
 
                     <TextBlock Grid.Row="7" Grid.Column="0" Text="Počet červených karet" Style="{DynamicResource Lbl}"/>
@@ -366,7 +366,7 @@
                                             Style="{DynamicResource Spin}"
                                             Value="0"
                                             Minimum="0"
-                                            Maximum="20"/>
+                                            Maximum="99"/>
                     </Border>
 
                     <Button Grid.Row="8" Grid.Column="1"

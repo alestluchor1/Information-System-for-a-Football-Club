@@ -573,7 +573,7 @@ namespace InformacniSystemKlub
 
             if (!RegexVysledekZapasu.IsMatch(vysledek))
             {
-                throw new Exception("Výsledek musí být ve formátu např. 2:1 nebo 10:0!");
+                throw new Exception("Výsledek musí být ve formátu např. 2:1 !!");
             }
 
             return vysledek;
