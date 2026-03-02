@@ -301,6 +301,8 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <!-- 0 Hráč -->
@@ -327,8 +329,26 @@
                              MaxLength="50"
                              Style="{DynamicResource Input}"/>
 
-                    <!-- 3 Tlačítko -->
-                    <StackPanel Grid.Row="4" Grid.Column="1"
+                    <!-- 3 Bylo v zápase -->
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Bylo v zápase" Style="{DynamicResource Lbl}"/>
+                    <CheckBox x:Name="chkByloVZapase"
+                              Grid.Row="3" Grid.Column="1"
+                              VerticalAlignment="Center"
+                              Margin="0,6,0,6"
+                              Checked="chkByloVZapase_Checked"
+                              Unchecked="chkByloVZapase_Unchecked"/>
+
+                    <!-- 4 Zápas -->
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Zápas" Style="{DynamicResource Lbl}"/>
+                    <Border Grid.Row="4" Grid.Column="1" Style="{DynamicResource InputHost}">
+                        <ComboBox x:Name="cbZapas"
+                                  Style="{DynamicResource ComboTheme}"
+                                  IsEditable="False"
+                                  IsEnabled="False"/>
+                    </Border>
+
+                    <!-- 5 Tlačítko -->
+                    <StackPanel Grid.Row="6" Grid.Column="1"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right"
                                 Margin="0,14,0,0">

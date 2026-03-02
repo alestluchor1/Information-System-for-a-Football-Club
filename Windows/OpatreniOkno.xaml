@@ -263,6 +263,12 @@
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
+                    <DataGridTextColumn Header="ID Zápas"
+                                        Binding="{Binding IdZapas}"
+                                        Width="110"
+                                        HeaderStyle="{StaticResource DgHeaderCenter}"
+                                        CellStyle="{StaticResource DgCellCenter}"/>
+
                     <DataGridTextColumn Header="Jméno hráče" Binding="{Binding Jmeno}" Width="*"
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
@@ -280,6 +286,8 @@
                     <DataGridTextColumn Header="Důvod" Binding="{Binding Duvod}" Width="*"
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
+
+                   
 
 
                 </DataGrid.Columns>

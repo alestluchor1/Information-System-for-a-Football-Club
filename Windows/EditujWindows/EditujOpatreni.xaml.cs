@@ -3,38 +3,46 @@ using InformacniSystemKlub.Models;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace InformacniSystemKlub.Windows.EditujWindows
 {
     /// <summary>
     /// Okno pro editaci vybraného disciplinárního opatření
-    /// Při otevření se formulář předvyplní a po potvrzení se změny uloží do databáze
+    /// Při otevření se formulář předvyplní hodnotami opatření a po potvrzení se změny uloží do databáze
     /// </summary>
     public partial class EditujOpatreni : Window
     {
-        private readonly DisciplinarniOpatreni editovaneOpatreni;
-        private const int MaxDuvod = 50;
+        private DisciplinarniOpatreni editovanyOpatreni;
 
-        public EditujOpatreni(DisciplinarniOpatreni opatreni)
+        public EditujOpatreni(DisciplinarniOpatreni editovanyOpatreni)
         {
             InitializeComponent();
             ApplyTheme(HlavniOkno.jeDarkModeAktivni);
 
-            if (opatreni == null)
-            {
-                throw new ArgumentNullException(nameof(opatreni));
-            }
-
-            this.editovaneOpatreni = opatreni;
-
-            TxtDuvod.MaxLength = MaxDuvod;
+            this.editovanyOpatreni = editovanyOpatreni;
 
             NactiHraceDoComboBoxu();
+            NactiZapasyDoComboBoxu();
 
-            // Předvyplnění
-            dpDatumUkonceni.SelectedDate = editovaneOpatreni.DatumUkonceniOpatreni;
-            TxtDuvod.Text = editovaneOpatreni.Duvod;
+            dpDatumUkonceni.SelectedDate = editovanyOpatreni.DatumUkonceniOpatreni;
+            TxtDuvod.Text = editovanyOpatreni.Duvod;
+
+            NastavVybranehoHrace(editovanyOpatreni.IdHrac);
+
+            if (editovanyOpatreni.IdZapas != null)
+            {
+                chkByloVZapase.IsChecked = true;
+                cbZapas.IsEnabled = true;
+                NastavVybranyZapas(editovanyOpatreni.IdZapas.Value);
+            }
+            else
+            {
+                chkByloVZapase.IsChecked = false;
+                cbZapas.IsEnabled = false;
+                cbZapas.SelectedIndex = -1;
+            }
         }
 
         /// <summary>
@@ -51,23 +59,90 @@ namespace InformacniSystemKlub.Windows.EditujWindows
 
                 cbHrac.ItemsSource = HraciOkno.HraciData;
                 cbHrac.DisplayMemberPath = "prijmeni";
-
-                if (editovaneOpatreni.IdHrac != 0)
-                {
-                    foreach (var hrac in HraciOkno.HraciData)
-                    {
-                        if (hrac.id == editovaneOpatreni.IdHrac)
-                        {
-                            cbHrac.SelectedItem = hrac;
-                            break;
-                        }
-                    }
-                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Nepodařilo se načíst hráče:\n" + ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        /// <summary>
+        /// Načte zápasy do comboboxu, zápasy jen se stavem odehráno
+        /// </summary>
+        private void NactiZapasyDoComboBoxu()
+        {
+            try
+            {
+                cbZapas.ItemsSource = ZapasyOkno.ZapasyData.Where(z => z.IdStav == StavZapasuEnum.Odehrano).ToList();
+                cbZapas.DisplayMemberPath = "ZapasDoComboBoxu";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Nepodařilo se načíst zápasy:\n" + ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Nastaví vybraného hráče v ComboBoxu podle ID
+        /// </summary>
+        private void NastavVybranehoHrace(int idHrac)
+        {
+            foreach (object item in cbHrac.Items)
+            {
+                Hrac hrac = item as Hrac;
+
+                if (hrac != null)
+                {
+                    if (hrac.id == idHrac)
+                    {
+                        cbHrac.SelectedItem = hrac;
+                        return;
+                    }
+                }
+            }
+
+            cbHrac.SelectedIndex = -1;
+        }
+
+        /// <summary>
+        /// Nastaví vybraný zápas v ComboBoxu podle ID
+        /// </summary>
+        private void NastavVybranyZapas(int idZapas)
+        {
+            foreach (object item in cbZapas.Items)
+            {
+                Zapas zapas = item as Zapas;
+
+                if (zapas != null)
+                {
+                    if (zapas.IdZapas == idZapas)
+                    {
+                        cbZapas.SelectedItem = zapas;
+                        return;
+                    }
+                }
+            }
+
+            cbZapas.SelectedIndex = -1;
+        }
+
+        /// <summary>
+        /// Po zaškrtnutí CheckBoxu povolí ComboBox se zápasy,
+        /// aby bylo možné vybrat zápas, ke kterému se opatření vztahuje.
+        /// </summary>
+        private void chkByloVZapase_Checked(object sender, RoutedEventArgs e)
+        {
+            cbZapas.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Po odškrtnutí CheckBoxu zakáže ComboBox se zápasy
+        /// a zruší případně vybraný zápas.
+        /// </summary>
+        private void chkByloVZapase_Unchecked(object sender, RoutedEventArgs e)
+        {
+            cbZapas.IsEnabled = false;
+            cbZapas.SelectedIndex = -1;
         }
 
         /// <summary>
@@ -78,46 +153,32 @@ namespace InformacniSystemKlub.Windows.EditujWindows
         {
             try
             {
-                InputValidator.ValidujVyberHrace(cbHrac.SelectedItem);
-
-                Hrac hracVybrany = cbHrac.SelectedItem as Hrac;
-
-                if (hracVybrany == null)
-                {
-                    throw new Exception("Vyberte hráče");
-                }
-
                 DateTime datumUkonceni = InputValidator.ValidujDatumUkonceniOpatreni(dpDatumUkonceni.SelectedDate);
+                string duvod = InputValidator.ValidujDuvodOpatreni(TxtDuvod.Text);
 
-                string duvod = TxtDuvod.Text;
-                if (duvod == null)
+                editovanyOpatreni.DatumUkonceniOpatreni = datumUkonceni;
+                editovanyOpatreni.Duvod = duvod;
+
+                if (chkByloVZapase.IsChecked == true)
                 {
-                    duvod = "";
-                }
-                duvod = InputValidator.ValidujDuvodOpatreni(duvod);
+                    Zapas vybranyZapas = cbZapas.SelectedItem as Zapas;
 
-                foreach (var opatreni in OpatreniOkno.DisciplinarniOpatreniData)
-                {   
-                    // Když už vybraný hráč má jiné opatření kromě editovaného
-                    if (opatreni.IdHrac == hracVybrany.id && opatreni.IdOpatreni != editovaneOpatreni.IdOpatreni)
+                    if (vybranyZapas == null)
                     {
-                        MessageBox.Show("Tento hráč už má jiné opatření!", "Upozornění", MessageBoxButton.OK, MessageBoxImage.Information);
-                        return;
+                        throw new Exception("Vyberte zápas");
                     }
+
+                    editovanyOpatreni.IdZapas = vybranyZapas.IdZapas;
+                }
+                else
+                {
+                    editovanyOpatreni.IdZapas = null;
                 }
 
-                // Uložení do objektu
-                editovaneOpatreni.IdHrac = hracVybrany.id;
-                editovaneOpatreni.Jmeno = hracVybrany.jmeno;
-                editovaneOpatreni.Prijmeni = hracVybrany.prijmeni;
-                editovaneOpatreni.DatumUkonceniOpatreni = datumUkonceni;
-                editovaneOpatreni.Duvod = duvod;
+                OracleConnection conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
+                DatabazeOpatreni.EditaceOpatreni(conn, editovanyOpatreni);
 
-                // Uložení do DB
-                var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
-                DatabazeOpatreni.EditaceOpatreni(conn, editovaneOpatreni);
-
-                MessageBox.Show("Opatření bylo úspěšně editováno", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Změny byly úspěšně uloženy", "Úspěch", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 DialogResult = true;
                 this.Close();
@@ -128,7 +189,7 @@ namespace InformacniSystemKlub.Windows.EditujWindows
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Chyba při ukládání", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Chyba při editaci opatření:\n" + ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

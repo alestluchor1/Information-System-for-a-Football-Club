@@ -48,7 +48,7 @@ namespace InformacniSystemKlub.Windows
         /// <summary>
         /// Načte zápasy z databáze a naplní kolekci ZapasyData
         /// </summary>
-        private void NactiZapasy()
+        public static void NactiZapasy()
         {
             try
             {

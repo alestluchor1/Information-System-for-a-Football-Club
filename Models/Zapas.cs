@@ -59,6 +59,15 @@ namespace InformacniSystemKlub.Models
             }
         }
 
+        // Zápis do comboboxu pro opatření
+        public string ZapasDoComboBoxu
+        {
+            get
+            {
+                return "ID zápas: " + IdZapas + " (" + Datum.ToString("dd.MM.yyyy") + ")";
+            }
+        }
+
         public Zapas() { }
     }
 }

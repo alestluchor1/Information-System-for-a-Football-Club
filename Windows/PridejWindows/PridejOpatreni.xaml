@@ -16,7 +16,6 @@
 
     <Window.Resources>
 
-        <!-- Barvy (výchozí LIGHT MODE) -->
         <SolidColorBrush x:Key="BgApp" Color="#F6F7FB"/>
         <SolidColorBrush x:Key="Surface" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="TextMain" Color="#0B1220"/>
@@ -31,7 +30,6 @@
             <GradientStop Color="#F97316" Offset="1"/>
         </LinearGradientBrush>
 
-        <!-- Label vlevo -->
         <Style x:Key="Lbl" TargetType="TextBlock">
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -41,7 +39,6 @@
             <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
         </Style>
 
-        <!-- TextBox -->
         <Style x:Key="Input" TargetType="TextBox">
             <Setter Property="Height" Value="36"/>
             <Setter Property="Padding" Value="12,0"/>
@@ -75,7 +72,6 @@
             </Setter>
         </Style>
 
-        <!-- Vzhled host (pro ComboBox / DatePicker) -->
         <Style x:Key="InputHost" TargetType="Border">
             <Setter Property="Height" Value="36"/>
             <Setter Property="CornerRadius" Value="12"/>
@@ -86,7 +82,6 @@
             <Setter Property="Padding" Value="8,0"/>
         </Style>
 
-        <!-- ComboBox -->
         <Style x:Key="ComboTheme" TargetType="ComboBox">
             <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
             <Setter Property="Background" Value="Transparent"/>
@@ -188,7 +183,6 @@
             </Setter>
         </Style>
 
-        <!-- DatePickerTextBox -->
         <Style x:Key="DatePickerTextBoxTheme" TargetType="{x:Type DatePickerTextBox}">
             <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
             <Setter Property="Background" Value="{DynamicResource InputBg}"/>
@@ -211,7 +205,6 @@
             </Setter>
         </Style>
 
-        <!-- DatePicker -->
         <Style x:Key="DatePickerTheme" TargetType="DatePicker">
             <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
             <Setter Property="Background" Value="Transparent"/>
@@ -225,7 +218,6 @@
             </Style.Resources>
         </Style>
 
-        <!-- Primární tlačítko -->
         <Style x:Key="BtnPrimary" TargetType="Button">
             <Setter Property="Height" Value="42"/>
             <Setter Property="Width" Value="140"/>
@@ -265,7 +257,6 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Levý panel -->
         <Border Grid.Column="0" Background="{DynamicResource SidebarGradient}">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="24">
                 <Image Source="/Images/card.png" Width="150" Height="150" Margin="0,0,0,24"/>
@@ -276,7 +267,6 @@
             </StackPanel>
         </Border>
 
-        <!-- Pravý panel -->
         <Border Grid.Column="1"
                 Background="{DynamicResource Surface}"
                 CornerRadius="24"
@@ -301,9 +291,10 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- 0: Hráč -->
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Hráč" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="0" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <ComboBox x:Name="cbHrac"
@@ -311,7 +302,6 @@
                                   IsEditable="False"/>
                     </Border>
 
-                    <!-- 1 Datum ukončení -->
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Datum ukončení" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="1" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <DatePicker x:Name="dpDatumUkonceni"
@@ -319,15 +309,29 @@
                                     SelectedDateFormat="Short"/>
                     </Border>
 
-                    <!-- 2 Důvod -->
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Důvod" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtDuvod"
                              Grid.Row="2" Grid.Column="1"
                              MaxLength="50"
                              Style="{DynamicResource Input}"/>
 
-                    <!-- 3 Tlačítko -->
-                    <StackPanel Grid.Row="4" Grid.Column="1"
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Bylo v zápase" Style="{DynamicResource Lbl}"/>
+                    <CheckBox x:Name="chkByloVZapase"
+                              Grid.Row="3" Grid.Column="1"
+                              VerticalAlignment="Center"
+                              Margin="0,6,0,6"
+                              Checked="chkByloVZapase_Checked"
+                              Unchecked="chkByloVZapase_Unchecked"/>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Zápas" Style="{DynamicResource Lbl}"/>
+                    <Border Grid.Row="4" Grid.Column="1" Style="{DynamicResource InputHost}">
+                        <ComboBox x:Name="cbZapas"
+                                  Style="{DynamicResource ComboTheme}"
+                                  IsEditable="False"
+                                  IsEnabled="False"/>
+                    </Border>
+
+                    <StackPanel Grid.Row="6" Grid.Column="1"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right"
                                 Margin="0,14,0,0">

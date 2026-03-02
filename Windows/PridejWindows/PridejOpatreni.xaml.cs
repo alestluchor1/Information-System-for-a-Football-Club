@@ -1,28 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using InformacniSystemKlub.Models;
 
 namespace InformacniSystemKlub.Windows.PridejWindows
 {
     /// <summary>
     /// Okno pro přidání nového disciplinárního opatření hráči
-    /// Naplní ComboBox hráči a 
-    /// provede validaci 
     /// </summary>
     public partial class PridejOpatreni : Window
     {
         private DisciplinarniOpatreni novyOpatreni;
+
         public PridejOpatreni(DisciplinarniOpatreni opatreni)
         {
             InitializeComponent();
@@ -36,6 +26,7 @@ namespace InformacniSystemKlub.Windows.PridejWindows
             }
 
             NactiHraceDoComboBoxu();
+            NactiZapasyDoComboBoxu();
         }
 
         /// <summary>
@@ -51,14 +42,12 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                 }
 
                 cbHrac.ItemsSource = HraciOkno.HraciData;
-
                 cbHrac.DisplayMemberPath = "prijmeni";
 
                 if (cbHrac.Items.Count > 0)
                 {
                     cbHrac.SelectedIndex = 0;
                 }
-
             }
             catch (Exception ex)
             {
@@ -67,8 +56,47 @@ namespace InformacniSystemKlub.Windows.PridejWindows
         }
 
         /// <summary>
+        /// Načte zápasy do comboboxu, zápasy jen se stavem odehráno
+        /// </summary>
+        private void NactiZapasyDoComboBoxu()
+        {
+            try
+            {
+                cbZapas.ItemsSource = ZapasyOkno.ZapasyData.Where(z => z.IdStav == StavZapasuEnum.Odehrano).ToList();
+                cbZapas.DisplayMemberPath = "ZapasDoComboBoxu";
+
+                if (cbZapas.Items.Count > 0)
+                {
+                    cbZapas.SelectedIndex = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Nepodařilo se načíst zápasy:\n" + ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Po zaškrtnutí CheckBoxu povolí ComboBox se zápasy,
+        /// aby bylo možné vybrat zápas, ke kterému se opatření vztahuje
+        /// </summary>
+        private void chkByloVZapase_Checked(object sender, RoutedEventArgs e)
+        {
+            cbZapas.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Po odškrtnutí CheckBoxu zakáže ComboBox se zápasy
+        /// a zruší případně vybraný zápas
+        /// </summary>
+        private void chkByloVZapase_Unchecked(object sender, RoutedEventArgs e)
+        {
+            cbZapas.IsEnabled = false;
+            cbZapas.SelectedIndex = -1;
+        }
+
+        /// <summary>
         /// Obsluha tlačítka Uložit
-        /// Provede validaci všech vstupů, uloží hodnoty do objektu <see cref="Trenink"/>
         /// </summary>
         private void BtnUlozit_Click(object sender, RoutedEventArgs e)
         {
@@ -83,16 +111,30 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                     throw new Exception("Vyberte hráče");
                 }
 
-                // Validace
                 DateTime datumUkonceni = InputValidator.ValidujDatumUkonceniOpatreni(dpDatumUkonceni.SelectedDate);
                 string duvod = InputValidator.ValidujDuvodOpatreni(TxtDuvod.Text);
 
-                // Uložení do objektu
-                novyOpatreni.IdHrac = hracVybrany.id;                 
-                novyOpatreni.Jmeno = hracVybrany.jmeno;            
-                novyOpatreni.Prijmeni = hracVybrany.prijmeni;        
+                novyOpatreni.IdHrac = hracVybrany.id;
+                novyOpatreni.Jmeno = hracVybrany.jmeno;
+                novyOpatreni.Prijmeni = hracVybrany.prijmeni;
                 novyOpatreni.DatumUkonceniOpatreni = datumUkonceni;
                 novyOpatreni.Duvod = duvod;
+
+                if (chkByloVZapase.IsChecked == true)
+                {
+                    Zapas vybranyZapas = cbZapas.SelectedItem as Zapas;
+
+                    if (vybranyZapas == null)
+                    {
+                        throw new Exception("Vyberte zápas");
+                    }
+
+                    novyOpatreni.IdZapas = vybranyZapas.IdZapas;
+                }
+                else
+                {
+                    novyOpatreni.IdZapas = null;
+                }
 
                 DialogResult = true;
                 this.Close();
@@ -117,8 +159,10 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                 Resources["InputBg"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x12, 0x20));
                 Resources["Orange"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
                 Resources["OrangeHover"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
-                Resources["SidebarGradient"] = new LinearGradientBrush(Color.FromRgb(0xFB, 0x92, 0x3C),
-                    Color.FromRgb(0xF9, 0x73, 0x16), 90);
+                Resources["SidebarGradient"] = new LinearGradientBrush(
+                    Color.FromRgb(0xFB, 0x92, 0x3C),
+                    Color.FromRgb(0xF9, 0x73, 0x16),
+                    90);
             }
             else
             {

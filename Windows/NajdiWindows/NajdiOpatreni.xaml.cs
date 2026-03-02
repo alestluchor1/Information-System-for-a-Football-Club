@@ -41,6 +41,8 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
 
             dpDatumUkonceni.SelectedDate = null;
             TxtDuvod.Text = "";
+            chkByloVZapase.IsChecked = false;
+            chkNebylVZapase.IsChecked = false;
         }
 
         private void BtnNajdi_Click(object sender, RoutedEventArgs e)
@@ -62,6 +64,8 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
             cbHrac.SelectedItem = null;
             dpDatumUkonceni.SelectedDate = null;
             TxtDuvod.Text = "";
+            chkByloVZapase.IsChecked = false;
+            chkNebylVZapase.IsChecked = false;
         }
 
         private IEnumerable<DisciplinarniOpatreni> FiltrujOpatreni()
@@ -92,6 +96,17 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
             {
                 string duvod = TxtDuvod.Text.Trim();
                 vysledek = vysledek.Where(o => o.Duvod != null && o.Duvod.ToLower().Contains(duvod.ToLower()));
+            }
+
+            // Opatření bylo v zápase / nebylo v zápase
+            if (chkByloVZapase.IsChecked == true && chkNebylVZapase.IsChecked == false)
+            {
+                vysledek = vysledek.Where(o => o.IdZapas != null);
+            }
+
+            if (chkByloVZapase.IsChecked == false && chkNebylVZapase.IsChecked == true)
+            {
+                vysledek = vysledek.Where(o => o.IdZapas == null);
             }
 
             return vysledek;

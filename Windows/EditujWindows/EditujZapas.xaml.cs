@@ -34,7 +34,7 @@ namespace InformacniSystemKlub.Windows.EditujWindows
             }
             else
             {
-                iudPocetZlutychKaret.Value = 0;
+                iudPocetZlutychKaret.Value = null;
             }
 
             if (editovanyZapas.PocetCervenychKaret != null)
@@ -43,7 +43,7 @@ namespace InformacniSystemKlub.Windows.EditujWindows
             }
             else
             {
-                iudPocetCervenychKaret.Value = 0;
+                iudPocetCervenychKaret.Value = null;
             }
 
             NastavTypSouteze(editovanyZapas.IdTypSouteze);
@@ -241,10 +241,10 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                 TxtVysledek.Text = "-";
                 TxtVysledek.IsEnabled = false;
 
-                iudPocetZlutychKaret.Value = 0;
+                iudPocetZlutychKaret.Value = null;
                 iudPocetZlutychKaret.IsEnabled = false;
 
-                iudPocetCervenychKaret.Value = 0;
+                iudPocetCervenychKaret.Value = null;
                 iudPocetCervenychKaret.IsEnabled = false;
             }
             else

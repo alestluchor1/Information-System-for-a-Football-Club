@@ -47,6 +47,15 @@ namespace InformacniSystemKlub.Database
                     cmd.Parameters.Add("v_id_clenklubu", OracleDbType.Int32).Value = opatreni.IdHrac;
                     cmd.Parameters.Add("v_datum_ukonceni", OracleDbType.Date).Value = opatreni.DatumUkonceniOpatreni;
                     cmd.Parameters.Add("v_duvod", OracleDbType.Varchar2, 50).Value = opatreni.Duvod;
+                    OracleParameter parametrZapas = cmd.Parameters.Add("v_id_zapas", OracleDbType.Int32);
+                    if (opatreni.IdZapas != null)
+                    {
+                        parametrZapas.Value = opatreni.IdZapas;
+                    }
+                    else
+                    {
+                        parametrZapas.Value = DBNull.Value;
+                    }
 
                     cmd.ExecuteNonQuery();
                 }
@@ -71,6 +80,15 @@ namespace InformacniSystemKlub.Database
                     cmd.Parameters.Add("v_id_opatreni", OracleDbType.Int32).Value = opatreni.IdOpatreni;
                     cmd.Parameters.Add("v_datum_ukonceni", OracleDbType.Date).Value = opatreni.DatumUkonceniOpatreni;
                     cmd.Parameters.Add("v_duvod", OracleDbType.Varchar2, 50).Value = opatreni.Duvod;
+                    OracleParameter parametrZapas = cmd.Parameters.Add("v_id_zapas", OracleDbType.Int32);
+                    if (opatreni.IdZapas != null)
+                    {
+                        parametrZapas.Value = opatreni.IdZapas;
+                    }
+                    else
+                    {
+                        parametrZapas.Value = DBNull.Value;
+                    }
 
                     cmd.ExecuteNonQuery();
                 }

@@ -30,6 +30,11 @@ namespace InformacniSystemKlub.Models
         /// </summary>
         public string Prijmeni { get; set; }
 
+        /// <summary>
+        /// ID zápasu, ke kterému se opatření vztahuje, zápas může, ale nemusí mít opatření
+        /// </summary>
+        public int? IdZapas { get; set; }
+
         public DisciplinarniOpatreni() { }
     }
 

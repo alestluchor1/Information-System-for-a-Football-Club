@@ -136,10 +136,10 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                 TxtVysledek.Text = "-";
                 TxtVysledek.IsEnabled = false;
 
-                iudPocetZlutychKaret.Value = 0;
+                iudPocetZlutychKaret.Value = null;
                 iudPocetZlutychKaret.IsEnabled = false;
 
-                iudPocetCervenychKaret.Value = 0;
+                iudPocetCervenychKaret.Value = null;
                 iudPocetCervenychKaret.IsEnabled = false;
             }
             else

@@ -41,6 +41,7 @@ namespace InformacniSystemKlub.Windows
             InitializeComponent();
             ApplyTheme(HlavniOkno.jeDarkModeAktivni);
             NactiDisciplinarniOpatreni();
+            ZapasyOkno.NactiZapasy();
 
             DgOpatreni.ItemsSource = DisciplinarniOpatreniData;
         }
@@ -116,6 +117,15 @@ namespace InformacniSystemKlub.Windows
                     else
                     {
                         opatreni.Duvod = "-";
+                    }
+
+                    if (reader["ZAPAS_IDZAPAS"] != DBNull.Value)
+                    {
+                        opatreni.IdZapas = Convert.ToInt32(reader["ZAPAS_IDZAPAS"]);
+                    }
+                    else
+                    {
+                        opatreni.IdZapas = null;
                     }
 
                     DisciplinarniOpatreniData.Add(opatreni);
