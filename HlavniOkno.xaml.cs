@@ -75,9 +75,10 @@ namespace InformacniSystemKlub.Windows
             zapasyOkno.ShowDialog();
         }
 
-        private void BtnSestava_Click(object sender, RoutedEventArgs e)
+        private void BtnSportovniVybaveni_Click(object sender, RoutedEventArgs e)
         {
-            
+            SportovniVybaveniOkno vybaveniOkno = new SportovniVybaveniOkno();
+            vybaveniOkno.ShowDialog();
         }
 
         private void BtnKontraktyClick(object sender, RoutedEventArgs e)

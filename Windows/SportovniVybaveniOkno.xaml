@@ -1,0 +1,284 @@
+﻿<Window x:Class="InformacniSystemKlub.Windows.SportovniVybaveniOkno"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Sportovní vybavení"
+        PreviewKeyDown="WindowUkonceniFiltrovani"
+        Height="650" Width="1100"
+        MinHeight="450" MinWidth="850"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource WindowBgBrush}"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType">
+
+    <Window.Resources>
+
+        <FontFamily x:Key="AppFont">Segoe UI</FontFamily>
+
+        <SolidColorBrush x:Key="WindowBgBrush" Color="#F6F7FB"/>
+
+        <SolidColorBrush x:Key="CardBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="CardAltBrush" Color="#F8FAFC"/>
+        <SolidColorBrush x:Key="BorderBrushSoft" Color="#E6EAF2"/>
+
+        <SolidColorBrush x:Key="TextBrush" Color="#0B1220"/>
+        <SolidColorBrush x:Key="MutedTextBrush" Color="#64748B"/>
+
+        <SolidColorBrush x:Key="AccentBrush" Color="#F97316"/>
+        <SolidColorBrush x:Key="AccentDarkBrush" Color="#EA580C"/>
+
+        <SolidColorBrush x:Key="GridLineBrush" Color="#E9EEF6"/>
+
+        <SolidColorBrush x:Key="RowHoverBrush" Color="#0F172A" Opacity="0.04"/>
+        <SolidColorBrush x:Key="RowSelectedBrush" Color="#F97316" Opacity="0.18"/>
+        <SolidColorBrush x:Key="RowSelectedBorderBrush" Color="#F97316" Opacity="0.55"/>
+
+        <DropShadowEffect x:Key="CardShadow" BlurRadius="18" ShadowDepth="2" Opacity="0.10"/>
+
+        <Style x:Key="BtnPrimary" TargetType="Button">
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="MinWidth" Value="100"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentDarkBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontFamily" Value="{DynamicResource AppFont}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Root"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="12">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="Opacity" Value="0.92"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Root" Property="Opacity" Value="0.86"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Root" Property="Opacity" Value="0.55"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BtnSecondary" TargetType="Button" BasedOn="{StaticResource BtnPrimary}">
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource CardBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSoft}"/>
+        </Style>
+
+        <Style x:Key="DgHeaderBase" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="{DynamicResource CardAltBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="FontFamily" Value="{DynamicResource AppFont}"/>
+            <Setter Property="FontSize" Value="12.5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="12,9"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource GridLineBrush}"/>
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridColumnHeader">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                RecognizesAccessKey="True"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DgHeaderLeft" TargetType="DataGridColumnHeader" BasedOn="{StaticResource DgHeaderBase}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+
+        <Style x:Key="DgHeaderCenter" TargetType="DataGridColumnHeader" BasedOn="{StaticResource DgHeaderBase}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="DgCellBase" TargetType="DataGridCell">
+            <Setter Property="FontFamily" Value="{DynamicResource AppFont}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="Padding" Value="12,9"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource GridLineBrush}"/>
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource RowSelectedBrush}"/>
+                    <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DgCellLeft" TargetType="DataGridCell" BasedOn="{StaticResource DgCellBase}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+
+        <Style x:Key="DgCellCenter" TargetType="DataGridCell" BasedOn="{StaticResource DgCellBase}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="DataGridRow">
+            <Setter Property="MinHeight" Value="38"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Background" Value="{DynamicResource CardBrush}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource RowHoverBrush}"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource RowSelectedBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="12"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0"
+                Background="{DynamicResource CardBrush}"
+                CornerRadius="16"
+                Padding="14"
+                BorderBrush="{DynamicResource BorderBrushSoft}"
+                BorderThickness="1"
+                Effect="{StaticResource CardShadow}">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <WrapPanel Grid.Column="0"
+                           VerticalAlignment="Center"
+                           ItemHeight="36"
+                           Margin="0,0,10,0">
+
+                    <Button Style="{StaticResource BtnPrimary}" Content="Přidej" Margin="0,0,8,0" Click="BtnPridat_Click"/>
+                    <Button Style="{StaticResource BtnPrimary}" Content="Odeber" Margin="0,0,8,0" Click="BtnOdebrat_Click"/>
+                    <Button Style="{StaticResource BtnPrimary}" Content="Edituj" Margin="0,0,8,0" Click="BtnEdituj_Click"/>
+                    <Button Style="{StaticResource BtnPrimary}" Content="Najdi" Margin="0,0,8,0" Click="BtnNajdi_Click"/>
+
+                </WrapPanel>
+
+                <Button Grid.Column="1"
+                        Style="{StaticResource BtnSecondary}"
+                        Content="Zpět"
+                        MinWidth="110"
+                        VerticalAlignment="Center"
+                        Click="BtnZpet_Click"/>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="2"
+                Background="{DynamicResource CardBrush}"
+                CornerRadius="16"
+                Padding="0"
+                BorderBrush="{DynamicResource BorderBrushSoft}"
+                BorderThickness="1"
+                Effect="{StaticResource CardShadow}">
+
+            <DataGrid Name="DgSportovniVybaveni"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      CanUserAddRows="False"
+                      HeadersVisibility="Column"
+                      Background="{DynamicResource CardBrush}"
+                      Foreground="{DynamicResource TextBrush}"
+                      RowBackground="{DynamicResource CardBrush}"
+                      AlternatingRowBackground="{DynamicResource CardAltBrush}"
+                      BorderThickness="0"
+                      SelectionMode="Single"
+                      SelectionUnit="FullRow"
+                      ColumnWidth="*"
+                      MinColumnWidth="60"
+                      RowHeaderWidth="0"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto"
+                      GridLinesVisibility="All"
+                      HorizontalGridLinesBrush="{DynamicResource GridLineBrush}"
+                      VerticalGridLinesBrush="{DynamicResource GridLineBrush}">
+
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Header="ID" Binding="{Binding IdSportovniVybaveni}" Width="70"
+                                        HeaderStyle="{StaticResource DgHeaderCenter}"
+                                        CellStyle="{StaticResource DgCellCenter}"/>
+
+                    <DataGridTextColumn Header="Název" Binding="{Binding Nazev}" Width="*"
+                                        HeaderStyle="{StaticResource DgHeaderLeft}"
+                                        CellStyle="{StaticResource DgCellLeft}"/>
+
+                    <DataGridTextColumn Header="Velikost" Binding="{Binding Velikost}" Width="150"
+                                        HeaderStyle="{StaticResource DgHeaderLeft}"
+                                        CellStyle="{StaticResource DgCellLeft}"/>
+
+                    <DataGridTextColumn Header="Datum nákupu" Binding="{Binding DatumNakupu}" Width="*"
+                                        HeaderStyle="{StaticResource DgHeaderCenter}"
+                                        CellStyle="{StaticResource DgCellCenter}"/>
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </Border>
+    </Grid>
+</Window>

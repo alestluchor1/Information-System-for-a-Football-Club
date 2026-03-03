@@ -333,7 +333,7 @@
                             ToolTip="Evidence a správa klubového vybavení"
                             Style="{StaticResource TileButtonSimpleStyle}"
                             BorderBrush="#06B6D4"
-                            Click="BtnSestava_Click"/>
+                            Click="BtnSportovniVybaveni_Click"/>
 
                     <Button Content="Smlouvy"
                             Tag="📝"
