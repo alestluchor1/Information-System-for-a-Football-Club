@@ -15,5 +15,7 @@ namespace InformacniSystemKlub.Models
         public String Velikost { get; set; }
 
         public DateTime DatumNakupu { get; set; }
+
+        public SportovniVybaveni() { }
     }
 }

@@ -219,77 +219,77 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnPridat_Click(object sender, RoutedEventArgs e)
         {
-            //if (jeVyhledavaniAktivni == true)
-            //{
-            //    MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
-            //        MessageBoxButton.OK, MessageBoxImage.Information);
-            //    return;
-            //}
+            if (jeVyhledavaniAktivni == true)
+            {
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
 
-            //SportovniVybaveni pridanyVybaveni = new SportovniVybaveni();
-            //var okno = new PridejSportovniVybaveni(pridanyVybaveni);
+            SportovniVybaveni pridanyVybaveni = new SportovniVybaveni();
+            var okno = new PridejSportovniVybaveni(pridanyVybaveni);
 
-            //if (okno.ShowDialog() != true)
-            //{
-            //    return;
-            //}
+            if (okno.ShowDialog() != true)
+            {
+                return;
+            }
 
-            //try
-            //{
-            //    var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
-            //    DatabazeTreninky.PridejTrenink(conn, pridanyTrenink);
+            try
+            {
+                var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
+                DatabazeSportovniVybaveni.PridejSportovniVybaveni(conn, pridanyVybaveni);
 
-            //    NactiTreninky();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Chyba při přidání tréninku: {ex.Message}");
-            //}
+                NactiSportovniVybaveni();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Chyba při přidání tréninku: {ex.Message}");
+            }
         }
 
         /// <summary>
-        /// Smaže vybraného trenéra z databáze i z lokální kolekce a aktualizuje zobrazení podle aktuálního filtru
+        /// Smaže vybrané sportovní vybavení z databáze i z lokální kolekce a aktualizuje zobrazení podle aktuálního filtru
         /// </summary>
         private void BtnOdebrat_Click(object sender, RoutedEventArgs e)
         {
-            //if (jeVyhledavaniAktivni == true)
-            //{
-            //    MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
-            //        MessageBoxButton.OK, MessageBoxImage.Information);
-            //    return;
-            //}
+            if (jeVyhledavaniAktivni == true)
+            {
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
 
-            //Trenink vybranyTrenink = (Trenink)DgTreninky.SelectedItem;
+            SportovniVybaveni vybranySportovniVybaveni = (SportovniVybaveni)DgSportovniVybaveni.SelectedItem;
 
-            //if (vybranyTrenink == null)
-            //{
-            //    MessageBox.Show("Vyberte trénink !", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //    return;
-            //}
+            if (vybranySportovniVybaveni == null)
+            {
+                MessageBox.Show("Vyberte sportovní vybavení !", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            //var result = MessageBox.Show("Opravdu chcete smazat vybraný trénink?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            var result = MessageBox.Show("Opravdu chcete smazat vybrané sportovní vybavení?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
-            //if (result == MessageBoxResult.No)
-            //{
-            //    return;
-            //}
+            if (result == MessageBoxResult.No)
+            {
+                return;
+            }
 
-            //try
-            //{
-            //    var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
+            try
+            {
+                var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
 
-            //    DatabazeTreninky.OdeberTrenink(conn, vybranyTrenink);
+                DatabazeSportovniVybaveni.OdeberSportovniVybaveni(conn, vybranySportovniVybaveni);
 
-            //    TreninkyData.Remove(vybranyTrenink);
+                SportovniVybaveniData.Remove(vybranySportovniVybaveni);
 
-            //    MessageBox.Show("Trénink byl smazán", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Sportovní vybavení bylo smazáno", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
 
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Chyba při mazání tréninku: {ex.Message}");
-            //}
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Chyba při mazání Sportovního vybavení: {ex.Message}");
+            }
         }
 
         /// <summary>

@@ -271,7 +271,7 @@
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
 
-                    <DataGridTextColumn Header="Datum nákupu" Binding="{Binding DatumNakupu}" Width="*"
+                    <DataGridTextColumn Header="Datum nákupu" Binding="{Binding DatumNakupu, StringFormat=dd.MM.yyyy}" Width="*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 

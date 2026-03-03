@@ -603,5 +603,55 @@ namespace InformacniSystemKlub
 
             return hodnota;
         }
+
+        // Sportovní vybavení
+        public static string ValidujNazevSportovnihoVybaveni(string nazev, string nazevPole = "Název")
+        {
+            if (string.IsNullOrWhiteSpace(nazev))
+            {
+                throw new Exception($"{nazevPole} nesmí být prázdný!");
+            }
+
+            nazev = nazev.Trim();
+
+            if (nazev.Length > 50)
+            {
+                throw new Exception($"{nazevPole} může mít maximálně 50 znaků!");
+            }
+
+            return nazev;
+        }
+
+        public static string ValidujVelikostSportovnihoVybaveni(string velikost, string nazevPole = "Velikost")
+        {
+            if (string.IsNullOrWhiteSpace(velikost))
+            {
+                throw new Exception($"{nazevPole} nesmí být prázdná!");
+            }
+
+            velikost = velikost.Trim();
+
+            if (velikost.Length > 3)
+            {
+                throw new Exception($"{nazevPole} může mít maximálně 3 znaky!");
+            }
+
+            return velikost;
+        }
+
+        public static DateTime ValidujDatumNakupuSportovnihoVybaveni(DateTime? datum, string nazevPole = "Datum nákupu")
+        {
+            if (datum == null)
+            {
+                throw new Exception($"{nazevPole} nesmí být prázdné!");
+            }
+
+            if (datum.Value.Date > DateTime.Today)
+            {
+                throw new Exception($"{nazevPole} nesmí být v budoucnosti!");
+            }
+
+            return datum.Value.Date;
+        }
     }
 }
