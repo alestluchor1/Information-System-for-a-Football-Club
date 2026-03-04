@@ -139,30 +139,30 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Otevře dialog pro vyhledávání tréninků
+        /// Otevře dialog pro vyhledávání sportovního vybavení
         /// Aktivuje vyhledávací mód, dokud není režim ukončen pomocí CTRL+X.
         /// </summary>
         private void BtnNajdi_Click(object sender, RoutedEventArgs e)
         {
-            //NajdiTrenink najdiTrenink = new NajdiTrenink(TreninkyData);
-            //bool? vysledekDialogu = najdiTrenink.ShowDialog();
+            NajdiSportovniVybaveni najdiSportovniVybaveni = new NajdiSportovniVybaveni(SportovniVybaveniData);
+            bool? vysledekDialogu = najdiSportovniVybaveni.ShowDialog();
 
-            //if (vysledekDialogu == true)
-            //{
-            //    if (najdiTrenink.FiltrovaniTreninky == null || najdiTrenink.FiltrovaniTreninky.Count == 0)
-            //    {
-            //        MessageBox.Show("Nenašly se žádné záznamy se zadanými filtry", "Not found", MessageBoxButton.OK, MessageBoxImage.Information);
-            //        return;
-            //    }
+            if (vysledekDialogu == true)
+            {
+                if (najdiSportovniVybaveni.FiltrovaniVybaveni == null || najdiSportovniVybaveni.FiltrovaniVybaveni.Count == 0)
+                {
+                    MessageBox.Show("Nenašly se žádné záznamy se zadanými filtry", "Not found", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
 
-            //    MessageBox.Show(
-            //        "Pokud je vyhledávací mód aktivní nemůžete přidávat ani odebírat vyhledaná data " +
-            //        "Pro ukončení vyhledávacího módu stiskněte klávesy CTRL + X",
-            //        "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(
+                    "Pokud je vyhledávací mód aktivní nemůžete přidávat ani odebírat vyhledaná data " +
+                    "Pro ukončení vyhledávacího módu stiskněte klávesy CTRL + X",
+                    "Info", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            //    DgTreninky.ItemsSource = new ObservableCollection<Trenink>(najdiTrenink.FiltrovaniTreninky);
-            //    jeVyhledavaniAktivni = true;
-            //}
+                DgSportovniVybaveni.ItemsSource = new ObservableCollection<SportovniVybaveni>(najdiSportovniVybaveni.FiltrovaniVybaveni);
+                jeVyhledavaniAktivni = true;
+            }
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Otevře dialog pro přidání tréninku, uloží nový trénink do databáze a obnoví seznam
+        /// Otevře dialog pro přidání sportovního vybavení, uloží nový vybavení do databáze a obnoví seznam
         /// </summary>
         private void BtnPridat_Click(object sender, RoutedEventArgs e)
         {
@@ -243,7 +243,7 @@ namespace InformacniSystemKlub.Windows
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Chyba při přidání tréninku: {ex.Message}");
+                MessageBox.Show($"Chyba při přidání sportovního vybavení: {ex.Message}");
             }
         }
 
