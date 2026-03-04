@@ -35,7 +35,7 @@ namespace InformacniSystemKlub.Windows.PridejWindows
         }
     
 
-    /// <summary>
+        /// <summary>
         /// Obsluha tlačítka Uložit
         /// Provede validaci všech vstupů, uloží hodnoty do objektu <see cref="SportovniVybaveni"/>
         /// </summary>
@@ -43,7 +43,7 @@ namespace InformacniSystemKlub.Windows.PridejWindows
         {
             try
             {
-                String nazev = InputValidator.ValidujNazevSportovnihoVybaveni(TxtNazev.Text, "Název sportovního vybavení");
+                string nazev = InputValidator.ValidujNazevSportovnihoVybaveni(TxtNazev.Text, "Název sportovního vybavení");
                 DateTime datumNakupu = InputValidator.ValidujDatumNakupuSportovnihoVybaveni(dpDatumNakupu.SelectedDate, "Datum nákupu");
                 string velikost = InputValidator.ValidujVelikostSportovnihoVybaveni(TxtVelikost.Text, "Velikost položky sportovního vybavení");
 

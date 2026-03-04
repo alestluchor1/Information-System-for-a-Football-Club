@@ -22,7 +22,9 @@ namespace InformacniSystemKlub.Windows.EditujWindows
             ApplyTheme(HlavniOkno.jeDarkModeAktivni);
 
             if (trenink == null)
+            {
                 throw new ArgumentNullException(nameof(trenink));
+            }
 
             editovanyTrenink = trenink;
 

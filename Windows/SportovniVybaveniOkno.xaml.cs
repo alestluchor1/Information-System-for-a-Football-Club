@@ -109,33 +109,33 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Obsluha tlačítka Edituj pro úpravu údajů tréninku
+        /// Obsluha tlačítka Edituj pro úpravu údajů sportovního vybavení
         /// </summary>
         private void BtnEdituj_Click(object sender, RoutedEventArgs e)
         {
-            //if (jeVyhledavaniAktivni == true)
-            //{
-            //    MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
-            //        MessageBoxButton.OK, MessageBoxImage.Information);
-            //    return;
-            //}
+            if (jeVyhledavaniAktivni == true)
+            {
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
 
-            //Trenink vybranyTrenink = DgTreninky.SelectedItem as Trenink;
-            //if (vybranyTrenink == null)
-            //{
-            //    MessageBox.Show("Prosím vyberte trénink, který chcete editovat!", "Chyba",
-            //        MessageBoxButton.OK, MessageBoxImage.Warning);
-            //    return;
-            //}
+            SportovniVybaveni vybranySportovniVybaveni = DgSportovniVybaveni.SelectedItem as SportovniVybaveni;
+            if (vybranySportovniVybaveni == null)
+            {
+                MessageBox.Show("Prosím vyberte záznam sportovního vybavení, které chcete editovat!", "Chyba",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            //var dialog = new EditujTrenink(vybranyTrenink);
-            //bool? result = dialog.ShowDialog();
+            var dialog = new EditujSportovniVybaveni(vybranySportovniVybaveni);
+            bool? result = dialog.ShowDialog();
 
-            //if (result == true)
-            //{
+            if (result == true)
+            {
 
-            //    DgTreninky.Items.Refresh();
-            //}
+                DgSportovniVybaveni.Items.Refresh();
+            }
         }
 
         /// <summary>

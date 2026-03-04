@@ -210,7 +210,6 @@
             </Setter>
         </Style>
 
-        <!-- DatePicker (kalendář) -->
         <Style x:Key="DatePickerTheme" TargetType="DatePicker">
             <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
             <Setter Property="Background" Value="Transparent"/>
