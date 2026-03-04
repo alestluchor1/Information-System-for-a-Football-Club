@@ -48,7 +48,7 @@ namespace InformacniSystemKlub.Windows
         /// <summary>
         /// Načte hráče z databáze a naplní kolekci TreneriData
         /// </summary>
-        private void NactiTreninky()
+        public static void NactiTreninky()
         {
             try
             {

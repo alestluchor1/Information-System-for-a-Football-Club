@@ -5,140 +5,141 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Kalendář"
-        Height="590"
-        Width="900"
-        FontFamily="Trebuchet MS"
-        WindowStartupLocation="CenterOwner"
-        WindowStyle="None"
-        AllowsTransparency="True"
-        Background="Transparent">
+        Height="760"
+        Width="1280"
+        MinHeight="680"
+        MinWidth="1080"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
+        FontFamily="Segoe UI"
+        Background="#F6F7FB">
 
     <Window.Resources>
-
-        <!-- barvy -->
-        <SolidColorBrush x:Key="White" Color="#FFFFFF"/>
-        <SolidColorBrush x:Key="SoftBorder" Color="#EAEAEA"/>
-        <SolidColorBrush x:Key="TextDark" Color="#1F2937"/>
-        <SolidColorBrush x:Key="TextMuted" Color="#6B7280"/>
-
-        <SolidColorBrush x:Key="Pink" Color="#C73F69"/>
-        <SolidColorBrush x:Key="PinkDark" Color="#B8345C"/>
-
-        <!-- stín -->
-        <DropShadowEffect x:Key="CardShadow" BlurRadius="28" ShadowDepth="10" Opacity="0.18"/>
-        
-        <Style x:Key="IconBtn" TargetType="Button">
-            <Setter Property="Width" Value="44"/>
-            <Setter Property="Height" Value="44"/>
-            <Setter Property="Background" Value="#0A000000"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="FontSize" Value="26"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="14"
-                                Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- primární button v pravém panelu -->
-        <Style x:Key="PrimaryBtn" TargetType="Button">
-            <Setter Property="Height" Value="44"/>
-            <Setter Property="MinWidth" Value="120"/>
-            <Setter Property="Padding" Value="18,0"/>
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="MinWidth" Value="110"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#0B1220"/>
+            <Setter Property="BorderBrush" Value="#E5E7EB"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Background" Value="{StaticResource PinkDark}"/>
-            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="B" CornerRadius="14" Background="{TemplateBinding Background}">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10">
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center"/>
                         </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="B" Property="Opacity" Value="0.92"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="B" Property="Opacity" Value="0.84"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="B" Property="Opacity" Value="0.55"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <Style x:Key="SecondaryBtn" TargetType="Button" BasedOn="{StaticResource PrimaryBtn}">
-            <Setter Property="Background" Value="#22FFFFFF"/>
+        <Style x:Key="MesicoveTlacitkoStyle" TargetType="Button">
+            <Setter Property="Width" Value="42"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#0B1220"/>
+            <Setter Property="BorderBrush" Value="#E5E7EB"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
-        <!-- den v kalendáři -->
-        <Style x:Key="DayBtn" TargetType="Button">
-            <Setter Property="Height" Value="44"/>
+        <Style x:Key="HlavičkaDneStyle" TargetType="Border">
+            <Setter Property="Background" Value="#E9EEF5"/>
+            <Setter Property="CornerRadius" Value="10"/>
             <Setter Property="Margin" Value="4"/>
-            <Setter Property="Background" Value="#00000000"/>
+            <Setter Property="Padding" Value="8"/>
+        </Style>
+
+        <Style x:Key="TlacitkoDneStyle" TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E5E7EB"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Foreground" Value="#0B1220"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="Background" Value="White"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="B"
-                                CornerRadius="12"
-                                Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="10"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter/>
                         </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="B" Property="Background" Value="#11000000"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#FFEDD5"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
-
     </Window.Resources>
 
-    <Border Margin="12"
-            CornerRadius="22"
-            Background="{StaticResource White}"
-            Effect="{StaticResource CardShadow}">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.9*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1.35*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <!-- Levá část -->
-            <Grid Grid.Column="0" Margin="26">
+        <!-- Levá část -->
+        <Border Grid.Column="0"
+                Background="White"
+                CornerRadius="20"
+                Padding="24"
+                Margin="0,0,16,0">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="18"/>
+                    <RowDefinition Height="16"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="12"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Header měsíce -->
-                <Grid Grid.Row="0">
+                <StackPanel>
+                    <TextBlock Text="Kalendář tréninků"
+                               FontSize="30"
+                               FontWeight="Bold"
+                               Foreground="#0B1220"/>
+
+                    <TextBlock Text="Klikněte na den a vpravo uvidíte tréninky"
+                               Margin="0,6,0,0"
+                               FontSize="15"
+                               Foreground="#6B7280"/>
+                </StackPanel>
+
+                <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
@@ -146,129 +147,152 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Column="0"
-                            Style="{StaticResource IconBtn}"
-                            Content="❮"
-                            />
+                            Content="‹"
+                            Style="{StaticResource MesicoveTlacitkoStyle}"
+                            Click="BtnPredchoziMesic_Click"/>
 
-                    <StackPanel Grid.Column="1" HorizontalAlignment="Center">
-                        <TextBlock x:Name="TxtMesic"
-                                   FontSize="30"
-                                   FontWeight="Bold"
-                                   Foreground="{StaticResource TextDark}"
-                                   HorizontalAlignment="Center"/>
-                        <TextBlock Text="Vyber den a vpravo uvidíš tréninky"
-                                   Margin="0,6,0,0"
-                                   Foreground="{StaticResource TextMuted}"
-                                   HorizontalAlignment="Center"/>
-                    </StackPanel>
+                    <TextBlock x:Name="TxtMesicRok"
+                               Grid.Column="1"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Foreground="#0B1220"/>
 
                     <Button Grid.Column="2"
-                            Style="{StaticResource IconBtn}"
-                            Content="❯"
-                            />
+                            Content="›"
+                            Style="{StaticResource MesicoveTlacitkoStyle}"
+                            Click="BtnDalsiMesic_Click"/>
                 </Grid>
 
-                <!-- dny v týdnu -->
-                <UniformGrid Grid.Row="2" Columns="7">
-                    <TextBlock Text="Po" Foreground="{StaticResource TextMuted}" HorizontalAlignment="Center"/>
-                    <TextBlock Text="Út" Foreground="{StaticResource TextMuted}" HorizontalAlignment="Center"/>
-                    <TextBlock Text="St" Foreground="{StaticResource TextMuted}" HorizontalAlignment="Center"/>
-                    <TextBlock Text="Čt" Foreground="{StaticResource TextMuted}" HorizontalAlignment="Center"/>
-                    <TextBlock Text="Pá" Foreground="{StaticResource TextMuted}" HorizontalAlignment="Center"/>
-                    <TextBlock Text="So" Foreground="{StaticResource TextMuted}" HorizontalAlignment="Center"/>
-                    <TextBlock Text="Ne" Foreground="{StaticResource TextMuted}" HorizontalAlignment="Center"/>
+                <UniformGrid Grid.Row="4" Columns="7">
+                    <Border Style="{StaticResource HlavičkaDneStyle}">
+                        <TextBlock Text="Po" HorizontalAlignment="Center" FontWeight="SemiBold" Foreground="#475569"/>
+                    </Border>
+                    <Border Style="{StaticResource HlavičkaDneStyle}">
+                        <TextBlock Text="Út" HorizontalAlignment="Center" FontWeight="SemiBold" Foreground="#475569"/>
+                    </Border>
+                    <Border Style="{StaticResource HlavičkaDneStyle}">
+                        <TextBlock Text="St" HorizontalAlignment="Center" FontWeight="SemiBold" Foreground="#475569"/>
+                    </Border>
+                    <Border Style="{StaticResource HlavičkaDneStyle}">
+                        <TextBlock Text="Čt" HorizontalAlignment="Center" FontWeight="SemiBold" Foreground="#475569"/>
+                    </Border>
+                    <Border Style="{StaticResource HlavičkaDneStyle}">
+                        <TextBlock Text="Pá" HorizontalAlignment="Center" FontWeight="SemiBold" Foreground="#475569"/>
+                    </Border>
+                    <Border Style="{StaticResource HlavičkaDneStyle}">
+                        <TextBlock Text="So" HorizontalAlignment="Center" FontWeight="SemiBold" Foreground="#475569"/>
+                    </Border>
+                    <Border Style="{StaticResource HlavičkaDneStyle}">
+                        <TextBlock Text="Ne" HorizontalAlignment="Center" FontWeight="SemiBold" Foreground="#475569"/>
+                    </Border>
                 </UniformGrid>
 
-                <!-- grid dnů -->
-                <UniformGrid x:Name="UgDays"
-                             Grid.Row="4"
-                             Columns="7"/>
+                <Border Grid.Row="6"
+                        Background="#EEF2F7"
+                        CornerRadius="18"
+                        Padding="10">
+                    <UniformGrid x:Name="GridDnyKalendare"
+                                 Rows="6"
+                                 Columns="7"/>
+                </Border>
             </Grid>
+        </Border>
 
-            <!-- Pravá část -->
-            <Border Grid.Column="1"
-                    Background="{StaticResource Pink}"
-                    CornerRadius="0,22,22,0">
+        <!-- Pravá část -->
+        <Border Grid.Column="1"
+                Background="#F97316"
+                CornerRadius="20"
+                Padding="24">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                <Grid Margin="22">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="14"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="14"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="16"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+                <TextBlock Text="Vybraný den"
+                           FontSize="28"
+                           FontWeight="Bold"
+                           Foreground="White"/>
 
+                <TextBlock x:Name="TxtVybranyDen"
+                           Grid.Row="2"
+                           Foreground="White"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           Text="Nevybrán žádný den"/>
 
-                    <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                <Border Grid.Row="4"
+                        Background="#22FFFFFF"
+                        CornerRadius="16"
+                        Padding="14">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="12"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                        <TextBlock Text="Vybraný den"
-                                   FontSize="26"
-                                   FontWeight="Bold"
-                                   Foreground="White"/>
+                        <TextBlock Text="Tréninky"
+                                   Foreground="White"
+                                   FontWeight="SemiBold"
+                                   FontSize="18"/>
 
-                        <Button Grid.Column="1"
-                                Style="{StaticResource IconBtn}"
-                                Background="#00FFFFFF"
-                                Content="✕"
-                                Foreground="White"
-                                Click="BtnClose_Click"/>
+                        <ListBox x:Name="LbTreninky"
+                                 Grid.Row="2"
+                                 Background="Transparent"
+                                 BorderThickness="0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="White"
+                                            CornerRadius="10"
+                                            Padding="10"
+                                            Margin="0,0,0,8">
+                                        <StackPanel>
+                                            <TextBlock FontWeight="SemiBold"
+                                                       Foreground="#0B1220"
+                                                       Text="{Binding Misto}"/>
+
+                                            <TextBlock Margin="0,4,0,0"
+                                                       Foreground="#6B7280"
+                                                       Text="{Binding Popis}"/>
+
+                                            <TextBlock Margin="0,4,0,0"
+                                                       Foreground="#6B7280"
+                                                       Text="{Binding Prijmeni, StringFormat=Trenér: {0}}"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </Grid>
+                </Border>
 
-                    <!-- vybraný datum -->
-                    <TextBlock x:Name="TxtVybranyDen"
-                               Grid.Row="2"
-                               Foreground="White"
-                               FontSize="16"
-                               Opacity="0.95"/>
+                <WrapPanel Grid.Row="6"
+                           HorizontalAlignment="Right">
+                    <Button x:Name="BtnPridat"
+                            Content="Přidat"
+                            Style="{StaticResource ModernButtonStyle}"
+                            Click="BtnPridat_Click"/>
 
+                    <Button x:Name="BtnEditovat"
+                            Content="Editovat"
+                            Style="{StaticResource ModernButtonStyle}"
+                            Click="BtnEditovat_Click"/>
 
-                    <Border Grid.Row="4"
-                            CornerRadius="18"
-                            Background="#22FFFFFF"
-                            Padding="14">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="10"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-                            <TextBlock Text="Tréninky"
-                                       Foreground="White"
-                                       FontWeight="SemiBold"
-                                       FontSize="16"/>
-
-                            <ListBox x:Name="LbTreninky"
-                                     Grid.Row="2"
-                                     Background="#00FFFFFF"
-                                     BorderThickness="0"
-                                     Foreground="White"
-                                     ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-                        </Grid>
-                    </Border>
-
-
-                    <StackPanel Grid.Row="6"
-                                Orientation="Horizontal"
-                                HorizontalAlignment="Right">
-
-                        <Button Content="Odebrat"
-                                Style="{StaticResource SecondaryBtn}"
-                                Margin="0,0,10,0"/>
-
-                        <Button Content="Přidat"
-                                Style="{StaticResource PrimaryBtn}"/>
-                    </StackPanel>
-                </Grid>
-            </Border>
-
-        </Grid>
-    </Border>
+                    <Button x:Name="BtnOdebrat"
+                            Content="Odebrat"
+                            Margin="0"
+                            Style="{StaticResource ModernButtonStyle}"
+                            Click="BtnOdebrat_Click"/>
+                </WrapPanel>
+            </Grid>
+        </Border>
+    </Grid>
 </Window>
