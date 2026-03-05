@@ -653,5 +653,77 @@ namespace InformacniSystemKlub
 
             return datum.Value.Date;
         }
+
+        // Registrace
+
+        public static string ValidujUzivatelskeJmeno(string uzivJmeno)
+        {
+            if (string.IsNullOrWhiteSpace(uzivJmeno))
+            {
+                throw new Exception("Uživatelské jméno nesmí být prázdné!");
+            }
+
+            uzivJmeno = uzivJmeno.Trim();
+
+            if ((uzivJmeno.Length < 3) || (uzivJmeno.Length > 30))
+            {
+                throw new Exception("Uživatelské jméno musí mít 3 až 30 znaků!");
+            }
+
+            // povolíme písmena/čísla/._-
+            if (!Regex.IsMatch(uzivJmeno, @"^[A-Za-z0-9._-]+$"))
+            {
+                throw new Exception("Uživatelské jméno smí obsahovat jen písmena, číslice a znaky . _ -");
+            }
+
+            return uzivJmeno;
+        }
+
+        public static string ValidujEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                throw new Exception("E-mail nesmí být prázdný!");
+            }
+
+            email = email.Trim();
+
+            if (email.Length > 100)
+            {
+                throw new Exception("E-mail je příliš dlouhý (max 100 znaků)!");
+            }
+
+            if (!Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                throw new Exception("E-mail není ve správném formátu!");
+            }
+
+            return email;
+        }
+
+        public static string ValidujHeslo(string heslo)
+        {
+            if (string.IsNullOrWhiteSpace(heslo))
+            {
+                throw new Exception("Heslo nesmí být prázdné!");
+            }
+
+            heslo = heslo.Trim();
+
+            if ((heslo.Length < 4) || (heslo.Length > 20))
+            {
+                throw new Exception("Heslo musí mít 4 až 20 znaků!");
+            }
+
+            return heslo;
+        }
+
+        public static void ValidujShoduHesel(string heslo, string heslo2)
+        {
+            if (heslo != heslo2)
+            {
+                throw new Exception("Hesla se neshodují!");
+            }
+        }
     }
 }

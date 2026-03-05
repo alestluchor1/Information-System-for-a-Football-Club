@@ -1,0 +1,295 @@
+﻿<Window x:Class="InformacniSystemKlub.Windows.RegistracniOkno"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Registrace"
+        Height="780"
+        Width="1000"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        MouseDown="Window_MouseDown">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="CardBrush" Color="#22FFFFFF"/>
+        <SolidColorBrush x:Key="InputBrush" Color="#18FFFFFF"/>
+        <SolidColorBrush x:Key="BorderSoftBrush" Color="#35FFFFFF"/>
+        <SolidColorBrush x:Key="TextSoftBrush" Color="#D0D0D0"/>
+
+        <Style x:Key="ModernTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{StaticResource InputBrush}"/>
+            <Setter Property="BorderBrush" Value="#40FFFFFF"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Padding" Value="14,0,14,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,6,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border CornerRadius="12"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ModernPasswordBoxStyle" TargetType="PasswordBox">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{StaticResource InputBrush}"/>
+            <Setter Property="BorderBrush" Value="#40FFFFFF"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Padding" Value="14,0,14,0"/>
+            <Setter Property="Margin" Value="0,6,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border CornerRadius="12"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="MainButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="46"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="23">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#FF8A00" Offset="0"/>
+                                    <GradientStop Color="#FF5E62" Offset="0.35"/>
+                                    <GradientStop Color="#7B2FF7" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="BorderBrush" Value="#55FFFFFF"/>
+            <Setter Property="Background" Value="#18FFFFFF"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="21"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CircleTopButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="18"/>
+            <Setter Property="Height" Value="18"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="9"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border CornerRadius="18" BorderThickness="1.5">
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#FFB347" Offset="0"/>
+                <GradientStop Color="#FF6A3D" Offset="0.3"/>
+                <GradientStop Color="#A855F7" Offset="0.7"/>
+                <GradientStop Color="#5B21B6" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+
+        <Grid ClipToBounds="True">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#1B0B2A" Offset="0"/>
+                    <GradientStop Color="#2A0A45" Offset="0.4"/>
+                    <GradientStop Color="#4A124D" Offset="0.75"/>
+                    <GradientStop Color="#6B1F3A" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <Ellipse Width="260" Height="260" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-80,-70,0,0">
+                <Ellipse.Fill>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#33FF8A00" Offset="0"/>
+                        <GradientStop Color="#00FF8A00" Offset="1"/>
+                    </RadialGradientBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+
+            <Ellipse Width="320" Height="320" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-100,-100">
+                <Ellipse.Fill>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#337B2FF7" Offset="0"/>
+                        <GradientStop Color="#007B2FF7" Offset="1"/>
+                    </RadialGradientBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="34"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Margin="12,8,12,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="REGISTRACE"
+                               Foreground="#EAEAEA"
+                               FontSize="12"
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center"/>
+
+                    <Button x:Name="btnMinimize"
+                            Grid.Column="1"
+                            Content="–"
+                            Background="#7C7C7C"
+                            Style="{StaticResource CircleTopButtonStyle}"
+                            Click="BtnMinimize_Click"/>
+
+                    <Button x:Name="btnClose"
+                            Grid.Column="2"
+                            Content="×"
+                            Background="#D95C5C"
+                            Style="{StaticResource CircleTopButtonStyle}"
+                            Click="BtnClose_Click"/>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Border Width="430"
+                            Height="610"
+                            CornerRadius="28"
+                            Background="{StaticResource CardBrush}"
+                            BorderBrush="{StaticResource BorderSoftBrush}"
+                            BorderThickness="1.5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Padding="34">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="30"
+                                              ShadowDepth="0"
+                                              Color="#AA000000"
+                                              Opacity="0.45"/>
+                        </Border.Effect>
+
+                        <StackPanel VerticalAlignment="Center">
+
+                            <TextBlock Text="Vytvořit účet"
+                                       Foreground="White"
+                                       FontSize="26"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"/>
+
+                            <TextBlock Text="Vyplňte registrační údaje"
+                                       Foreground="{StaticResource TextSoftBrush}"
+                                       FontSize="13"
+                                       TextAlignment="Center"
+                                       Margin="0,8,0,22"/>
+
+                            <TextBlock Text="Uživatelské jméno"
+                                       Foreground="#F1F1F1"
+                                       FontSize="13"
+                                       Margin="4,0,0,0"/>
+                            <TextBox x:Name="txtUser"
+                                     Style="{StaticResource ModernTextBoxStyle}"/>
+
+                            <TextBlock Text="E-mail"
+                                       Foreground="#F1F1F1"
+                                       FontSize="13"
+                                       Margin="4,14,0,0"/>
+                            <TextBox x:Name="txtEmail"
+                                     Style="{StaticResource ModernTextBoxStyle}"/>
+
+                            <TextBlock Text="Heslo"
+                                       Foreground="#F1F1F1"
+                                       FontSize="13"
+                                       Margin="4,14,0,0"/>
+                            <PasswordBox x:Name="txtPass"
+                                         Style="{StaticResource ModernPasswordBoxStyle}"/>
+
+                            <TextBlock Text="Potvrzení hesla"
+                                       Foreground="#F1F1F1"
+                                       FontSize="13"
+                                       Margin="4,14,0,0"/>
+                            <PasswordBox x:Name="txtPass2"
+                                         Style="{StaticResource ModernPasswordBoxStyle}"/>
+
+                            <Button x:Name="btnRegister"
+                                    Content="Registrovat"
+                                    Style="{StaticResource MainButtonStyle}"
+                                    Margin="0,26,0,0"
+                                    Click="BtnRegister_Click"/>
+
+                            <Button x:Name="btnZpet"
+                                    Content="Zpět na přihlášení"
+                                    Style="{StaticResource SecondaryButtonStyle}"
+                                    Margin="0,12,0,0"
+                                    Click="BtnZpet_Click"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

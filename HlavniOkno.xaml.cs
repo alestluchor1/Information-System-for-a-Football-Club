@@ -123,6 +123,9 @@ namespace InformacniSystemKlub.Windows
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
+            PrihlasovaciOkno prihlasovaciOkno = new PrihlasovaciOkno();
+            Application.Current.MainWindow = prihlasovaciOkno;
+            prihlasovaciOkno.Show();
             this.Close();
         }
 
