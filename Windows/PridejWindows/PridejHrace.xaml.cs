@@ -47,7 +47,20 @@ namespace InformacniSystemKlub.Windows.PřidáníWindows
                 int goly = InputValidator.ValidujHraciSpinnerGolyKarty(iudPocetGolu.Text, "Počet vstřelených gólů");
                 int zluteKarty = InputValidator.ValidujHraciSpinnerGolyKarty(iudPocetZlutychKaret.Text, "Počet žlutých karet");
                 int cerveneKarty = InputValidator.ValidujHraciSpinnerGolyKarty(iudPocetCervenychKaret.Text, "Počet červených karet");
-                int vek = InputValidator.ValidujHraciVek(iudVek.Text, "Věk");
+
+                // Vybraná tréninková skupina
+                ComboBoxItem vybranaSkupina = cbSkupina.SelectedItem as ComboBoxItem;
+                if (vybranaSkupina == null)
+                {
+                    throw new Exception("Vyber tréninkovou skupinu!");
+                }
+
+                if (vybranaSkupina.Tag == null)
+                {
+                    throw new Exception("Vyber tréninkovou skupinu!");
+                }
+
+                int idSkupiny = Convert.ToInt32(vybranaSkupina.Tag);
 
                 char stavZdravi = InputValidator.ValidujZdravotniStav(cbZdraviStav.SelectedItem);
 
@@ -60,7 +73,7 @@ namespace InformacniSystemKlub.Windows.PřidáníWindows
                 novyHrac.PocetVstrelenychGolu = goly;
                 novyHrac.PocetZlutychKaret = zluteKarty;
                 novyHrac.PocetCervenychKaret = cerveneKarty;
-                novyHrac.Vek = vek;
+                novyHrac.IdTreninkovaSkupina = idSkupiny;
 
                 novyHrac.TypClena = "Hrac";
                 novyHrac.ZdravotniStav = stavZdravi;

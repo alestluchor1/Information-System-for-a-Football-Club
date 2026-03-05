@@ -388,47 +388,47 @@
 
                 <DataGrid.Columns>
 
-                    <DataGridTextColumn Header="ID" Binding="{Binding id}" Width="70"
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="70"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="Jméno" Binding="{Binding jmeno}" Width="*"
+                    <DataGridTextColumn Header="Jméno" Binding="{Binding Jmeno}" Width="*"
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
 
-                    <DataGridTextColumn Header="Příjmení" Binding="{Binding prijmeni}" Width="*"
+                    <DataGridTextColumn Header="Příjmení" Binding="{Binding Prijmeni}" Width="*"
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
 
-                    <DataGridTextColumn Header="Rodné číslo" Binding="{Binding rodneCislo}" Width="150"
+                    <DataGridTextColumn Header="Rodné číslo" Binding="{Binding RodneCislo}" Width="150"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="Telefon" Binding="{Binding telefonniCislo}" Width="130"
+                    <DataGridTextColumn Header="Telefon" Binding="{Binding TelefonniCislo}" Width="130"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="Pozice" Binding="{Binding pozice}" Width="2*"
+                    <DataGridTextColumn Header="Pozice" Binding="{Binding Pozice}" Width="2*"
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
 
-                    <DataGridTextColumn Header="Věk" Binding="{Binding vek}" Width="70"
+                    <DataGridTextColumn Header="Góly" Binding="{Binding PocetVstrelenychGolu}" Width="70"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="Góly" Binding="{Binding pocetVstrelenychGolu}" Width="70"
+                    <DataGridTextColumn Header="ŽK" Binding="{Binding PocetZlutychKaret}" Width="60"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="ŽK" Binding="{Binding pocetZlutychKaret}" Width="60"
+                    <DataGridTextColumn Header="ČK" Binding="{Binding PocetCervenychKaret}" Width="60"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="ČK" Binding="{Binding pocetCervenychKaret}" Width="60"
+                    <DataGridTextColumn Header="Zdravotní stav" Binding="{Binding ZdravotniStav}" Width="150"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="Zdravotní stav" Binding="{Binding zdravotniStav}" Width="150"
+                    <DataGridTextColumn Header="Tréninková Skupina" Binding="{Binding TreninkovaSkupinaText}" Width="150"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 

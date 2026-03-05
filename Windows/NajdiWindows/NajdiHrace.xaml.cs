@@ -117,11 +117,19 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
                     h.Pozice.Contains(pozice, StringComparison.OrdinalIgnoreCase));
             }
 
-            // Věk
-            if (!string.IsNullOrWhiteSpace(iudVek.Text))
+            // Tréninková skupina
+            ComboBoxItem vybranaSkupina = cbSkupina.SelectedItem as ComboBoxItem;
+            if (vybranaSkupina != null)
             {
-                int vek = InputValidator.ValidujHraciVek(iudVek.Text, "Věk");
-                vysledek = vysledek.Where(h => h.Vek == vek);
+                if (vybranaSkupina.Tag != null)
+                {
+                    int idSkupiny = Convert.ToInt32(vybranaSkupina.Tag);
+
+                    if (idSkupiny != 0)
+                    {
+                        vysledek = vysledek.Where(h => h.IdTreninkovaSkupina == idSkupiny);
+                    }
+                }
             }
 
             // Zdravotní stav (A/N) 

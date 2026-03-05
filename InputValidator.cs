@@ -171,34 +171,6 @@ namespace InformacniSystemKlub
             return hodnota; 
         }
 
-        public static int ValidujHraciVek(string hodnotaText, string nazevPole = "Počet let")
-        {
-            const int min = 3;
-            const int max = 100;
-
-            if (string.IsNullOrWhiteSpace(hodnotaText))
-            {
-                throw new Exception($"{nazevPole} nesmí být prázdné");
-            }
-
-            if (!int.TryParse(hodnotaText.Trim(), out int hodnota))
-            {
-                throw new Exception($"{nazevPole} musí být celé číslo");
-            }
-
-            if (hodnota < min)
-            {
-                throw new Exception($"{nazevPole} nesmí být menší než {min}");
-            }
-
-            if (hodnota > max)
-            {
-                throw new Exception($"{nazevPole} nesmí být větší než {max}");
-            }
-
-            return hodnota;
-        }
-
         public static int ValidujId(string idText)
         {
             const int minimalniHodnota = 0;

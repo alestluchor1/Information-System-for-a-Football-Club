@@ -32,7 +32,12 @@ namespace InformacniSystemKlub.Windows.EditujWindows
             iudPocetGolu.Value = editovanyHrac.PocetVstrelenychGolu;
             iudPocetZlutychKaret.Value = editovanyHrac.PocetZlutychKaret;
             iudPocetCervenychKaret.Value = editovanyHrac.PocetCervenychKaret;
-            iudVek.Value = editovanyHrac.Vek;
+            cbSkupina.SelectedIndex = editovanyHrac.IdTreninkovaSkupina;
+
+            if (cbSkupina.SelectedIndex < 0 || cbSkupina.SelectedIndex > 3)
+            {
+                cbSkupina.SelectedIndex = 0;
+            }
 
             NastavZdravotniStav(editovanyHrac.ZdravotniStav);
         }
@@ -82,12 +87,14 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                 string tel = TxtTelefonniCislo.Text.Trim();
                 string pozice = TxtPozice.Text.Trim();
 
+                // Validace textů
                 InputValidator.ValidujRodneCislo(rodneCislo);
                 InputValidator.ValidujJmeno(jmeno);
                 InputValidator.ValidujPrijmeni(prijmeni);
                 InputValidator.ValidujTelefonniCislo(tel);
                 InputValidator.ValidujPozice(pozice);
 
+                // Hodnoty ze spinnerů
                 string golyText = "";
                 if (iudPocetGolu.Value != null)
                 {
@@ -106,19 +113,23 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                     cerveneText = iudPocetCervenychKaret.Value.ToString();
                 }
 
-                string vekText = "";
-                if (iudVek.Value != null)
-                {
-                    vekText = iudVek.Value.ToString();
-                }
-
                 int goly = InputValidator.ValidujHraciSpinnerGolyKarty(golyText, "Počet vstřelených gólů");
                 int zlute = InputValidator.ValidujHraciSpinnerGolyKarty(zluteText, "Počet žlutých karet");
                 int cervene = InputValidator.ValidujHraciSpinnerGolyKarty(cerveneText, "Počet červených karet");
-                int vek = InputValidator.ValidujHraciVek(vekText, "Věk");
 
+                // Zdravotní stav
                 char zdrav = InputValidator.ValidujZdravotniStav(cbZdraviStav.SelectedItem);
 
+                // Tréninková skupina
+                if (cbSkupina.SelectedIndex == 0)
+                {
+                    MessageBox.Show("Vyber tréninkovou skupinu!", "Chyba", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                int idSkupiny = cbSkupina.SelectedIndex;
+
+                // Uložení do objektu
                 editovanyHrac.RodneCislo = rodneCislo;
                 editovanyHrac.Jmeno = jmeno;
                 editovanyHrac.Prijmeni = prijmeni;
@@ -128,10 +139,29 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                 editovanyHrac.PocetVstrelenychGolu = goly;
                 editovanyHrac.PocetZlutychKaret = zlute;
                 editovanyHrac.PocetCervenychKaret = cervene;
-                editovanyHrac.Vek = vek;
 
                 editovanyHrac.ZdravotniStav = zdrav;
+                editovanyHrac.IdTreninkovaSkupina = idSkupiny;
 
+                // Aktualizace textu pro DataGrid
+                if (idSkupiny == 1)
+                {
+                    editovanyHrac.TreninkovaSkupinaText = "A-Tým";
+                }
+                else if (idSkupiny == 2)
+                {
+                    editovanyHrac.TreninkovaSkupinaText = "Dorost";
+                }
+                else if (idSkupiny == 3)
+                {
+                    editovanyHrac.TreninkovaSkupinaText = "Mladší žáci";
+                }
+                else
+                {
+                    editovanyHrac.TreninkovaSkupinaText = "Neznámá";
+                }
+
+                // Uložení do DB
                 OracleConnection conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
                 DatabazeHraci.EditaceHrace(conn, editovanyHrac);
 

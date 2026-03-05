@@ -49,42 +49,39 @@ namespace InformacniSystemKlub.Windows
         private void VyberTymu()
         {
             int volba = cbVyberTymu.SelectedIndex;
+
             if (volba == 0)
             {
                 DgHraci.ItemsSource = HraciData;
                 return;
             }
+
             ObservableCollection<Hrac> vybraniHraci = new ObservableCollection<Hrac>();
 
             foreach (var hrac in HraciData)
             {
-                switch (volba)
+                if (volba == 1)
                 {
+                    if (hrac.IdTreninkovaSkupina == 1)
+                    {
+                        vybraniHraci.Add(hrac);
+                    }
+                }
 
-                    case 1: // A - Tým
-                        if (hrac.Vek > 18)
-                        {
-                            vybraniHraci.Add(hrac);
-                        }
-                        break;
-                    
-                    case 2: // Dorost
-                        if (hrac.Vek >= 14 && hrac.Vek <= 18)
-                        {
-                            vybraniHraci.Add(hrac);
-                        }
-                        break;
+                if (volba == 2)
+                {
+                    if (hrac.IdTreninkovaSkupina == 2)
+                    {
+                        vybraniHraci.Add(hrac);
+                    }
+                }
 
-                    case 3: // Mladší žáci
-                        if (hrac.Vek >= 3 && hrac.Vek < 14)
-                        {
-                            vybraniHraci.Add(hrac);
-                        }
-                        break;
-
-                    default:
-                        return;
-
+                if (volba == 3)
+                {
+                    if (hrac.IdTreninkovaSkupina == 3)
+                    {
+                        vybraniHraci.Add(hrac);
+                    }
                 }
             }
 
@@ -100,6 +97,27 @@ namespace InformacniSystemKlub.Windows
             {
               VyberTymu();
             }
+        }
+
+        private static string SkupinaNaText(int idSkupiny)
+        {
+            // Překlad ID tréninkové skupiny číselníku na text
+            if (idSkupiny == 1)
+            {
+                return "A-Tým";
+            }
+
+            if (idSkupiny == 2)
+            {
+                return "Dorost";
+            }
+
+            if (idSkupiny == 3)
+            {
+                return "Mladší žáci";
+            }
+
+            return "Neznámá";
         }
 
         /// <summary>
@@ -128,6 +146,17 @@ namespace InformacniSystemKlub.Windows
                     {
                         hrac.Id = 0;
                     }
+
+                    if (reader["IDTRENINKOVASKUPINA"] != DBNull.Value)
+                    {
+                        hrac.IdTreninkovaSkupina = Convert.ToInt32(reader["IDTRENINKOVASKUPINA"]);
+                    }
+                    else
+                    {
+                        hrac.IdTreninkovaSkupina = 0;
+                    }
+
+                    hrac.TreninkovaSkupinaText = SkupinaNaText(hrac.IdTreninkovaSkupina);
 
                     if (reader["RODNECISLO"] != DBNull.Value)
                     {
@@ -199,15 +228,6 @@ namespace InformacniSystemKlub.Windows
                     else
                     {
                         hrac.Pozice = "";
-                    }
-
-                    if (reader["VEK"] != DBNull.Value)
-                    {
-                        hrac.Vek = Convert.ToInt32(reader["VEK"]);
-                    }
-                    else 
-                    { 
-                        hrac.Vek= 0;
                     }
 
                     if (reader["ZDRAVOTNISTAV"] != DBNull.Value)

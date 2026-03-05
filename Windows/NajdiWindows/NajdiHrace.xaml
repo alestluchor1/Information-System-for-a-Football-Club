@@ -371,16 +371,16 @@
                     <TextBox x:Name="TxtPozice" Grid.Row="9" Grid.Column="1" MaxLength="50" Style="{DynamicResource Input}"/>
 
                     <!-- 10 -->
-                    <TextBlock Grid.Row="10" Grid.Column="0" Text="Věk" Style="{DynamicResource Lbl}"/>
+                    <TextBlock Grid.Row="10" Grid.Column="0" Text="Tréninková skupina" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="10" Grid.Column="1" Style="{DynamicResource InputHost}">
-                        <xctk:IntegerUpDown x:Name="iudVek"
-                                            Style="{DynamicResource Spin}"
-                                            Value="{x:Null}"
-                                            Minimum="3"
-                                            Maximum="100"
-                                            Watermark="—"
-                                            AllowTextInput="False"
-                                            AllowSpin="True"/>
+                        <ComboBox x:Name="cbSkupina"
+                                    Style="{DynamicResource ComboTheme}"
+                                    SelectedIndex="0">
+                            <ComboBoxItem Content="—" Tag="0"/>
+                            <ComboBoxItem Content="A-Tým" Tag="1"/>
+                            <ComboBoxItem Content="Dorost" Tag="2"/>
+                            <ComboBoxItem Content="Mladší žáci" Tag="3"/>
+                        </ComboBox>
                     </Border>
 
                     <!-- 11 Tlačítko -->

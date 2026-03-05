@@ -9,7 +9,7 @@ namespace InformacniSystemKlub.Models
     public class Hrac
     {
         public int Id { get; set; }
-    
+        public int IdTreninkovaSkupina { get; set; }
         public String RodneCislo { get; set; }
         public String Jmeno { get; set; }
         public String Prijmeni { get; set; }
@@ -21,6 +21,7 @@ namespace InformacniSystemKlub.Models
         public String Pozice { get; set; } = "";
         public int Vek { get; set; }
         public char ZdravotniStav { get; set; }
+        public string TreninkovaSkupinaText { get; set; } = "";
 
         public Hrac() { }
     }
