@@ -357,12 +357,12 @@ namespace InformacniSystemKlub
                 throw new Exception("Neplatný výběr hráče!");
             }
 
-            if (hrac.id <= 0)
+            if (hrac.Id <= 0)
             {
                 throw new Exception("Neplatné ID hráče!");
             }
 
-            return hrac.id;
+            return hrac.Id;
         }
 
         public static void ValidujRozsahDatumuKontraktu(DateTime? datumOd, DateTime? datumDo)

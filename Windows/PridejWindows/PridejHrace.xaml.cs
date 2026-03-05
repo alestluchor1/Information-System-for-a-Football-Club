@@ -51,19 +51,19 @@ namespace InformacniSystemKlub.Windows.PřidáníWindows
 
                 char stavZdravi = InputValidator.ValidujZdravotniStav(cbZdraviStav.SelectedItem);
 
-                novyHrac.jmeno = TxtJmeno.Text.Trim();
-                novyHrac.prijmeni = TxtPrijmeni.Text.Trim();
-                novyHrac.rodneCislo = TxtRodneCislo.Text.Trim();
-                novyHrac.pozice = TxtPozice.Text.Trim();
-                novyHrac.telefonniCislo = TxtTelefonniCislo.Text.Trim();
+                novyHrac.Jmeno = TxtJmeno.Text.Trim();
+                novyHrac.Prijmeni = TxtPrijmeni.Text.Trim();
+                novyHrac.RodneCislo = TxtRodneCislo.Text.Trim();
+                novyHrac.Pozice = TxtPozice.Text.Trim();
+                novyHrac.TelefonniCislo = TxtTelefonniCislo.Text.Trim();
 
-                novyHrac.pocetVstrelenychGolu = goly;
-                novyHrac.pocetZlutychKaret = zluteKarty;
-                novyHrac.pocetCervenychKaret = cerveneKarty;
-                novyHrac.vek = vek;
+                novyHrac.PocetVstrelenychGolu = goly;
+                novyHrac.PocetZlutychKaret = zluteKarty;
+                novyHrac.PocetCervenychKaret = cerveneKarty;
+                novyHrac.Vek = vek;
 
-                novyHrac.typClena = "Hrac";
-                novyHrac.zdravotniStav = stavZdravi;
+                novyHrac.TypClena = "Hrac";
+                novyHrac.ZdravotniStav = stavZdravi;
 
                 MessageBox.Show("Hráč byl úspěšně přidán", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
 

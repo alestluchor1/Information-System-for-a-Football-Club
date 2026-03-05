@@ -18,7 +18,7 @@ namespace InformacniSystemKlub.Database
             using (var cmd = new OracleCommand("PKG_HRACI.SP_ODEBER_HRACE", conn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("v_idclenklubu", OracleDbType.Int32).Value = hrac.id;
+                cmd.Parameters.Add("v_idclenklubu", OracleDbType.Int32).Value = hrac.Id;
 
                 cmd.ExecuteNonQuery();
             }
@@ -36,17 +36,17 @@ namespace InformacniSystemKlub.Database
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add("v_idclenklubu", OracleDbType.Int32).Value = hrac.id;
-                    cmd.Parameters.Add("v_rodne_cislo", OracleDbType.Varchar2).Value = hrac.rodneCislo;
-                    cmd.Parameters.Add("v_jmeno", OracleDbType.Varchar2).Value = hrac.jmeno;
-                    cmd.Parameters.Add("v_prijmeni", OracleDbType.Varchar2).Value = hrac.prijmeni;
-                    cmd.Parameters.Add("v_telefonni_cislo", OracleDbType.Varchar2).Value = hrac.telefonniCislo;
-                    cmd.Parameters.Add("v_pozice", OracleDbType.Varchar2).Value = hrac.pozice;
-                    cmd.Parameters.Add("v_pocet_golu", OracleDbType.Int32).Value = hrac.pocetVstrelenychGolu;
-                    cmd.Parameters.Add("v_pocet_zlute", OracleDbType.Int32).Value = hrac.pocetZlutychKaret;
-                    cmd.Parameters.Add("v_pocet_cervene", OracleDbType.Int32).Value = hrac.pocetCervenychKaret;
-                    cmd.Parameters.Add("v_vek", OracleDbType.Int32).Value = hrac.vek;
-                    cmd.Parameters.Add("v_zdravotni_stav", OracleDbType.Char).Value = hrac.zdravotniStav;
+                    cmd.Parameters.Add("v_idclenklubu", OracleDbType.Int32).Value = hrac.Id;
+                    cmd.Parameters.Add("v_rodne_cislo", OracleDbType.Varchar2).Value = hrac.RodneCislo;
+                    cmd.Parameters.Add("v_jmeno", OracleDbType.Varchar2).Value = hrac.Jmeno;
+                    cmd.Parameters.Add("v_prijmeni", OracleDbType.Varchar2).Value = hrac.Prijmeni;
+                    cmd.Parameters.Add("v_telefonni_cislo", OracleDbType.Varchar2).Value = hrac.TelefonniCislo;
+                    cmd.Parameters.Add("v_pozice", OracleDbType.Varchar2).Value = hrac.Pozice;
+                    cmd.Parameters.Add("v_pocet_golu", OracleDbType.Int32).Value = hrac.PocetVstrelenychGolu;
+                    cmd.Parameters.Add("v_pocet_zlute", OracleDbType.Int32).Value = hrac.PocetZlutychKaret;
+                    cmd.Parameters.Add("v_pocet_cervene", OracleDbType.Int32).Value = hrac.PocetCervenychKaret;
+                    cmd.Parameters.Add("v_vek", OracleDbType.Int32).Value = hrac.Vek;
+                    cmd.Parameters.Add("v_zdravotni_stav", OracleDbType.Char).Value = hrac.ZdravotniStav;
 
                     cmd.ExecuteNonQuery();
                 }
@@ -66,17 +66,17 @@ namespace InformacniSystemKlub.Database
             {
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add("v_idclenklubu", OracleDbType.Int32).Value = hrac.id;
-                cmd.Parameters.Add("v_rodne_cislo", OracleDbType.Varchar2).Value = hrac.rodneCislo;
-                cmd.Parameters.Add("v_jmeno", OracleDbType.Varchar2).Value = hrac.jmeno;
-                cmd.Parameters.Add("v_prijmeni", OracleDbType.Varchar2).Value = hrac.prijmeni;
-                cmd.Parameters.Add("v_telefonni_cislo", OracleDbType.Varchar2).Value = hrac.telefonniCislo;
-                cmd.Parameters.Add("v_pozice", OracleDbType.Varchar2).Value = hrac.pozice;
-                cmd.Parameters.Add("v_pocet_golu", OracleDbType.Int32).Value = hrac.pocetVstrelenychGolu;
-                cmd.Parameters.Add("v_pocet_zlute", OracleDbType.Int32).Value = hrac.pocetZlutychKaret;
-                cmd.Parameters.Add("v_pocet_cervene", OracleDbType.Int32).Value = hrac.pocetCervenychKaret;
-                cmd.Parameters.Add("v_vek", OracleDbType.Int32).Value = hrac.vek;
-                cmd.Parameters.Add("v_zdravotni_stav", OracleDbType.Char).Value = hrac.zdravotniStav;
+                cmd.Parameters.Add("v_idclenklubu", OracleDbType.Int32).Value = hrac.Id;
+                cmd.Parameters.Add("v_rodne_cislo", OracleDbType.Varchar2).Value = hrac.RodneCislo;
+                cmd.Parameters.Add("v_jmeno", OracleDbType.Varchar2).Value = hrac.Jmeno;
+                cmd.Parameters.Add("v_prijmeni", OracleDbType.Varchar2).Value = hrac.Prijmeni;
+                cmd.Parameters.Add("v_telefonni_cislo", OracleDbType.Varchar2).Value = hrac.TelefonniCislo;
+                cmd.Parameters.Add("v_pozice", OracleDbType.Varchar2).Value = hrac.Pozice;
+                cmd.Parameters.Add("v_pocet_golu", OracleDbType.Int32).Value = hrac.PocetVstrelenychGolu;
+                cmd.Parameters.Add("v_pocet_zlute", OracleDbType.Int32).Value = hrac.PocetZlutychKaret;
+                cmd.Parameters.Add("v_pocet_cervene", OracleDbType.Int32).Value = hrac.PocetCervenychKaret;
+                cmd.Parameters.Add("v_vek", OracleDbType.Int32).Value = hrac.Vek;
+                cmd.Parameters.Add("v_zdravotni_stav", OracleDbType.Char).Value = hrac.ZdravotniStav;
 
                 cmd.ExecuteNonQuery();
             }

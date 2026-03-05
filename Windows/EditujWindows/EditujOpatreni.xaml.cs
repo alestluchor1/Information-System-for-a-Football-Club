@@ -93,7 +93,7 @@ namespace InformacniSystemKlub.Windows.EditujWindows
 
                 if (hrac != null)
                 {
-                    if (hrac.id == idHrac)
+                    if (hrac.Id == idHrac)
                     {
                         cbHrac.SelectedItem = hrac;
                         return;

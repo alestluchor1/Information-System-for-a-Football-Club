@@ -114,9 +114,9 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                 DateTime datumUkonceni = InputValidator.ValidujDatumUkonceniOpatreni(dpDatumUkonceni.SelectedDate);
                 string duvod = InputValidator.ValidujDuvodOpatreni(TxtDuvod.Text);
 
-                novyOpatreni.IdHrac = hracVybrany.id;
-                novyOpatreni.Jmeno = hracVybrany.jmeno;
-                novyOpatreni.Prijmeni = hracVybrany.prijmeni;
+                novyOpatreni.IdHrac = hracVybrany.Id;
+                novyOpatreni.Jmeno = hracVybrany.Jmeno;
+                novyOpatreni.Prijmeni = hracVybrany.Prijmeni;
                 novyOpatreni.DatumUkonceniOpatreni = datumUkonceni;
                 novyOpatreni.Duvod = duvod;
 

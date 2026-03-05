@@ -81,7 +81,7 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
                     throw new Exception("Vyberte hráče");
                 }
 
-                vysledek = vysledek.Where(o => o.IdHrac == vybranyHrac.id);
+                vysledek = vysledek.Where(o => o.IdHrac == vybranyHrac.Id);
             }
 
             // Datum ukončení

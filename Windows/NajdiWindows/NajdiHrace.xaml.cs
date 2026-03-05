@@ -50,7 +50,7 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
             if (!string.IsNullOrWhiteSpace(TxtId.Text))
             {
                 int id = InputValidator.ValidujId(TxtId.Text.Trim());
-                vysledek = vysledek.Where(h => h.id == id);
+                vysledek = vysledek.Where(h => h.Id == id);
             }
 
             // Jméno
@@ -58,7 +58,7 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
             {
                 var jmeno = TxtJmeno.Text.Trim();
                 InputValidator.ValidujJmeno(jmeno);
-                vysledek = vysledek.Where(h => string.Equals(h.jmeno, jmeno, StringComparison.OrdinalIgnoreCase));
+                vysledek = vysledek.Where(h => string.Equals(h.Jmeno, jmeno, StringComparison.OrdinalIgnoreCase));
             }
 
             // Příjmení
@@ -66,7 +66,7 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
             {
                 var prijmeni = TxtPrijmeni.Text.Trim();
                 InputValidator.ValidujPrijmeni(prijmeni);
-                vysledek = vysledek.Where(h => string.Equals(h.prijmeni, prijmeni, StringComparison.OrdinalIgnoreCase));
+                vysledek = vysledek.Where(h => string.Equals(h.Prijmeni, prijmeni, StringComparison.OrdinalIgnoreCase));
             }
 
             // Rodné číslo
@@ -74,7 +74,7 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
             {
                 var rodneCislo = TxtRodneCislo.Text.Trim();
                 InputValidator.ValidujRodneCislo(rodneCislo);
-                vysledek = vysledek.Where(h => h.rodneCislo == rodneCislo);
+                vysledek = vysledek.Where(h => h.RodneCislo == rodneCislo);
             }
 
             // Telefonní číslo
@@ -82,28 +82,28 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
             {
                 var telefonniCislo = TxtTelefonniCislo.Text.Trim();
                 InputValidator.ValidujTelefonniCislo(telefonniCislo);
-                vysledek = vysledek.Where(h => h.telefonniCislo == telefonniCislo);
+                vysledek = vysledek.Where(h => h.TelefonniCislo == telefonniCislo);
             }
 
             // Góly
             if (!string.IsNullOrWhiteSpace(iudPocetGolu.Text))
             {
                 int goly = InputValidator.ValidujHraciSpinnerGolyKarty(iudPocetGolu.Text, "Počet vstřelených gólů");
-                vysledek = vysledek.Where(h => h.pocetVstrelenychGolu == goly);
+                vysledek = vysledek.Where(h => h.PocetVstrelenychGolu == goly);
             }
 
             // Žluté karty
             if (!string.IsNullOrWhiteSpace(iudPocetZlutychKaret.Text))
             {
                 int zluteKarty = InputValidator.ValidujHraciSpinnerGolyKarty(iudPocetZlutychKaret.Text, "Počet žlutých karet");
-                vysledek = vysledek.Where(h => h.pocetZlutychKaret == zluteKarty);
+                vysledek = vysledek.Where(h => h.PocetZlutychKaret == zluteKarty);
             }
 
             // Červené karty
             if (!string.IsNullOrWhiteSpace(iudPocetCervenychKaret.Text))
             {
                 int cervene = InputValidator.ValidujHraciSpinnerGolyKarty(iudPocetCervenychKaret.Text, "Počet červených karet");
-                vysledek = vysledek.Where(h => h.pocetCervenychKaret == cervene);
+                vysledek = vysledek.Where(h => h.PocetCervenychKaret == cervene);
             }
 
             // Pozice
@@ -113,22 +113,22 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
                 InputValidator.ValidujPozice(pozice);
 
                 vysledek = vysledek.Where(h =>
-                    !string.IsNullOrWhiteSpace(h.pozice) &&
-                    h.pozice.Contains(pozice, StringComparison.OrdinalIgnoreCase));
+                    !string.IsNullOrWhiteSpace(h.Pozice) &&
+                    h.Pozice.Contains(pozice, StringComparison.OrdinalIgnoreCase));
             }
 
             // Věk
             if (!string.IsNullOrWhiteSpace(iudVek.Text))
             {
                 int vek = InputValidator.ValidujHraciVek(iudVek.Text, "Věk");
-                vysledek = vysledek.Where(h => h.vek == vek);
+                vysledek = vysledek.Where(h => h.Vek == vek);
             }
 
             // Zdravotní stav (A/N) 
             if (cbZdraviStav.SelectedItem is ComboBoxItem polozka && polozka.Content is string stavText && stavText != "—")
             {
                 char stav = stavText[0];
-                vysledek = vysledek.Where(h => h.zdravotniStav == stav);
+                vysledek = vysledek.Where(h => h.ZdravotniStav == stav);
             }
 
             return vysledek;

@@ -66,7 +66,7 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                 {
                     foreach (var hrac in HraciOkno.HraciData)
                     {
-                        if (hrac.id == editovanyKontrakt.IdHrac)
+                        if (hrac.Id == editovanyKontrakt.IdHrac)
                         {
                             cbHrac.SelectedItem = hrac;
                             break;

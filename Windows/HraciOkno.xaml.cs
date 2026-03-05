@@ -62,21 +62,21 @@ namespace InformacniSystemKlub.Windows
                 {
 
                     case 1: // A - Tým
-                        if (hrac.vek > 18)
+                        if (hrac.Vek > 18)
                         {
                             vybraniHraci.Add(hrac);
                         }
                         break;
                     
                     case 2: // Dorost
-                        if (hrac.vek >= 14 && hrac.vek <= 18)
+                        if (hrac.Vek >= 14 && hrac.Vek <= 18)
                         {
                             vybraniHraci.Add(hrac);
                         }
                         break;
 
                     case 3: // Mladší žáci
-                        if (hrac.vek >= 3 && hrac.vek < 14)
+                        if (hrac.Vek >= 3 && hrac.Vek < 14)
                         {
                             vybraniHraci.Add(hrac);
                         }
@@ -122,101 +122,101 @@ namespace InformacniSystemKlub.Windows
 
                     if (reader["IDCLENKLUBU"] != DBNull.Value)
                     {
-                        hrac.id = Convert.ToInt32(reader["IDCLENKLUBU"]);
+                        hrac.Id = Convert.ToInt32(reader["IDCLENKLUBU"]);
                     }
                     else
                     {
-                        hrac.id = 0;
+                        hrac.Id = 0;
                     }
 
                     if (reader["RODNECISLO"] != DBNull.Value)
                     {
-                        hrac.rodneCislo = reader["RODNECISLO"].ToString();
+                        hrac.RodneCislo = reader["RODNECISLO"].ToString();
                     }
                     else 
                     {
-                        hrac.rodneCislo = "0";
+                        hrac.RodneCislo = "0";
                     }
 
                     if (reader["JMENO"] != DBNull.Value)
                     {
-                        hrac.jmeno = reader["JMENO"].ToString();
+                        hrac.Jmeno = reader["JMENO"].ToString();
                     }
                     else
                     {
-                        hrac.jmeno = "-";
+                        hrac.Jmeno = "-";
                     }
 
                     if (reader["PRIJMENI"] != DBNull.Value)
                     {
-                        hrac.prijmeni = reader["PRIJMENI"].ToString();
+                        hrac.Prijmeni = reader["PRIJMENI"].ToString();
                     }
                     else
                     {
-                        hrac.prijmeni = "-";
+                        hrac.Prijmeni = "-";
                     }
 
                     if (reader["TELEFONNICISLO"] != DBNull.Value)
                     {
-                        hrac.telefonniCislo = reader["TELEFONNICISLO"].ToString();
+                        hrac.TelefonniCislo = reader["TELEFONNICISLO"].ToString();
                     }
                     else
                     {
-                        hrac.telefonniCislo = "-";
+                        hrac.TelefonniCislo = "-";
                     }
 
                     if (reader["POCETVSTRELENYCHGOLU"] != DBNull.Value)
                     {
-                        hrac.pocetVstrelenychGolu = Convert.ToInt32(reader["POCETVSTRELENYCHGOLU"]);
+                        hrac.PocetVstrelenychGolu = Convert.ToInt32(reader["POCETVSTRELENYCHGOLU"]);
                     }
                     else
                     {
-                        hrac.pocetVstrelenychGolu = 0;
+                        hrac.PocetVstrelenychGolu = 0;
                     }
 
                     if (reader["POCETZLUTYCHKARET"] != DBNull.Value)
                     {
-                        hrac.pocetZlutychKaret = Convert.ToInt32(reader["POCETZLUTYCHKARET"]);
+                        hrac.PocetZlutychKaret = Convert.ToInt32(reader["POCETZLUTYCHKARET"]);
                     }
                     else
                     {
-                        hrac.pocetZlutychKaret = 0;
+                        hrac.PocetZlutychKaret = 0;
                     }
 
                     if (reader["POCETCERVENYCHKARET"] != DBNull.Value)
                     {
-                        hrac.pocetCervenychKaret = Convert.ToInt32(reader["POCETCERVENYCHKARET"]);
+                        hrac.PocetCervenychKaret = Convert.ToInt32(reader["POCETCERVENYCHKARET"]);
                     }
                     else
                     {
-                        hrac.pocetCervenychKaret = 0;
+                        hrac.PocetCervenychKaret = 0;
                     }
 
                     if (reader["POZICE"] != DBNull.Value)
                     {
-                        hrac.pozice = reader["POZICE"].ToString();
+                        hrac.Pozice = reader["POZICE"].ToString();
                     }
                     else
                     {
-                        hrac.pozice = "";
+                        hrac.Pozice = "";
                     }
 
                     if (reader["VEK"] != DBNull.Value)
                     {
-                        hrac.vek = Convert.ToInt32(reader["VEK"]);
+                        hrac.Vek = Convert.ToInt32(reader["VEK"]);
                     }
                     else 
                     { 
-                        hrac.vek= 0;
+                        hrac.Vek= 0;
                     }
 
                     if (reader["ZDRAVOTNISTAV"] != DBNull.Value)
                     {
-                        hrac.zdravotniStav = Convert.ToChar(reader["ZDRAVOTNISTAV"]);
+                        hrac.ZdravotniStav = Convert.ToChar(reader["ZDRAVOTNISTAV"]);
                     }
                     else 
                     {
-                        hrac.zdravotniStav = 'A';
+                        hrac.ZdravotniStav = 'A';
                     }
 
                     HraciData.Add(hrac);

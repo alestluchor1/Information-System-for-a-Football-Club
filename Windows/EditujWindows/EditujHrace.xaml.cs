@@ -23,18 +23,18 @@ namespace InformacniSystemKlub.Windows.EditujWindows
 
             this.editovanyHrac = editovanyHrac;
 
-            TxtRodneCislo.Text = editovanyHrac.rodneCislo;
-            TxtJmeno.Text = editovanyHrac.jmeno;
-            TxtPrijmeni.Text = editovanyHrac.prijmeni;
-            TxtTelefonniCislo.Text = editovanyHrac.telefonniCislo;
-            TxtPozice.Text = editovanyHrac.pozice;
+            TxtRodneCislo.Text = editovanyHrac.RodneCislo;
+            TxtJmeno.Text = editovanyHrac.Jmeno;
+            TxtPrijmeni.Text = editovanyHrac.Prijmeni;
+            TxtTelefonniCislo.Text = editovanyHrac.TelefonniCislo;
+            TxtPozice.Text = editovanyHrac.Pozice;
 
-            iudPocetGolu.Value = editovanyHrac.pocetVstrelenychGolu;
-            iudPocetZlutychKaret.Value = editovanyHrac.pocetZlutychKaret;
-            iudPocetCervenychKaret.Value = editovanyHrac.pocetCervenychKaret;
-            iudVek.Value = editovanyHrac.vek;
+            iudPocetGolu.Value = editovanyHrac.PocetVstrelenychGolu;
+            iudPocetZlutychKaret.Value = editovanyHrac.PocetZlutychKaret;
+            iudPocetCervenychKaret.Value = editovanyHrac.PocetCervenychKaret;
+            iudVek.Value = editovanyHrac.Vek;
 
-            NastavZdravotniStav(editovanyHrac.zdravotniStav);
+            NastavZdravotniStav(editovanyHrac.ZdravotniStav);
         }
 
         /// <summary>
@@ -119,18 +119,18 @@ namespace InformacniSystemKlub.Windows.EditujWindows
 
                 char zdrav = InputValidator.ValidujZdravotniStav(cbZdraviStav.SelectedItem);
 
-                editovanyHrac.rodneCislo = rodneCislo;
-                editovanyHrac.jmeno = jmeno;
-                editovanyHrac.prijmeni = prijmeni;
-                editovanyHrac.telefonniCislo = tel;
-                editovanyHrac.pozice = pozice;
+                editovanyHrac.RodneCislo = rodneCislo;
+                editovanyHrac.Jmeno = jmeno;
+                editovanyHrac.Prijmeni = prijmeni;
+                editovanyHrac.TelefonniCislo = tel;
+                editovanyHrac.Pozice = pozice;
 
-                editovanyHrac.pocetVstrelenychGolu = goly;
-                editovanyHrac.pocetZlutychKaret = zlute;
-                editovanyHrac.pocetCervenychKaret = cervene;
-                editovanyHrac.vek = vek;
+                editovanyHrac.PocetVstrelenychGolu = goly;
+                editovanyHrac.PocetZlutychKaret = zlute;
+                editovanyHrac.PocetCervenychKaret = cervene;
+                editovanyHrac.Vek = vek;
 
-                editovanyHrac.zdravotniStav = zdrav;
+                editovanyHrac.ZdravotniStav = zdrav;
 
                 OracleConnection conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
                 DatabazeHraci.EditaceHrace(conn, editovanyHrac);

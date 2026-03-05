@@ -126,15 +126,15 @@ namespace InformacniSystemKlub.Windows
 
                             if (reader["HRAC_IDCLENKLUBU"] != DBNull.Value)
                             {
-                                kontrakt.KontraktHrace.id = Convert.ToInt32(reader["HRAC_IDCLENKLUBU"]);
+                                kontrakt.KontraktHrace.Id = Convert.ToInt32(reader["HRAC_IDCLENKLUBU"]);
                             }
                             else
                             {
-                                kontrakt.KontraktHrace.id = 0;
+                                kontrakt.KontraktHrace.Id = 0;
                             }
 
-                            kontrakt.KontraktHrace.jmeno = reader["JMENO"].ToString();
-                            kontrakt.KontraktHrace.prijmeni = reader["PRIJMENI"].ToString();
+                            kontrakt.KontraktHrace.Jmeno = reader["JMENO"].ToString();
+                            kontrakt.KontraktHrace.Prijmeni = reader["PRIJMENI"].ToString();
                         }
                         else
                         {
