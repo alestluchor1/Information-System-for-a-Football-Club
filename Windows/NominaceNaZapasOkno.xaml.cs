@@ -1,6 +1,7 @@
 ﻿using InformacniSystemKlub.Database;
 using InformacniSystemKlub.Models;
 using InformacniSystemKlub.Windows.EditujWindows;
+using InformacniSystemKlub.Windows.NajdiWindows;
 using InformacniSystemKlub.Windows.PridejWindows;
 using Oracle.ManagedDataAccess.Client;
 using System;
@@ -27,15 +28,9 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private bool jeVyhledavaniAktivni = false;
 
-        /// <summary>
-        /// Pomocný příznak, aby se filtr nespouštěl při inicializaci
-        /// </summary>
-        private bool ready = false;
-
         public NominaceNaZapasOkno()
         {
             InitializeComponent();
-            ready = false;
 
             ApplyTheme(HlavniOkno.jeDarkModeAktivni);
 
@@ -53,10 +48,6 @@ namespace InformacniSystemKlub.Windows
 
             DgNominace.ItemsSource = NominaceData;
 
-            cbVyberTymu.SelectedIndex = 0;
-            ready = true;
-
-            VyberTymu();
             ZkontrolujKartyVeVsechZapasech();
         }
 
@@ -88,7 +79,6 @@ namespace InformacniSystemKlub.Windows
                     NactiNominace();
                     HraciOkno.NactiHrace();
 
-                    VyberTymu();
                     ZkontrolujKartyVeVsechZapasech();
 
                     MessageBox.Show("Nominace byla úspěšně přidána", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -125,7 +115,6 @@ namespace InformacniSystemKlub.Windows
 
             if (result == true)
             {
-                VyberTymu();
 
                 DgNominace.Items.Refresh();
             }
@@ -172,7 +161,6 @@ namespace InformacniSystemKlub.Windows
                 NactiNominace();
                 HraciOkno.NactiHrace();
 
-                VyberTymu();
                 ZkontrolujKartyVeVsechZapasech();
 
                 MessageBox.Show("Záznam byl smazán", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -180,62 +168,6 @@ namespace InformacniSystemKlub.Windows
             catch (Exception ex)
             {
                 MessageBox.Show("Chyba při mazání záznamu: " + ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        /// <summary>
-        /// Filtruje nominace podle vybrané tréninkové skupiny v ComboBoxu
-        /// </summary>
-        private void VyberTymu()
-        {
-            int volba = cbVyberTymu.SelectedIndex;
-
-            if (volba == 0)
-            {
-                DgNominace.ItemsSource = NominaceData;
-                return;
-            }
-
-            ObservableCollection<NominaceNaZapas> vybrane = new ObservableCollection<NominaceNaZapas>();
-
-            foreach (var n in NominaceData)
-            {
-                if (volba == 1)
-                {
-                    if (n.IdTreninkovaSkupina == 1)
-                    {
-                        vybrane.Add(n);
-                    }
-                }
-
-                if (volba == 2)
-                {
-                    if (n.IdTreninkovaSkupina == 2)
-                    {
-                        vybrane.Add(n);
-                    }
-                }
-
-                if (volba == 3)
-                {
-                    if (n.IdTreninkovaSkupina == 3)
-                    {
-                        vybrane.Add(n);
-                    }
-                }
-            }
-
-            DgNominace.ItemsSource = vybrane;
-        }
-
-        /// <summary>
-        /// Událost při změně výběru v ComboBoxu – znovu aplikuje filtr
-        /// </summary>
-        private void cbVyberTymu_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (ready == true)
-            {
-                VyberTymu();
             }
         }
 
@@ -381,6 +313,33 @@ namespace InformacniSystemKlub.Windows
             catch (Exception ex)
             {
                 MessageBox.Show("Chyba při načítání nominací: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Otevře dialog pro vyhledávání záznamů nominací
+        /// Aktivuje vyhledávací mód, dokud není režim ukončen pomocí CTRL+X
+        /// </summary>
+        private void BtnNajdi_Click(object sender, RoutedEventArgs e)
+        {
+            NajdiNominaci najdiNominaci = new NajdiNominaci(NominaceData);
+            bool? vysledekDialogu = najdiNominaci.ShowDialog();
+
+            if (vysledekDialogu == true)
+            {
+                if (najdiNominaci.FiltrovaniNominace == null || najdiNominaci.FiltrovaniNominace.Count == 0)
+                {
+                    MessageBox.Show("Nenašly se žádné záznamy se zadanými filtry", "Not found", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
+                MessageBox.Show(
+                    "Pokud je vyhledávací mód aktivní nemůžete přidávat ani odebírat vyhledaná data " +
+                    "Pro ukončení vyhledávacího módu stiskněte klávesy CTRL + X",
+                    "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                DgNominace.ItemsSource = new ObservableCollection<NominaceNaZapas>(najdiNominaci.FiltrovaniNominace);
+                jeVyhledavaniAktivni = true;
             }
         }
 

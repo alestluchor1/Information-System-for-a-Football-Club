@@ -41,6 +41,7 @@
             <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
         </Style>
 
+        <!-- Styl textových vstupů použitých ve formuláři -->
         <Style x:Key="Input" TargetType="TextBox">
             <Setter Property="Height" Value="36"/>
             <Setter Property="Padding" Value="12,0"/>
@@ -50,6 +51,7 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
+            <Setter Property="CaretBrush" Value="{DynamicResource TextMain}"/>
             <Setter Property="Margin" Value="0,6,0,6"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -93,6 +95,7 @@
             <Setter Property="Padding" Value="12,10"/>
         </Style>
 
+        <!-- Styl číselných vstupů typu IntegerUpDown -->
         <Style x:Key="Spin" TargetType="{x:Type xctk:IntegerUpDown}">
             <Setter Property="Height" Value="34"/>
             <Setter Property="Background" Value="Transparent"/>
@@ -101,8 +104,18 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
+            <Setter Property="CaretBrush" Value="{DynamicResource TextMain}"/>
         </Style>
 
+        <!-- Styl zaškrtávacích polí -->
+        <Style x:Key="CheckTheme" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+
+        <!-- Styl rozbalovacího seznamu -->
         <Style x:Key="ComboTheme" TargetType="ComboBox">
             <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
             <Setter Property="Background" Value="Transparent"/>
@@ -209,6 +222,7 @@
             </Setter>
         </Style>
 
+        <!-- Styl tlačítka -->
         <Style x:Key="BtnPrimary" TargetType="Button">
             <Setter Property="Height" Value="42"/>
             <Setter Property="Width" Value="140"/>
@@ -248,6 +262,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <!-- Levý informační panel -->
         <Border Grid.Column="0" Background="{DynamicResource SidebarGradient}">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="24">
                 <Image Source="/Images/award.png"
@@ -288,6 +303,7 @@
             </StackPanel>
         </Border>
 
+        <!-- Pravý panel obsahuje formulář pro úpravu nominace -->
         <Border Grid.Column="1"
                 Background="{DynamicResource Surface}"
                 CornerRadius="24"
@@ -325,7 +341,7 @@
                                   Style="{DynamicResource ComboTheme}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock>
+                                    <TextBlock Foreground="{DynamicResource TextMain}">
                                         <Run Text="{Binding Prijmeni}"/>
                                         <Run Text=" "/>
                                         <Run Text="{Binding Jmeno}"/>
@@ -344,7 +360,7 @@
                                   SelectionChanged="cbZapas_SelectionChanged">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock>
+                                    <TextBlock Foreground="{DynamicResource TextMain}">
                                         <Run Text="{Binding DomaciTym}"/>
                                         <Run Text=" vs "/>
                                         <Run Text="{Binding HosteTym}"/>
@@ -359,21 +375,22 @@
                         <StackPanel>
                             <CheckBox x:Name="chkJenZdravi"
                                       Content="Zobrazit jen zdravotně způsobilé hráče (A)"
-                                      Margin="0,0,0,8"
+                                      Style="{DynamicResource CheckTheme}"
                                       Checked="FiltrHrace_Changed"
                                       Unchecked="FiltrHrace_Changed"/>
                             <CheckBox x:Name="chkBezOpatreni"
                                       Content="Skrýt hráče s aktivním opatřením"
-                                      Margin="0,0,0,8"
+                                      Style="{DynamicResource CheckTheme}"
                                       Checked="FiltrHrace_Changed"
                                       Unchecked="FiltrHrace_Changed"/>
                             <CheckBox x:Name="chkJenSeGolem"
-                                      Content="Hráči, kteří dali, alepoň 1 gól"
-                                      Margin="0,0,0,8"
+                                      Content="Hráči, kteří dali, alespoň 1 gól"
+                                      Style="{DynamicResource CheckTheme}"
                                       Checked="FiltrHrace_Changed"
                                       Unchecked="FiltrHrace_Changed"/>
                             <CheckBox x:Name="chkSeraditDleStatistik"
                                       Content="Seřadit hráče podle statistik"
+                                      Style="{DynamicResource CheckTheme}"
                                       Checked="FiltrHrace_Changed"
                                       Unchecked="FiltrHrace_Changed"/>
                         </StackPanel>

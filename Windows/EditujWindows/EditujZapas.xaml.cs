@@ -198,7 +198,6 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                 if (editovanyZapas.IdStav == StavZapasuEnum.BudeSeHrat)
                 {
                     DatabazeNominace.VynulujNominaceProZapas(conn, editovanyZapas.IdZapas);
-                    DatabazeHraci.PrepocitejStatistikyHracu(conn);
                     HraciOkno.NactiHrace();
                 }
 

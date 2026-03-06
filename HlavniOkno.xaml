@@ -328,6 +328,13 @@
                             BorderBrush="#F97316"
                             Click="BtnZapasy_Click"/>
 
+                    <Button Content="Nominace sestavy na zápas"
+                            Tag="✍️"
+                            ToolTip="U odehraného zápasu zapisuje hráče, góly, minuty a karty. U budoucího slouží jako návrh sestavy podle kritérií."
+                            Style="{StaticResource TileButtonSimpleStyle}"
+                            BorderBrush="#10de47"
+                            Click="BtnNotifikaceClick"/>
+
                     <Button Content="Sportovní vybavení"
                             Tag="📦"
                             ToolTip="Evidence a správa klubového vybavení"
@@ -341,13 +348,6 @@
                             Style="{StaticResource TileButtonSimpleStyle}"
                             BorderBrush="#db18be"
                             Click="BtnKontraktyClick"/>
-
-                    <Button Content="Notifikace"
-                            Tag="✍️"
-                            ToolTip="Oznámení klubu"
-                            Style="{StaticResource TileButtonSimpleStyle}"
-                            BorderBrush="#10de47"
-                            Click="BtnNotifikaceClick"/>
 
                     <Button Content="Kalendář"
                             Tag="📅"
