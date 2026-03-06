@@ -69,6 +69,13 @@ namespace InformacniSystemKlub.Windows
 
         }
 
+        private void BtnNotifikaceClick(object sender, RoutedEventArgs e)
+        {
+            NominaceNaZapasOkno nominace = new NominaceNaZapasOkno();
+            nominace.ShowDialog();
+
+        }
+
         private void BtnZapasy_Click(object sender, RoutedEventArgs e)
         {
             ZapasyOkno zapasyOkno = new ZapasyOkno();

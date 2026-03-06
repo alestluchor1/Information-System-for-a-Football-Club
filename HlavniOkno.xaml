@@ -346,7 +346,8 @@
                             Tag="✍️"
                             ToolTip="Oznámení klubu"
                             Style="{StaticResource TileButtonSimpleStyle}"
-                            BorderBrush="#10de47"/>
+                            BorderBrush="#10de47"
+                            Click="BtnNotifikaceClick"/>
 
                     <Button Content="Kalendář"
                             Tag="📅"

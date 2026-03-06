@@ -194,6 +194,14 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                 OracleConnection conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
                 DatabazeZapasy.EditaceZapasu(conn, editovanyZapas);
 
+                // Když se zápas změní na BUDE SE HRÁT, vynulují se statistiky nominací pro tento zápas
+                if (editovanyZapas.IdStav == StavZapasuEnum.BudeSeHrat)
+                {
+                    DatabazeNominace.VynulujNominaceProZapas(conn, editovanyZapas.IdZapas);
+                    DatabazeHraci.PrepocitejStatistikyHracu(conn);
+                    HraciOkno.NactiHrace();
+                }
+
                 MessageBox.Show("Změny byly úspěšně uloženy", "Úspěch", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 DialogResult = true;

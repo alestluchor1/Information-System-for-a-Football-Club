@@ -49,7 +49,7 @@ namespace InformacniSystemKlub.Windows
         /// <summary>
         /// Načte disciplinární opatření z databáze a naplní kolekci DisciplinarniOpatreniData
         /// </summary>
-        private void NactiDisciplinarniOpatreni()
+        public static void NactiDisciplinarniOpatreni()
         {
             try
             {

@@ -697,5 +697,35 @@ namespace InformacniSystemKlub
                 throw new Exception("Hesla se neshodují!");
             }
         }
+
+        // Nominace
+
+        public static int ValidujNominaciMinuty(string hodnotaText, string nazevPole = "Počet odehraných minut")
+        {
+            const int min = 0;
+            const int max = 300;
+
+            if (string.IsNullOrWhiteSpace(hodnotaText))
+            {
+                throw new Exception($"{nazevPole} nesmí být prázdné");
+            }
+
+            if (!int.TryParse(hodnotaText.Trim(), out int hodnota))
+            {
+                throw new Exception($"{nazevPole} musí být celé číslo");
+            }
+
+            if (hodnota < min)
+            {
+                throw new Exception($"{nazevPole} nesmí být menší než {min}");
+            }
+
+            if (hodnota > max)
+            {
+                throw new Exception($"{nazevPole} nesmí být větší než {max}");
+            }
+
+            return hodnota;
+        }
     }
 }

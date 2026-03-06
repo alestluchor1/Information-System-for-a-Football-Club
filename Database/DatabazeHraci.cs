@@ -83,5 +83,25 @@ namespace InformacniSystemKlub.Database
                 cmd.ExecuteNonQuery();
             }
         }
+
+        /// <summary>
+        /// přepočítání statistik hráčů z nominace na zápas z odehraných zápasů <c>PKG_HRACI.SP_PREPOCITEJ_STATISTIKY_HRACU</c> 
+        /// </summary
+        public static void PrepocitejStatistikyHracu(OracleConnection conn)
+        {
+            try
+            {
+                using (var cmd = new OracleCommand("PKG_HRACI.SP_PREPOCITEJ_STATISTIKY_HRACU", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.BindByName = true;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (OracleException ex)
+            {
+                throw new Exception("Chyba při volání PKG_HRACI.SP_PREPOCITEJ_STATISTIKY_HRACU: " + ex.Message, ex);
+            }
+        }
     }
 }

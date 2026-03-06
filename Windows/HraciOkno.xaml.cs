@@ -88,6 +88,44 @@ namespace InformacniSystemKlub.Windows
             DgHraci.ItemsSource = vybraniHraci;
         }
 
+        public static void PrepocitejStatistikyHracuZNominaci()
+        {
+            if (HraciData == null)
+            {
+                return;
+            }
+
+            foreach (var hrac in HraciData)
+            {
+                if (hrac == null)
+                {
+                    continue;
+                }
+
+                hrac.PocetVstrelenychGolu = 0;
+                hrac.PocetZlutychKaret = 0;
+                hrac.PocetCervenychKaret = 0;
+
+                foreach (var nominace in NominaceNaZapasOkno.NominaceData)
+                {
+                    if (nominace == null)
+                    {
+                        continue;
+                    }
+
+                    if (nominace.IdHrace == hrac.Id)
+                    {
+                        if (nominace.StavZapasu == "ODEHRÁNO" || nominace.StavZapasu == "Odehráno")
+                        {
+                            hrac.PocetVstrelenychGolu = hrac.PocetVstrelenychGolu + nominace.PocetGolu;
+                            hrac.PocetZlutychKaret = hrac.PocetZlutychKaret + nominace.ZluteKarty;
+                            hrac.PocetCervenychKaret = hrac.PocetCervenychKaret + nominace.CerveneKarty;
+                        }
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Událost změny výběru v ComboBoxu – provede znovu aplikace filtru
         /// </summary>
