@@ -11,7 +11,7 @@ namespace InformacniSystemKlub.Windows.PridejWindows
 {
     /// <summary>
     /// Okno pro přidání nové nominace. Umožnuje navrhnout hráče i podel různých kriterií na zápasy
-    /// Nebo pokud se zápas odehrál, lze přiřadit hráče k zápasu a zapsat počet odehraných minut, vstřelených golu a počet karet
+    /// Nebo pokud se zápas odehrál, lze přiřadit hráče k zápasu a zapsat počet odehraných minut, vstřelených golu a počet karet v daném zápase
     /// </summary>
     public partial class PridejNominaci : Window
     {

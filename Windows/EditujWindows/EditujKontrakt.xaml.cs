@@ -60,7 +60,7 @@ namespace InformacniSystemKlub.Windows.EditujWindows
 
                 cbHrac.ItemsSource = HraciOkno.HraciData;
 
-                cbHrac.DisplayMemberPath = "prijmeni";
+                cbHrac.DisplayMemberPath = "Prijmeni";
 
                 if (editovanyKontrakt.IdHrac != 0)
                 {

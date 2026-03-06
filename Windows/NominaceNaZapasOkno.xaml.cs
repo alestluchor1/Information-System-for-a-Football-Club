@@ -1,5 +1,7 @@
 ﻿using InformacniSystemKlub.Database;
 using InformacniSystemKlub.Models;
+using InformacniSystemKlub.Windows.EditujWindows;
+using InformacniSystemKlub.Windows.PridejWindows;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.ObjectModel;
@@ -7,7 +9,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using InformacniSystemKlub.Windows.PridejWindows;
 
 namespace InformacniSystemKlub.Windows
 {
@@ -17,23 +18,20 @@ namespace InformacniSystemKlub.Windows
     public partial class NominaceNaZapasOkno : Window
     {
         /// <summary>
-        /// Kolekce nominací, která se zobrazuje v DataGridu.
+        /// Kolekce nominací, která se zobrazuje v DataGridu
         /// </summary>
         public static ObservableCollection<NominaceNaZapas> NominaceData { get; set; } = new ObservableCollection<NominaceNaZapas>();
 
         /// <summary>
-        /// Příznak, zda je aktivní vyhledávací mód.
+        /// Příznak, zda je aktivní vyhledávací mód
         /// </summary>
         private bool jeVyhledavaniAktivni = false;
 
         /// <summary>
-        /// Pomocný příznak, aby se filtr nespouštěl při inicializaci.
+        /// Pomocný příznak, aby se filtr nespouštěl při inicializaci
         /// </summary>
         private bool ready = false;
 
-        /// <summary>
-        /// Konstruktor – načte data, nastaví téma a připraví DataGrid.
-        /// </summary>
         public NominaceNaZapasOkno()
         {
             InitializeComponent();
@@ -62,10 +60,20 @@ namespace InformacniSystemKlub.Windows
             ZkontrolujKartyVeVsechZapasech();
         }
 
+        /// <summary>
+        /// Otevře dialog pro přidání záznamu, uloží nový záznam do databáze a obnoví seznam
+        /// </summary>
         private void BtnPridej_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                if (jeVyhledavaniAktivni == true)
+                {
+                    MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
                 NominaceNaZapas novaNominace = new NominaceNaZapas();
 
                 PridejNominaci okno = new PridejNominaci(novaNominace);
@@ -73,12 +81,13 @@ namespace InformacniSystemKlub.Windows
 
                 if (vysledek == true)
                 {
-                    OracleConnection conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
+                    var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
 
                     DatabazeNominace.PridejNominaci(conn, novaNominace);
-                    DatabazeHraci.PrepocitejStatistikyHracu(conn);
 
                     NactiNominace();
+                    HraciOkno.NactiHrace();
+
                     VyberTymu();
                     ZkontrolujKartyVeVsechZapasech();
 
@@ -88,6 +97,37 @@ namespace InformacniSystemKlub.Windows
             catch (Exception ex)
             {
                 MessageBox.Show("Chyba při přidání nominace: " + ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Obsluha tlačítka Edituj pro úpravu údajů záznamu
+        /// </summary>
+        private void BtnEdituj_Click(object sender, RoutedEventArgs e)
+        {
+            if (jeVyhledavaniAktivni == true)
+            {
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            NominaceNaZapas vybranyZaznam = DgNominace.SelectedItem as NominaceNaZapas;
+            if (vybranyZaznam == null)
+            {
+                MessageBox.Show("Prosím vyberte záznam, který chcete editovat!", "Chyba",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var dialog = new EditujNominaci(vybranyZaznam);
+            bool? result = dialog.ShowDialog();
+
+            if (result == true)
+            {
+                VyberTymu();
+
+                DgNominace.Items.Refresh();
             }
         }
 
@@ -125,12 +165,13 @@ namespace InformacniSystemKlub.Windows
 
             try
             {
-                OracleConnection conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
+                var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
 
                 DatabazeNominace.OdeberNominaci(conn, vybranyZaznam);
-                DatabazeHraci.PrepocitejStatistikyHracu(conn);
 
                 NactiNominace();
+                HraciOkno.NactiHrace();
+
                 VyberTymu();
                 ZkontrolujKartyVeVsechZapasech();
 
@@ -143,7 +184,7 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Filtruje nominace podle vybrané tréninkové skupiny v ComboBoxu.
+        /// Filtruje nominace podle vybrané tréninkové skupiny v ComboBoxu
         /// </summary>
         private void VyberTymu()
         {
@@ -188,7 +229,7 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Událost při změně výběru v ComboBoxu – znovu aplikuje filtr.
+        /// Událost při změně výběru v ComboBoxu – znovu aplikuje filtr
         /// </summary>
         private void cbVyberTymu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -199,7 +240,7 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Načte nominace z databáze (pohled NOMINACE_VIEW) a naplní kolekci NominaceData.
+        /// Načte nominace z databáze (pohled NOMINACE_VIEW) a naplní kolekci NominaceData
         /// </summary>
         public static void NactiNominace()
         {
@@ -368,7 +409,7 @@ namespace InformacniSystemKlub.Windows
 
         /// <summary>
         /// Zkontroluje jeden konkrétní zápas: sečte ŽK/ČK ze všech nominací pro daný zápas
-        /// a porovná s hodnotami v tabulce zápasů.
+        /// a porovná s hodnotami v tabulce zápasů
         /// </summary>
         private void ZkontrolujKartyProZapas(Zapas zapas)
         {
@@ -435,7 +476,7 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Zavře okno.
+        /// Zavře okno
         /// </summary>
         private void BtnZpet_Click(object sender, RoutedEventArgs e)
         {
@@ -443,7 +484,7 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Přepne barvy podle režimu (dark / light).
+        /// Přepne barvy podle režimu (dark / light)
         /// </summary>
         private void ApplyTheme(bool darkMode)
         {

@@ -51,7 +51,7 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                 }
 
                 cbHrac.ItemsSource = HraciOkno.HraciData;
-                cbHrac.DisplayMemberPath = "prijmeni";
+                cbHrac.DisplayMemberPath = "Prijmeni";
 
                 if (cbHrac.Items.Count > 0)
                 {

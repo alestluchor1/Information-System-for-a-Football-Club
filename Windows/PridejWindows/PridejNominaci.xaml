@@ -358,7 +358,7 @@
                     <Border Grid.Row="2" Grid.Column="1" Style="{DynamicResource InputHostTall}">
                         <StackPanel>
                             <CheckBox x:Name="chkJenZdravi"
-                                      Content="Zobrazit jen zdravé hráče (A)"
+                                      Content="Zobrazit jen zdravotně způsobilé hráče (A)"
                                       Margin="0,0,0,8"
                                       Checked="FiltrHrace_Changed"
                                       Unchecked="FiltrHrace_Changed"/>
@@ -368,7 +368,7 @@
                                       Checked="FiltrHrace_Changed"
                                       Unchecked="FiltrHrace_Changed"/>
                             <CheckBox x:Name="chkJenSeGolem"
-                                      Content="Jen hráči, kteří dali aspoň 1 gól"
+                                      Content="Hráči, kteří dali, alespoň 1 gól"
                                       Margin="0,0,0,8"
                                       Checked="FiltrHrace_Changed"
                                       Unchecked="FiltrHrace_Changed"/>
@@ -409,7 +409,7 @@
                                             Style="{DynamicResource Spin}"
                                             Value="0"
                                             Minimum="0"
-                                            Maximum="100"/>
+                                            Maximum="2"/>
                     </Border>
 
                     <TextBlock Grid.Row="7" Grid.Column="0" Text="Počet červených karet" Style="{DynamicResource Lbl}"/>
@@ -418,7 +418,7 @@
                                             Style="{DynamicResource Spin}"
                                             Value="0"
                                             Minimum="0"
-                                            Maximum="100"/>
+                                            Maximum="1"/>
                     </Border>
 
                     <Button Grid.Row="8" Grid.Column="1"

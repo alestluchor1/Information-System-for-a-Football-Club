@@ -88,44 +88,6 @@ namespace InformacniSystemKlub.Windows
             DgHraci.ItemsSource = vybraniHraci;
         }
 
-        public static void PrepocitejStatistikyHracuZNominaci()
-        {
-            if (HraciData == null)
-            {
-                return;
-            }
-
-            foreach (var hrac in HraciData)
-            {
-                if (hrac == null)
-                {
-                    continue;
-                }
-
-                hrac.PocetVstrelenychGolu = 0;
-                hrac.PocetZlutychKaret = 0;
-                hrac.PocetCervenychKaret = 0;
-
-                foreach (var nominace in NominaceNaZapasOkno.NominaceData)
-                {
-                    if (nominace == null)
-                    {
-                        continue;
-                    }
-
-                    if (nominace.IdHrace == hrac.Id)
-                    {
-                        if (nominace.StavZapasu == "ODEHRÁNO" || nominace.StavZapasu == "Odehráno")
-                        {
-                            hrac.PocetVstrelenychGolu = hrac.PocetVstrelenychGolu + nominace.PocetGolu;
-                            hrac.PocetZlutychKaret = hrac.PocetZlutychKaret + nominace.ZluteKarty;
-                            hrac.PocetCervenychKaret = hrac.PocetCervenychKaret + nominace.CerveneKarty;
-                        }
-                    }
-                }
-            }
-        }
-
         /// <summary>
         /// Událost změny výběru v ComboBoxu – provede znovu aplikace filtru
         /// </summary>
@@ -137,6 +99,9 @@ namespace InformacniSystemKlub.Windows
             }
         }
 
+        /// <summary>
+        /// Z čísleníku tréninkové skupiny databáze na text
+        /// </summary>
         private static string SkupinaNaText(int idSkupiny)
         {
             // Překlad ID tréninkové skupiny číselníku na text
@@ -159,7 +124,7 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Načte hráče z databáze (pohled HRACI_VIEW) a naplní kolekci HraciData.
+        /// Načte hráče z databáze (pohled HRACI_VIEW) a naplní kolekci HraciData
         /// </summary>
         public static void NactiHrace()
         {
@@ -317,7 +282,6 @@ namespace InformacniSystemKlub.Windows
             }
         }
 
-
         /// <summary>
         /// Otevře dialog pro vyhledávání hráčů (NajdiHrace) a v případě potvrzení zobrazí filtrovaný výsledek v DataGridu
         /// Aktivuje vyhledávací mód, dokud není režim ukončen pomocí CTRL+X.
@@ -344,7 +308,6 @@ namespace InformacniSystemKlub.Windows
                 jeVyhledavaniAktivni = true;
             }
         }
-
 
         /// <summary>
         /// Metoda slouží k zrušení vyhledávacího módu, pokud se zmáčkne klávesa CTRL + X
