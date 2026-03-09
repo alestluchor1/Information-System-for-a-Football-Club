@@ -140,7 +140,7 @@ namespace InformacniSystemKlub.Windows
         /// <summary>
         /// Otevře okno nominací na zápas
         /// </summary>
-        private void BtnNotifikaceClick(object sender, RoutedEventArgs e)
+        private void BtnNominaceClick(object sender, RoutedEventArgs e)
         {
             NominaceNaZapasOkno nominace = new NominaceNaZapasOkno();
             nominace.ShowDialog();
@@ -266,11 +266,14 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Pomocné tlačítko pro systémové notifikace.
+        /// Pomocné tlačítko pro notifikace
         /// </summary>
-        private void BtnNotifikaceSystemClick(object sender, RoutedEventArgs e)
+        private void BtnNotifikaceClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Okno notifikací zatím není připojeno.");
+            NastaveniOkno.NactiUzivatele();
+
+            Notifikace notifikace = new Notifikace(NastaveniOkno.UzivateleData);
+            notifikace.ShowDialog();
         }
 
         /// <summary>

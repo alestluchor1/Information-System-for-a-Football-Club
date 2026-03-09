@@ -369,7 +369,7 @@
                             ToolTip="U odehraného zápasu zapisuje hráče, góly, minuty a karty. U budoucího slouží jako návrh sestavy podle kritérií."
                             Style="{StaticResource TileButtonSimpleStyle}"
                             BorderBrush="#10DE47"
-                            Click="BtnNotifikaceClick"/>
+                            Click="BtnNominaceClick"/>
 
                     <Button Content="Sportovní vybavení"
                             Tag="📦"
@@ -407,7 +407,7 @@
                             ToolTip="Přehled oznámení, upozornění a systémových zpráv"
                             Style="{StaticResource TileButtonSimpleStyle}"
                             BorderBrush="#EAB308"
-                            Click="BtnNotifikaceSystemClick"/>
+                            Click="BtnNotifikaceClick"/>
 
                     <Button Content="Editor sestav"
                             Tag="🧩"
