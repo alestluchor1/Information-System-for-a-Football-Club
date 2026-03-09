@@ -126,6 +126,24 @@ namespace InformacniSystemKlub.Windows
                         uzivatel.RodneCislo = "";
                     }
 
+                    if (reader["IDROLE"] != DBNull.Value)
+                    {
+                        uzivatel.IdRole = Convert.ToInt32(reader["IDROLE"]);
+                    }
+                    else
+                    {
+                        uzivatel.IdRole = 0;
+                    }
+
+                    if (reader["CLENOVE_KLUBU_IDCLENKLUBU"] != DBNull.Value)
+                    {
+                        uzivatel.IdClenKlubu = Convert.ToInt32(reader["CLENOVE_KLUBU_IDCLENKLUBU"]);
+                    }
+                    else
+                    {
+                        uzivatel.IdClenKlubu = 0;
+                    }
+
                     UzivateleData.Add(uzivatel);
                 }
 
@@ -142,28 +160,70 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnEdituj_Click(object sender, RoutedEventArgs e)
         {
-            //if (jeVyhledavaniAktivni == true)
-            //{
-            //    MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
-            //        MessageBoxButton.OK, MessageBoxImage.Information);
-            //    return;
-            //}
+            // Zakáže editaci během aktivního vyhledávacího módu
+            if (jeVyhledavaniAktivni == true)
+            {
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
 
-            //Uzivatel vybranyUzivatel = DgUzivatele.SelectedItem as Uzivatel;
-            //if (vybranyUzivatel == null)
-            //{
-            //    MessageBox.Show("Prosím vyberte uživatele, kterého chcete editovat!", "Chyba",
-            //        MessageBoxButton.OK, MessageBoxImage.Warning);
-            //    return;
-            //}
+            Uzivatel vybranyUzivatel = DgUzivatele.SelectedItem as Uzivatel;
 
-            //var dialog = new EditujUzivatele(vybranyUzivatel);
-            //bool? result = dialog.ShowDialog();
+            if (vybranyUzivatel == null)
+            {
+                MessageBox.Show("Vyberte uživatele, kterého chcete editovat!", "Chyba",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            //if (result == true)
-            //{
-            //    DgUzivatele.Items.Refresh();
-            //}
+            // Otevře editační okno pro vybraného uživatele
+            var okno = new EditujNastaveni(vybranyUzivatel);
+            bool? result = okno.ShowDialog();
+
+            // Pokud uživatel editaci zrušil, metoda skončí
+            if (result != true)
+            {
+                return;
+            }
+
+            try
+            {
+                // Získá sdílené databázové připojení
+                var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
+
+                DatabazeNastaveni.EditaceUzivatele(conn, vybranyUzivatel);
+
+                // Získá aktuálně přihlášeného uživatele z hlavního okna
+                Uzivatel prihlaseny = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+                // Ověří, jestli editovaný účet je zároveň právě přihlášený účet
+                if (prihlaseny != null)
+                {
+                    // Porovná přihlášeného a editovaného uživatele podle uživatelského jména
+                    if (prihlaseny.UzivatelskeJmeno == vybranyUzivatel.UzivatelskeJmeno)
+                    {
+                        HlavniOkno.NastavPrihlasenehoUzivatele(vybranyUzivatel);
+
+                        HlavniOkno hlavniOkno = Application.Current.MainWindow as HlavniOkno;
+                        if (hlavniOkno != null)
+                        {
+                            // Obnoví text s přihlášeným uživatelem v hlavním okně
+                            hlavniOkno.ObnovPrihlasenehoUzivatele();
+                        }
+                    }
+                }
+
+                NactiUzivatele();
+
+                MessageBox.Show("Uživatelský účet byl úspěšně upraven", "Hotovo",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Chyba při editaci uživatele: " + ex.Message, "Chyba",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         /// <summary>
@@ -283,11 +343,12 @@ namespace InformacniSystemKlub.Windows
         {
             if (jeVyhledavaniAktivni == true)
             {
-                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
                     MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
+            // Získá aktuálně vybraného uživatele z datagridu
             Uzivatel vybranyUzivatel = (Uzivatel)DgUzivatele.SelectedItem;
 
             if (vybranyUzivatel == null)
@@ -296,9 +357,24 @@ namespace InformacniSystemKlub.Windows
                 return;
             }
 
+            // Získá aktuálně přihlášeného uživatele
+            Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            // Zabrání smazání účtu, na kterém je uživatel právě přihlášen
+            if (prihlasenyUzivatel != null)
+            {
+                if (prihlasenyUzivatel.UzivatelskeJmeno == vybranyUzivatel.UzivatelskeJmeno)
+                {
+                    MessageBox.Show("Na tomto uživatelském účtu jste právě přihlášen. Tento účet nelze odebrat", "Info",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+            }
+
             var result = MessageBox.Show("Opravdu chcete smazat vybraného uživatele?", "Warning",
                 MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
+            // Pokud uživatel mazání nepotvrdí, metoda skončí
             if (result == MessageBoxResult.No)
             {
                 return;
@@ -306,10 +382,10 @@ namespace InformacniSystemKlub.Windows
 
             try
             {
+                // Získá sdílené databázové připojení
                 var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
 
                 DatabazeNastaveni.OdeberUzivatele(conn, vybranyUzivatel);
-
                 UzivateleData.Remove(vybranyUzivatel);
 
                 MessageBox.Show("Uživatel byl smazán", "Information", MessageBoxButton.OK, MessageBoxImage.Information);

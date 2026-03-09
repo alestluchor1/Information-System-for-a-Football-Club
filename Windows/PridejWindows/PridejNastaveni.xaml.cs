@@ -66,9 +66,12 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                 return;
             }
 
+            const int roleHrac = 3;
+            const int roleTrener = 4;
+
             int idRole = Convert.ToInt32(vybranaRole.Tag);
 
-            if (idRole == 3 || idRole == 4)
+            if (idRole == roleHrac || idRole == roleTrener)
             {
                 LblIdClenaKlubu.Visibility = Visibility.Visible;
                 TxtIdClenKlubu.Visibility = Visibility.Visible;
@@ -109,7 +112,10 @@ namespace InformacniSystemKlub.Windows.PridejWindows
 
                 int idClenKlubu = 0;
 
-                if (nazevRole == "Hrac" || nazevRole == "Trener")
+                const string roleHracText = "Hrac";
+                const string roleTrenerText = "Trener";
+
+                if (nazevRole == roleHracText || nazevRole == roleTrenerText)
                 {
                     idClenKlubu = InputValidator.ValidujIdClenaKlubuProRoli(TxtIdClenKlubu.Text, nazevRole);
 
@@ -122,17 +128,17 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                         throw new Exception("Zadané ID člena klubu neexistuje!");
                     }
 
-                    if (nazevRole == "Hrac")
+                    if (nazevRole == roleHracText)
                     {
-                        if (typClena != "Hrac")
+                        if (typClena != roleHracText)
                         {
                             throw new Exception("Zadané ID člena klubu nepatří hráči!");
                         }
                     }
 
-                    if (nazevRole == "Trener")
+                    if (nazevRole == roleTrenerText)
                     {
-                        if (typClena != "Trener")
+                        if (typClena != roleTrenerText)
                         {
                             throw new Exception("Zadané ID člena klubu nepatří trenérovi!");
                         }

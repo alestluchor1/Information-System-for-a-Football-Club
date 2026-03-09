@@ -12,14 +12,21 @@ namespace InformacniSystemKlub.Database
         /// </summary>
         public static void OdeberUzivatele(OracleConnection conn, Uzivatel uzivatel)
         {
-            using (var cmd = new OracleCommand("PKG_UZIVATELE.SP_ODEBER_UZIVATELE", conn))
+            try
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.BindByName = true;
+                using (var cmd = new OracleCommand("PKG_UZIVATELE.SP_ODEBER_UZIVATELE", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.BindByName = true;
 
-                cmd.Parameters.Add("v_iduzivatelskyucet", OracleDbType.Int32).Value = uzivatel.IdUzivatelskyUcet;
+                    cmd.Parameters.Add("v_iduzivatelskyucet", OracleDbType.Int32).Value = uzivatel.IdUzivatelskyUcet;
 
-                cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (OracleException ex)
+            {
+                throw new Exception("Chyba při volání procedury SP_ODEBER_UZIVATELE: " + ex.Message, ex);
             }
         }
 
@@ -38,7 +45,16 @@ namespace InformacniSystemKlub.Database
                     cmd.Parameters.Add("v_uzivatelskejmeno", OracleDbType.Varchar2).Value = uzivatel.UzivatelskeJmeno;
                     cmd.Parameters.Add("v_email", OracleDbType.Varchar2).Value = uzivatel.Email;
                     cmd.Parameters.Add("v_heslo", OracleDbType.Varchar2).Value = uzivatel.Heslo;
-                    cmd.Parameters.Add("v_clenove_klubu_idclenklubu", OracleDbType.Int32).Value = uzivatel.IdClenKlubu;
+
+                    if (uzivatel.IdClenKlubu == 0)
+                    {
+                        cmd.Parameters.Add("v_clenove_klubu_idclenklubu", OracleDbType.Int32).Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        cmd.Parameters.Add("v_clenove_klubu_idclenklubu", OracleDbType.Int32).Value = uzivatel.IdClenKlubu;
+                    }
+
                     cmd.Parameters.Add("v_salt", OracleDbType.Varchar2).Value = uzivatel.Salt;
                     cmd.Parameters.Add("v_idrole", OracleDbType.Int32).Value = uzivatel.IdRole;
 
@@ -56,20 +72,36 @@ namespace InformacniSystemKlub.Database
         /// </summary>
         public static void EditaceUzivatele(OracleConnection conn, Uzivatel uzivatel)
         {
-            using (var cmd = new OracleCommand("PKG_UZIVATELE.SP_UPDATE_UZIVATEL", conn))
+            try
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.BindByName = true;
+                using (var cmd = new OracleCommand("PKG_UZIVATELE.SP_UPDATE_UZIVATEL", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.BindByName = true;
 
-                cmd.Parameters.Add("v_iduzivatelskyucet", OracleDbType.Int32).Value = uzivatel.IdUzivatelskyUcet;
-                cmd.Parameters.Add("v_uzivatelskejmeno", OracleDbType.Varchar2).Value = uzivatel.UzivatelskeJmeno;
-                cmd.Parameters.Add("v_email", OracleDbType.Varchar2).Value = uzivatel.Email;
-                cmd.Parameters.Add("v_heslo", OracleDbType.Varchar2).Value = uzivatel.Heslo;
-                cmd.Parameters.Add("v_clenove_klubu_idclenklubu", OracleDbType.Int32).Value = uzivatel.IdClenKlubu;
-                cmd.Parameters.Add("v_salt", OracleDbType.Varchar2).Value = uzivatel.Salt;
-                cmd.Parameters.Add("v_idrole", OracleDbType.Int32).Value = uzivatel.IdRole;
+                    cmd.Parameters.Add("v_iduzivatelskyucet", OracleDbType.Int32).Value = uzivatel.IdUzivatelskyUcet;
+                    cmd.Parameters.Add("v_uzivatelskejmeno", OracleDbType.Varchar2).Value = uzivatel.UzivatelskeJmeno;
+                    cmd.Parameters.Add("v_email", OracleDbType.Varchar2).Value = uzivatel.Email;
+                    cmd.Parameters.Add("v_heslo", OracleDbType.Varchar2).Value = uzivatel.Heslo;
 
-                cmd.ExecuteNonQuery();
+                    if (uzivatel.IdClenKlubu == 0)
+                    {
+                        cmd.Parameters.Add("v_clenove_klubu_idclenklubu", OracleDbType.Int32).Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        cmd.Parameters.Add("v_clenove_klubu_idclenklubu", OracleDbType.Int32).Value = uzivatel.IdClenKlubu;
+                    }
+
+                    cmd.Parameters.Add("v_salt", OracleDbType.Varchar2).Value = uzivatel.Salt;
+                    cmd.Parameters.Add("v_idrole", OracleDbType.Int32).Value = uzivatel.IdRole;
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (OracleException ex)
+            {
+                throw new Exception("Chyba při volání procedury SP_UPDATE_UZIVATEL: " + ex.Message, ex);
             }
         }
     }

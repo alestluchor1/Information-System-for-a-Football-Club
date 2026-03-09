@@ -243,12 +243,18 @@
 
         <Border Grid.Column="0" Background="{DynamicResource SidebarGradient}">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="24">
+                <Image Source="/Images/user.png"
+                       Width="150"
+                       Height="150"
+                       Margin="0,0,0,24"/>
+
                 <TextBlock Text="Přidání uživatele"
                            FontSize="28"
                            FontWeight="SemiBold"
                            Foreground="#FFFFFF"
                            Opacity="0.95"
                            TextAlignment="Center"/>
+
                 <TextBlock Text="Vyplňte údaje uživatelského účtu"
                            FontSize="13"
                            Foreground="#FFF7ED"
@@ -298,11 +304,13 @@
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Heslo" Style="{DynamicResource Lbl}"/>
                 <PasswordBox x:Name="PbHeslo"
                              Grid.Row="2" Grid.Column="1"
+                             MaxLength="64"
                              Style="{DynamicResource PasswordInput}"/>
 
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Potvrzení hesla" Style="{DynamicResource Lbl}"/>
                 <PasswordBox x:Name="PbHesloZnovu"
                              Grid.Row="3" Grid.Column="1"
+                             MaxLength="64"
                              Style="{DynamicResource PasswordInput}"/>
 
                 <TextBlock Grid.Row="4" Grid.Column="0" Text="Role" Style="{DynamicResource Lbl}"/>
@@ -324,6 +332,7 @@
 
                 <TextBox x:Name="TxtIdClenKlubu"
                          Grid.Row="5" Grid.Column="1"
+                         MaxLength="10"
                          Style="{DynamicResource Input}"/>
 
                 <StackPanel Grid.Row="6" Grid.Column="1"

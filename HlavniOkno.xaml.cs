@@ -57,6 +57,14 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
+        /// Obnoví zobrazení přihlášeného uživatele v horní liště
+        /// </summary>
+        public void ObnovPrihlasenehoUzivatele()
+        {
+            ZobrazPrihlasenehoUzivatele();
+        }
+
+        /// <summary>
         /// Vrátí objekt aktuálně přihlášeného uživatele
         /// </summary>
         public static Uzivatel ZiskejPrihlasenehoUzivatele()
@@ -65,8 +73,8 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Zobrazí do horní informační lišty jméno aktuálně přihlášeného uživatele.
-        /// Pokud není žádný uživatel přihlášen, zobrazí se text Host.
+        /// Zobrazí do horní informační lišty jméno a roli aktuálně přihlášeného uživatele
+        /// Pokud není žádný uživatel přihlášen, zobrazí se text Host
         /// </summary>
         private void ZobrazPrihlasenehoUzivatele()
         {
@@ -76,13 +84,21 @@ namespace InformacniSystemKlub.Windows
                 return;
             }
 
-            if (!string.IsNullOrWhiteSpace(prihlasenyUzivatel.UzivatelskeJmeno))
+            string uzivatelskeJmeno = prihlasenyUzivatel.UzivatelskeJmeno;
+            string role = prihlasenyUzivatel.Role;
+
+            if (string.IsNullOrWhiteSpace(uzivatelskeJmeno))
             {
-                TxtAktualniUzivatel.Text = prihlasenyUzivatel.UzivatelskeJmeno;
+                uzivatelskeJmeno = "Uživatel";
+            }
+
+            if (string.IsNullOrWhiteSpace(role))
+            {
+                TxtAktualniUzivatel.Text = uzivatelskeJmeno;
                 return;
             }
 
-            TxtAktualniUzivatel.Text = "Uživatel";
+            TxtAktualniUzivatel.Text = uzivatelskeJmeno + " (" + role + ")";
         }
 
         /// <summary>

@@ -96,7 +96,7 @@ namespace InformacniSystemKlub.Windows
 
                 MessageBox.Show("Přihlášení úspěšné (" + prihlasenyUzivatel.Role + ")", "OK", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                // HlavniOkno.NastavPrihlaseneho(prihlasenyUzivatel);
+                HlavniOkno.NastavPrihlasenehoUzivatele(prihlasenyUzivatel);
 
                 // Otevření hlavního okna
                 HlavniOkno hlavni = new HlavniOkno();
