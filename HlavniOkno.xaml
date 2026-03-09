@@ -6,8 +6,8 @@
         mc:Ignorable="d"
         Title="Informační systém – hlavní okno"
         WindowStartupLocation="CenterScreen"
-        Width="1200" Height="800"
-        MinWidth="900" MinHeight="600"
+        Width="1280" Height="860"
+        MinWidth="1000" MinHeight="680"
         Background="{DynamicResource AppBgBrush}"
         UseLayoutRounding="True"
         SnapsToDevicePixels="True"
@@ -16,32 +16,38 @@
 
     <Window.Resources>
 
-        <!-- základ -->
+        <!--
+            Základní barevné prostředky hlavního okna.
+            Hodnoty jsou nastaveny tak, aby bylo možné jednoduše přepínat
+            mezi světlým a tmavým režimem bez nutnosti měnit strukturu rozhraní.
+        -->
         <SolidColorBrush x:Key="AppBgBrush" Color="#F6F7FB"/>
         <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="BorderBrushSoft" Color="#E4EAF3"/>
         <SolidColorBrush x:Key="TextBrush" Color="#0B1220"/>
         <SolidColorBrush x:Key="MutedTextBrush" Color="#64748B"/>
 
-        <!-- top bar text -->
+        <!-- Texty pro horní barevný panel -->
         <SolidColorBrush x:Key="TopBarText" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="TopBarSubText" Color="#EAF0FF"/>
 
-        <!-- stejný gradient jako horní panel -->
+        <!-- Barevný přechod použitý v horním panelu a informační liště -->
         <LinearGradientBrush x:Key="TopBarGradientBrush" StartPoint="0,0" EndPoint="1,0">
             <GradientStop Color="#2563EB" Offset="0"/>
             <GradientStop Color="#7C3AED" Offset="0.45"/>
             <GradientStop Color="#F97316" Offset="1"/>
         </LinearGradientBrush>
 
-        <!-- text na gradientu -->
         <SolidColorBrush x:Key="OnGradientTextBrush" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="OnGradientSubTextBrush" Color="#EAF0FF"/>
 
-        <!-- Styl horních tlačítek -->
+        <!--
+            Styl horních tlačítek.
+            Používá se pro základní akce dostupné z hlavního panelu.
+        -->
         <Style x:Key="TopButtonStyle" TargetType="Button">
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="MinWidth" Value="125"/>
             <Setter Property="Padding" Value="16,0"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
@@ -74,7 +80,10 @@
             </Setter>
         </Style>
 
-        <!-- malé bílé obdélníky (datum/čas) -->
+        <!--
+            Malé informační karty v horní liště.
+            Slouží pro datum, čas a informace o přihlášeném uživateli.
+        -->
         <Style x:Key="InfoMiniCardStyle" TargetType="Border">
             <Setter Property="CornerRadius" Value="12"/>
             <Setter Property="Padding" Value="12,7"/>
@@ -85,10 +94,14 @@
             <Setter Property="UseLayoutRounding" Value="True"/>
         </Style>
 
-        <!-- Jednoduchý styl dlaždic -->
+        <!--
+            Základní styl dlaždic hlavního menu.
+            Dlaždice byly mírně zvětšeny, aby byl obsah čitelnější
+            a menu působilo přehledněji i při větším počtu modulů.
+        -->
         <Style x:Key="TileButtonSimpleStyle" TargetType="Button">
-            <Setter Property="Height" Value="155"/>
-            <Setter Property="Padding" Value="14"/>
+            <Setter Property="Height" Value="172"/>
+            <Setter Property="Padding" Value="16"/>
             <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
             <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
             <Setter Property="BorderThickness" Value="2"/>
@@ -110,7 +123,7 @@
                             <Grid Margin="{TemplateBinding Padding}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="10"/>
-                                    <ColumnDefinition Width="52"/>
+                                    <ColumnDefinition Width="54"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
@@ -119,7 +132,7 @@
                                         Background="{TemplateBinding BorderBrush}"/>
 
                                 <Border Grid.Column="1"
-                                        Width="42" Height="42"
+                                        Width="44" Height="44"
                                         CornerRadius="14"
                                         BorderThickness="1"
                                         BorderBrush="{TemplateBinding BorderBrush}"
@@ -140,7 +153,7 @@
                                                Foreground="{TemplateBinding Foreground}"
                                                TextWrapping="Wrap"/>
 
-                                    <TextBlock Margin="0,7,0,0"
+                                    <TextBlock Margin="0,8,0,0"
                                                Text="{TemplateBinding ToolTip}"
                                                FontSize="12.5"
                                                Foreground="{DynamicResource MutedTextBrush}"
@@ -174,7 +187,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- HORNÍ BAREVNÝ PANEL -->
+        <!-- Horní hlavička hlavního okna -->
         <Border Grid.Row="0"
                 CornerRadius="22"
                 Padding="18"
@@ -216,7 +229,7 @@
             </Grid>
         </Border>
 
-        <!-- SPODNÍ ČÁST -->
+        <!-- Hlavní obsahová část -->
         <Border Grid.Row="1"
                 Background="{DynamicResource SurfaceBrush}"
                 BorderBrush="{DynamicResource BorderBrushSoft}"
@@ -227,11 +240,12 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Řádek Dnes: celý gradient + bílé mini-karty -->
+                <!-- Informační lišta -->
                 <Border Grid.Row="0"
                         Background="{DynamicResource TopBarGradientBrush}"
                         CornerRadius="14"
@@ -252,6 +266,28 @@
                         <StackPanel Grid.Column="1"
                                     Orientation="Horizontal"
                                     VerticalAlignment="Center">
+
+                            <Border Style="{StaticResource InfoMiniCardStyle}"
+                                    Margin="0,0,10,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="👤"
+                                               Margin="0,0,6,0"
+                                               FontSize="12.5"
+                                               Foreground="{DynamicResource MutedTextBrush}"
+                                               VerticalAlignment="Center"/>
+                                    <TextBlock Text="Uživatel:"
+                                               Margin="0,0,6,0"
+                                               FontSize="13.5"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextBrush}"
+                                               VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="TxtAktualniUzivatel"
+                                               FontSize="13.5"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextBrush}"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
 
                             <Border Style="{StaticResource InfoMiniCardStyle}"
                                     Margin="0,0,10,0">
@@ -288,7 +324,7 @@
                     </Grid>
                 </Border>
 
-                <!-- 1. řada tlačítek -->
+                <!-- 1. řada -->
                 <UniformGrid Grid.Row="1" Columns="4" Margin="0,0,0,14">
                     <Button Content="Hráči"
                             Tag="👤"
@@ -319,8 +355,8 @@
                             Click="BtnOpatreniClick"/>
                 </UniformGrid>
 
-                <!-- 2. řada tlačítek -->
-                <UniformGrid Grid.Row="2" Columns="5">
+                <!-- 2. řada -->
+                <UniformGrid Grid.Row="2" Columns="4" Margin="0,0,0,14">
                     <Button Content="Zápasy"
                             Tag="⚽"
                             ToolTip="Rozpis, nominace a výsledky"
@@ -332,7 +368,7 @@
                             Tag="✍️"
                             ToolTip="U odehraného zápasu zapisuje hráče, góly, minuty a karty. U budoucího slouží jako návrh sestavy podle kritérií."
                             Style="{StaticResource TileButtonSimpleStyle}"
-                            BorderBrush="#10de47"
+                            BorderBrush="#10DE47"
                             Click="BtnNotifikaceClick"/>
 
                     <Button Content="Sportovní vybavení"
@@ -344,17 +380,41 @@
 
                     <Button Content="Smlouvy"
                             Tag="📝"
-                            ToolTip="Hráčské smlouvy, výstupní klauzule, kontakt na agenta"
+                            ToolTip="Hráčské smlouvy, výstupní klauzule a kontakt na agenta"
                             Style="{StaticResource TileButtonSimpleStyle}"
-                            BorderBrush="#db18be"
+                            BorderBrush="#DB18BE"
                             Click="BtnKontraktyClick"/>
+                </UniformGrid>
 
+                <!-- 3. řada -->
+                <UniformGrid Grid.Row="3" Columns="4">
                     <Button Content="Kalendář"
-                            Tag="📅"
-                            ToolTip="Plánování událostí"
+                            Tag="📆"
+                            ToolTip="Plánování a přehled klubových událostí"
                             Style="{StaticResource TileButtonSimpleStyle}"
                             BorderBrush="MediumPurple"
                             Click="BtnKalendarClick"/>
+
+                    <Button Content="Nastavení"
+                            Tag="⚙️"
+                            ToolTip="Uživatelské a systémové nastavení aplikace"
+                            Style="{StaticResource TileButtonSimpleStyle}"
+                            BorderBrush="#64748B"
+                            Click="BtnNastaveniClick"/>
+
+                    <Button Content="Notifikace"
+                            Tag="🔔"
+                            ToolTip="Přehled oznámení, upozornění a systémových zpráv"
+                            Style="{StaticResource TileButtonSimpleStyle}"
+                            BorderBrush="#EAB308"
+                            Click="BtnNotifikaceSystemClick"/>
+
+                    <Button Content="Editor sestav"
+                            Tag="🧩"
+                            ToolTip="Příprava a úprava herních sestav"
+                            Style="{StaticResource TileButtonSimpleStyle}"
+                            BorderBrush="#14B8A6"
+                            Click="BtnEditorSestavClick"/>
                 </UniformGrid>
 
             </Grid>

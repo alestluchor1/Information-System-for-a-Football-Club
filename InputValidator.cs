@@ -727,5 +727,37 @@ namespace InformacniSystemKlub
 
             return hodnota;
         }
+
+        // Nastavení - uživatelské účty
+        public static void ValidujVyberRole(object selectedItem)
+        {
+            ComboBoxItem item = selectedItem as ComboBoxItem;
+
+            if (item == null)
+            {
+                throw new Exception("Vyber roli!");
+            }
+
+            if (item.Tag == null)
+            {
+                throw new Exception("Neplatná role!");
+            }
+        }
+
+        public static int ValidujIdClenaKlubuProRoli(string idText, string role)
+        {
+            if (string.IsNullOrWhiteSpace(role))
+            {
+                throw new Exception("Role nesmí být prázdná!");
+            }
+
+            if (role != "Hrac" && role != "Trener")
+            {
+                throw new Exception("ID člena klubu se zadává pouze pro roli Hrac nebo Trener!");
+            }
+
+            int id = ValidujId(idText);
+            return id;
+        }
     }
 }

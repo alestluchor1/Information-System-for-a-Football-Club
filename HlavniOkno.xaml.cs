@@ -2,30 +2,34 @@
 using InformacniSystemKlub.Models;
 using Oracle.ManagedDataAccess.Client;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace InformacniSystemKlub.Windows
 {
     /// <summary>
-    /// Interakční logika pro HlavniOkno.xaml
+    /// Hlavní okno aplikace
+    /// Zajišťuje zobrazení hlavního menu, aktuálního data a času,
+    /// přepínání dark/light režimu a otevření jednotlivých oken
     /// </summary>
     public partial class HlavniOkno : Window
     {
+        /// <summary>
+        /// Časovač
+        /// </summary>
         private DispatcherTimer timer;
 
+        /// <summary>
+        /// Příznak, zda je v aplikaci aktivní tmavý režim
+        /// </summary>
         public static bool jeDarkModeAktivni = false;
+
+        /// <summary>
+        /// Aktuálně přihlášený uživatel aplikace
+        /// </summary>
+        private static Uzivatel prihlasenyUzivatel;
 
         public HlavniOkno()
         {
@@ -38,14 +42,62 @@ namespace InformacniSystemKlub.Windows
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
+
+            ZobrazPrihlasenehoUzivatele();
+            Timer_Tick(null, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Uloží objekt aktuálně přihlášeného uživatele
+        /// Tato metoda se volá po úspěšném přihlášení
+        /// </summary>
+        public static void NastavPrihlasenehoUzivatele(Uzivatel uzivatel)
+        {
+            prihlasenyUzivatel = uzivatel;
+        }
+
+        /// <summary>
+        /// Vrátí objekt aktuálně přihlášeného uživatele
+        /// </summary>
+        public static Uzivatel ZiskejPrihlasenehoUzivatele()
+        {
+            return prihlasenyUzivatel;
+        }
+
+        /// <summary>
+        /// Zobrazí do horní informační lišty jméno aktuálně přihlášeného uživatele.
+        /// Pokud není žádný uživatel přihlášen, zobrazí se text Host.
+        /// </summary>
+        private void ZobrazPrihlasenehoUzivatele()
+        {
+            if (prihlasenyUzivatel == null)
+            {
+                TxtAktualniUzivatel.Text = "Host";
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(prihlasenyUzivatel.UzivatelskeJmeno))
+            {
+                TxtAktualniUzivatel.Text = prihlasenyUzivatel.UzivatelskeJmeno;
+                return;
+            }
+
+            TxtAktualniUzivatel.Text = "Uživatel";
+        }
+
+        /// <summary>
+        /// Událost časovače.
+        /// Každou sekundu aktualizuje zobrazené datum a čas
+        /// </summary>
         private void Timer_Tick(object sender, EventArgs e)
         {
             TxtTime.Text = DateTime.Now.ToString("HH:mm:ss");
             TxtDate.Text = DateTime.Now.ToString("dd.MM.yyyy");
         }
 
+        /// <summary>
+        /// Přepne aplikaci mezi světlým a tmavým režimem
+        /// </summary>
         private void BtnMode_Click(object sender, RoutedEventArgs e)
         {
             if (jeDarkModeAktivni == false)
@@ -53,55 +105,180 @@ namespace InformacniSystemKlub.Windows
                 jeDarkModeAktivni = true;
                 ApplyTheme(jeDarkModeAktivni);
             }
-
-            else if (jeDarkModeAktivni == true)
+            else
             {
                 jeDarkModeAktivni = false;
                 ApplyTheme(jeDarkModeAktivni);
             }
-            
         }
 
+        /// <summary>
+        /// Otevře okno kalendáře
+        /// </summary>
         private void BtnKalendarClick(object sender, RoutedEventArgs e)
         {
             Kalendar kalendar = new Kalendar();
             kalendar.ShowDialog();
-
         }
 
+        /// <summary>
+        /// Otevře okno nominací na zápas
+        /// </summary>
         private void BtnNotifikaceClick(object sender, RoutedEventArgs e)
         {
             NominaceNaZapasOkno nominace = new NominaceNaZapasOkno();
             nominace.ShowDialog();
-
         }
 
+        /// <summary>
+        /// Otevře okno správy zápasů.
+        /// </summary>
         private void BtnZapasy_Click(object sender, RoutedEventArgs e)
         {
             ZapasyOkno zapasyOkno = new ZapasyOkno();
             zapasyOkno.ShowDialog();
         }
 
+        /// <summary>
+        /// Otevře okno správy sportovního vybavení.
+        /// </summary>
         private void BtnSportovniVybaveni_Click(object sender, RoutedEventArgs e)
         {
             SportovniVybaveniOkno vybaveniOkno = new SportovniVybaveniOkno();
             vybaveniOkno.ShowDialog();
         }
 
+        /// <summary>
+        /// Otevře okno správy kontraktů.
+        /// </summary>
         private void BtnKontraktyClick(object sender, RoutedEventArgs e)
         {
             KontraktyOkno kontraktyOkno = new KontraktyOkno();
             kontraktyOkno.ShowDialog();
-
         }
 
+        /// <summary>
+        /// Otevře okno disciplinárních opatření.
+        /// </summary>
         private void BtnOpatreniClick(object sender, RoutedEventArgs e)
         {
             OpatreniOkno opatreniOkno = new OpatreniOkno();
             opatreniOkno.ShowDialog();
-
         }
 
+        /// <summary>
+        /// Otevře okno hráčů.
+        /// Hlavní okno se dočasně skryje a po zavření okna hráčů se znovu zobrazí.
+        /// </summary>
+        private void BtnHraciClick(object sender, RoutedEventArgs e)
+        {
+            var hraciOkno = new HraciOkno();
+            hraciOkno.Owner = this;
+
+            this.Hide();
+
+            hraciOkno.Closed += HraciOkno_Closed;
+
+            hraciOkno.Show();
+        }
+
+        /// <summary>
+        /// Po zavření okna hráčů znovu zobrazí hlavní okno.
+        /// </summary>
+        private void HraciOkno_Closed(object sender, EventArgs e)
+        {
+            this.Show();
+            this.Activate();
+        }
+
+        /// <summary>
+        /// Otevře okno trenérů.
+        /// </summary>
+        private void BtnTreneriClick(object sender, RoutedEventArgs e)
+        {
+            var treneriOkno = new TreneriOkno();
+            treneriOkno.Owner = this;
+
+            this.Hide();
+
+            treneriOkno.Closed += TreneriOkno_Closed;
+
+            treneriOkno.Show();
+        }
+
+        /// <summary>
+        /// Po zavření okna trenérů znovu zobrazí hlavní okno.
+        /// </summary>
+        private void TreneriOkno_Closed(object sender, EventArgs e)
+        {
+            this.Show();
+            this.Activate();
+        }
+
+        /// <summary>
+        /// Otevře okno tréninků.
+        /// </summary>
+        private void BtnTreninkyClick(object sender, RoutedEventArgs e)
+        {
+            var treninkOkno = new TreninkOkno();
+            treninkOkno.Owner = this;
+
+            this.Hide();
+
+            treninkOkno.Closed += TreninkyOkno_Closed;
+
+            treninkOkno.Show();
+        }
+
+        /// <summary>
+        /// Po zavření okna tréninků znovu zobrazí hlavní okno.
+        /// </summary>
+        private void TreninkyOkno_Closed(object sender, EventArgs e)
+        {
+            this.Show();
+            this.Activate();
+        }
+
+        /// <summary>
+        /// Pomocné tlačítko pro otevření nastavení.
+        /// Pokud zatím okno nastavení neexistuje, lze tuto metodu později upravit.
+        /// </summary>
+        private void BtnNastaveniClick(object sender, RoutedEventArgs e)
+        {
+            NastaveniOkno nastaveniOkno = new NastaveniOkno();
+            nastaveniOkno.ShowDialog();
+        }
+
+        /// <summary>
+        /// Pomocné tlačítko pro systémové notifikace.
+        /// </summary>
+        private void BtnNotifikaceSystemClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Okno notifikací zatím není připojeno.");
+        }
+
+        /// <summary>
+        /// Pomocné tlačítko pro editor sestav.
+        /// </summary>
+        private void BtnEditorSestavClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Editor sestav zatím není připojen.");
+        }
+
+        /// <summary>
+        /// Vrátí uživatele na přihlašovací obrazovku a ukončí aktuální relaci hlavního okna.
+        /// </summary>
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            PrihlasovaciOkno prihlasovaciOkno = new PrihlasovaciOkno();
+            Application.Current.MainWindow = prihlasovaciOkno;
+            prihlasovaciOkno.Show();
+            this.Close();
+        }
+
+        /// <summary>
+        /// Nastaví barevné prostředky okna podle zvoleného režimu zobrazení.
+        /// </summary>
         private void ApplyTheme(bool darkMode)
         {
             if (darkMode == true)
@@ -115,7 +292,7 @@ namespace InformacniSystemKlub.Windows
                 Resources["TopBarText"] = new SolidColorBrush(Color.FromRgb(0xFF, 0xFF, 0xFF));
                 Resources["TopBarSubText"] = new SolidColorBrush(Color.FromRgb(0xE5, 0xE7, 0xEB));
             }
-            else if(darkMode == false)
+            else
             {
                 Resources["AppBgBrush"] = new SolidColorBrush(Color.FromRgb(0xF6, 0xF7, 0xFB));
                 Resources["SurfaceBrush"] = new SolidColorBrush(Color.FromRgb(0xFF, 0xFF, 0xFF));
@@ -127,70 +304,5 @@ namespace InformacniSystemKlub.Windows
                 Resources["TopBarSubText"] = new SolidColorBrush(Color.FromRgb(0xEA, 0xF0, 0xFF));
             }
         }
-
-        private void BtnClose_Click(object sender, RoutedEventArgs e)
-        {
-            PrihlasovaciOkno prihlasovaciOkno = new PrihlasovaciOkno();
-            Application.Current.MainWindow = prihlasovaciOkno;
-            prihlasovaciOkno.Show();
-            this.Close();
-        }
-
-        private void BtnHraciClick(object sender, RoutedEventArgs e)
-        {
-            var hraciOkno = new HraciOkno();
-            hraciOkno.Owner = this;
-
-            this.Hide();
-
-            hraciOkno.Closed += HraciOkno_Closed;  
-
-            hraciOkno.Show();
-        }
-
-        private void HraciOkno_Closed(object? sender, EventArgs e)
-        {
-            this.Show();
-            this.Activate();
-        }
-
-        private void BtnTreneriClick(object sender, RoutedEventArgs e)
-        {
-            var treneriOkno = new TreneriOkno();
-            treneriOkno.Owner = this;
-
-            this.Hide();
-
-            treneriOkno.Closed += TreneriOkno_Closed;
-
-            treneriOkno.Show();
-        }
-
-        private void TreneriOkno_Closed(object? sender, EventArgs e)
-        {
-            this.Show();
-            this.Activate();
-        }
-
-        private void BtnTreninkyClick(object sender, RoutedEventArgs e)
-        {
-            var treninkOkno = new TreninkOkno();
-            treninkOkno.Owner = this;
-
-            this.Hide();
-
-            treninkOkno.Closed += TreninkyOkno_Closed;
-
-            treninkOkno.Show();
-        }
-
-        private void TreninkyOkno_Closed(object? sender, EventArgs e)
-        {
-            this.Show();
-            this.Activate();
-        }
-
-
-
     }
 }

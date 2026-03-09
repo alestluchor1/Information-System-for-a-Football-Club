@@ -50,5 +50,8 @@ namespace InformacniSystemKlub.Models
         /// Pro Notifikace/zprávy potřebné, jestli je vybrán uživatel v checkboxu nebo ne
         /// </summary>
         public bool JeVybran { get; set; }
+        public int IdUzivatelskyUcet { get; set; }
+        public int IdClenKlubu { get; set; }
+        public int IdRole { get; set; }
     }
 }
