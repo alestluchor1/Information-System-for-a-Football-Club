@@ -13,7 +13,7 @@ using System.Windows.Media;
 namespace InformacniSystemKlub.Windows 
 {
     /// <summary>
-    /// Okno pro správu hráčů (zobrazení, filtrování dle kategorií, přidání/odebrání)
+    /// Okno pro správu hráčů
     /// Data se načítají z databázového pohledu HRACI_VIEW
     /// </summary>
     public partial class HraciOkno : Window 
@@ -26,15 +26,14 @@ namespace InformacniSystemKlub.Windows
         private bool ready = false;
 
         /// <summary>
-        /// Příznak, zda je aktivní vyhledávací mód
-        /// V tomto režimu není umožněno přidávání/odebírání dat
+        /// Zda je aktivní vyhledávací mód
         /// </summary>
         private bool jeVyhledavaniAktivni = false; // pro ukončení filtrování
         public HraciOkno()
         {
             InitializeComponent();
             ready = false;
-            ApplyTheme(HlavniOkno.jeDarkModeAktivni);
+            RezimZobrazeni.NastavRezimTabulkoveOkno(this, HlavniOkno.jeDarkModeAktivni);
             NactiHrace();
 
             DgHraci.ItemsSource = HraciData;
@@ -60,6 +59,7 @@ namespace InformacniSystemKlub.Windows
 
             foreach (var hrac in HraciData)
             {
+                // Filtr pro A-Tým
                 if (volba == 1)
                 {
                     if (hrac.IdTreninkovaSkupina == 1)
@@ -68,6 +68,7 @@ namespace InformacniSystemKlub.Windows
                     }
                 }
 
+                // Filtr pro Dorost
                 if (volba == 2)
                 {
                     if (hrac.IdTreninkovaSkupina == 2)
@@ -76,6 +77,7 @@ namespace InformacniSystemKlub.Windows
                     }
                 }
 
+                // Filtr pro Mladší žáci
                 if (volba == 3)
                 {
                     if (hrac.IdTreninkovaSkupina == 3)
@@ -284,7 +286,7 @@ namespace InformacniSystemKlub.Windows
 
         /// <summary>
         /// Otevře dialog pro vyhledávání hráčů (NajdiHrace) a v případě potvrzení zobrazí filtrovaný výsledek v DataGridu
-        /// Aktivuje vyhledávací mód, dokud není režim ukončen pomocí CTRL+X.
+        /// Aktivuje vyhledávací mód, dokud není režim ukončen pomocí CTRL+X
         /// </summary>
         private void BtnNajdi_Click(object sender, RoutedEventArgs e)
         {
@@ -319,42 +321,6 @@ namespace InformacniSystemKlub.Windows
                 jeVyhledavaniAktivni = false;
                 DgHraci.ItemsSource = HraciData;
                 e.Handled = true;
-            }
-        }
-
-        /// <summary>
-        /// Nastaví barevné zdroje okna podle zvoleného režimu (dark / light)
-        /// </summary>
-        private void ApplyTheme(bool darkMode)
-        {
-            if (darkMode == true)
-            {
-                Resources["WindowBgBrush"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x0F, 0x19));
-                Resources["CardBrush"] = new SolidColorBrush(Color.FromRgb(0x11, 0x18, 0x27));
-                Resources["CardAltBrush"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x12, 0x20));
-
-                Resources["BorderBrushSoft"] = new SolidColorBrush(Color.FromRgb(0x1F, 0x29, 0x37));
-
-                Resources["TextBrush"] = new SolidColorBrush(Color.FromRgb(0xF9, 0xFA, 0xFB));
-                Resources["MutedTextBrush"] = new SolidColorBrush(Color.FromRgb(0x9C, 0xA3, 0xAF));
-
-                Resources["AccentBrush"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
-                Resources["AccentDarkBrush"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
-            }
-            else if (darkMode == false)
-            {
-                Resources["WindowBgBrush"] = new SolidColorBrush(Color.FromRgb(0xFA, 0xFA, 0xFA));
-
-                Resources["CardBrush"] = new SolidColorBrush(Color.FromRgb(0xFF, 0xFF, 0xFF));
-                Resources["CardAltBrush"] = new SolidColorBrush(Color.FromRgb(0xF8, 0xFA, 0xFC));
-
-                Resources["BorderBrushSoft"] = new SolidColorBrush(Color.FromRgb(0xE5, 0xE7, 0xEB));
-
-                Resources["TextBrush"] = new SolidColorBrush(Color.FromRgb(0x11, 0x18, 0x27));
-                Resources["MutedTextBrush"] = new SolidColorBrush(Color.FromRgb(0x6B, 0x72, 0x80));
-
-                Resources["AccentBrush"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
-                Resources["AccentDarkBrush"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
             }
         }
 

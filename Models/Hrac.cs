@@ -19,7 +19,6 @@ namespace InformacniSystemKlub.Models
         public int PocetZlutychKaret { get; set; }
         public int PocetCervenychKaret { get; set; }
         public String Pozice { get; set; } = "";
-        public int Vek { get; set; }
         public char ZdravotniStav { get; set; }
         public string TreninkovaSkupinaText { get; set; } = "";
 

@@ -4,10 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Informační systém – hlavní okno"
+        Title="Informační systém fotbalového klubu"
+        
         WindowStartupLocation="CenterScreen"
-        Width="1280" Height="860"
-        MinWidth="1000" MinHeight="680"
+        Width="1280"
+        Height="840"
+        MinWidth="1000"
+        MinHeight="680"
+        WindowState="Maximized"
         Background="{DynamicResource AppBgBrush}"
         UseLayoutRounding="True"
         SnapsToDevicePixels="True"
@@ -16,11 +20,7 @@
 
     <Window.Resources>
 
-        <!--
-            Základní barevné prostředky hlavního okna.
-            Hodnoty jsou nastaveny tak, aby bylo možné jednoduše přepínat
-            mezi světlým a tmavým režimem bez nutnosti měnit strukturu rozhraní.
-        -->
+        <!-- Základní barevné prostředky okna -->
         <SolidColorBrush x:Key="AppBgBrush" Color="#F6F7FB"/>
         <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="BorderBrushSoft" Color="#E4EAF3"/>
@@ -31,7 +31,7 @@
         <SolidColorBrush x:Key="TopBarText" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="TopBarSubText" Color="#EAF0FF"/>
 
-        <!-- Barevný přechod použitý v horním panelu a informační liště -->
+        <!-- Přechod pro horní panel -->
         <LinearGradientBrush x:Key="TopBarGradientBrush" StartPoint="0,0" EndPoint="1,0">
             <GradientStop Color="#2563EB" Offset="0"/>
             <GradientStop Color="#7C3AED" Offset="0.45"/>
@@ -41,10 +41,7 @@
         <SolidColorBrush x:Key="OnGradientTextBrush" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="OnGradientSubTextBrush" Color="#EAF0FF"/>
 
-        <!--
-            Styl horních tlačítek.
-            Používá se pro základní akce dostupné z hlavního panelu.
-        -->
+        <!-- Styl horních tlačítek -->
         <Style x:Key="TopButtonStyle" TargetType="Button">
             <Setter Property="Height" Value="42"/>
             <Setter Property="MinWidth" Value="125"/>
@@ -80,10 +77,7 @@
             </Setter>
         </Style>
 
-        <!--
-            Malé informační karty v horní liště.
-            Slouží pro datum, čas a informace o přihlášeném uživateli.
-        -->
+        <!-- Malé informační karty -->
         <Style x:Key="InfoMiniCardStyle" TargetType="Border">
             <Setter Property="CornerRadius" Value="12"/>
             <Setter Property="Padding" Value="12,7"/>
@@ -94,36 +88,32 @@
             <Setter Property="UseLayoutRounding" Value="True"/>
         </Style>
 
-        <!--
-            Základní styl dlaždic hlavního menu.
-            Dlaždice byly mírně zvětšeny, aby byl obsah čitelnější
-            a menu působilo přehledněji i při větším počtu modulů.
-        -->
+        <!-- Styl hlavních dlaždic menu -->
         <Style x:Key="TileButtonSimpleStyle" TargetType="Button">
-            <Setter Property="Height" Value="172"/>
-            <Setter Property="Padding" Value="16"/>
+            <Setter Property="Height" Value="154"/>
+            <Setter Property="Padding" Value="14"/>
             <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
             <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontSize" Value="15"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="VerticalContentAlignment" Value="Stretch"/>
             <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Margin" Value="0,0,14,0"/>
+            <Setter Property="Margin" Value="0,0,12,0"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="Root"
-                                CornerRadius="18"
+                                CornerRadius="16"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}">
                             <Grid Margin="{TemplateBinding Padding}">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="10"/>
-                                    <ColumnDefinition Width="54"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="50"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
@@ -132,30 +122,32 @@
                                         Background="{TemplateBinding BorderBrush}"/>
 
                                 <Border Grid.Column="1"
-                                        Width="44" Height="44"
-                                        CornerRadius="14"
+                                        Width="40"
+                                        Height="40"
+                                        CornerRadius="12"
                                         BorderThickness="1"
                                         BorderBrush="{TemplateBinding BorderBrush}"
                                         Background="#F8FAFF"
                                         VerticalAlignment="Top"
                                         Margin="10,0,0,0">
                                     <TextBlock Text="{TemplateBinding Tag}"
-                                               FontSize="18"
+                                               FontSize="17"
                                                Foreground="{TemplateBinding BorderBrush}"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"/>
                                 </Border>
 
-                                <StackPanel Grid.Column="2" Margin="14,0,0,0">
+                                <!-- Text dlaždice -->
+                                <StackPanel Grid.Column="2" Margin="12,0,0,0">
                                     <TextBlock Text="{TemplateBinding Content}"
-                                               FontSize="18"
+                                               FontSize="17"
                                                FontWeight="SemiBold"
                                                Foreground="{TemplateBinding Foreground}"
                                                TextWrapping="Wrap"/>
 
-                                    <TextBlock Margin="0,8,0,0"
+                                    <TextBlock Margin="0,7,0,0"
                                                Text="{TemplateBinding ToolTip}"
-                                               FontSize="12.5"
+                                               FontSize="12"
                                                Foreground="{DynamicResource MutedTextBrush}"
                                                TextWrapping="Wrap"/>
                                 </StackPanel>
@@ -187,7 +179,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Horní hlavička hlavního okna -->
+        <!-- Horní hlavička -->
         <Border Grid.Row="0"
                 CornerRadius="22"
                 Padding="18"
@@ -229,7 +221,7 @@
             </Grid>
         </Border>
 
-        <!-- Hlavní obsahová část -->
+        <!-- Hlavní obsah -->
         <Border Grid.Row="1"
                 Background="{DynamicResource SurfaceBrush}"
                 BorderBrush="{DynamicResource BorderBrushSoft}"
@@ -325,60 +317,68 @@
                 </Border>
 
                 <!-- 1. řada -->
-                <UniformGrid Grid.Row="1" Columns="4" Margin="0,0,0,14">
-                    <Button Content="Hráči"
+                <UniformGrid Grid.Row="1" Columns="4" Margin="0,0,0,12">
+                    <Button x:Name="BtnHraci"
+                            Content="Hráči"
                             Tag="👤"
-                            ToolTip="Evidence hráčů, statistiky a zdravotní stav"
+                            ToolTip="Evidence hráčů"
                             Style="{StaticResource TileButtonSimpleStyle}"
                             BorderBrush="#2563EB"
                             Click="BtnHraciClick"/>
 
-                    <Button Content="Trenéři"
+                    <Button x:Name="BtnTreneri"
+                            Content="Trenéři"
                             Tag="🎓"
-                            ToolTip="Evidence trenérů, licence a praxe"
+                            ToolTip="Evidence trenérů"
                             Style="{StaticResource TileButtonSimpleStyle}"
                             BorderBrush="#7C3AED"
                             Click="BtnTreneriClick"/>
 
-                    <Button Content="Tréninky"
+                    <Button x:Name="BtnTreninky"
+                            Content="Tréninky"
                             Tag="📅"
-                            ToolTip="Plánování tréninků, docházka a náplň"
+                            ToolTip="Plánování a evidence tréninků"
                             Style="{StaticResource TileButtonSimpleStyle}"
                             BorderBrush="#10B981"
                             Click="BtnTreninkyClick"/>
 
-                    <Button Content="Disciplinární opatření"
+                    <Button x:Name="BtnOpatreni"
+                            Content="Disciplinární opatření"
                             Tag="🟥"
-                            ToolTip="Karty, tresty a poznámky k hráčům"
+                            ToolTip="Tresty udělené hráčům"
                             Style="{StaticResource TileButtonSimpleStyle}"
                             BorderBrush="#EF4444"
                             Click="BtnOpatreniClick"/>
                 </UniformGrid>
 
                 <!-- 2. řada -->
-                <UniformGrid Grid.Row="2" Columns="4" Margin="0,0,0,14">
-                    <Button Content="Zápasy"
+                <UniformGrid Grid.Row="2" Columns="4" Margin="0,0,0,12">
+                    <Button x:Name="BtnZapasy"
+                            Content="Zápasy"
                             Tag="⚽"
-                            ToolTip="Rozpis, nominace a výsledky"
+                            ToolTip="Stručné výsledky zápasů"
                             Style="{StaticResource TileButtonSimpleStyle}"
                             BorderBrush="#F97316"
                             Click="BtnZapasy_Click"/>
 
-                    <Button Content="Nominace sestavy na zápas"
+                    <Button x:Name="BtnNominace"
+                            Content="Nominace sestavy na zápas"
                             Tag="✍️"
-                            ToolTip="U odehraného zápasu zapisuje hráče, góly, minuty a karty. U budoucího slouží jako návrh sestavy podle kritérií."
+                            ToolTip="Eviduje odehrané zápasy a plánované zápasy jako návrh sestavy podle kritérií"
                             Style="{StaticResource TileButtonSimpleStyle}"
                             BorderBrush="#10DE47"
                             Click="BtnNominaceClick"/>
 
-                    <Button Content="Sportovní vybavení"
+                    <Button x:Name="BtnSportovniVybaveni"
+                            Content="Sportovní vybavení"
                             Tag="📦"
                             ToolTip="Evidence a správa klubového vybavení"
                             Style="{StaticResource TileButtonSimpleStyle}"
                             BorderBrush="#06B6D4"
                             Click="BtnSportovniVybaveni_Click"/>
 
-                    <Button Content="Smlouvy"
+                    <Button x:Name="BtnSmlouvy"
+                            Content="Smlouvy"
                             Tag="📝"
                             ToolTip="Hráčské smlouvy, výstupní klauzule a kontakt na agenta"
                             Style="{StaticResource TileButtonSimpleStyle}"
@@ -388,28 +388,32 @@
 
                 <!-- 3. řada -->
                 <UniformGrid Grid.Row="3" Columns="4">
-                    <Button Content="Kalendář"
+                    <Button x:Name="BtnKalendar"
+                            Content="Kalendář"
                             Tag="📆"
-                            ToolTip="Plánování a přehled klubových událostí"
+                            ToolTip="Plánování a přehled tréninků"
                             Style="{StaticResource TileButtonSimpleStyle}"
                             BorderBrush="MediumPurple"
                             Click="BtnKalendarClick"/>
 
-                    <Button Content="Nastavení"
+                    <Button x:Name="BtnNastaveni"
+                            Content="Nastavení"
                             Tag="⚙️"
-                            ToolTip="Uživatelské a systémové nastavení aplikace"
+                            ToolTip="Uživatelské účty"
                             Style="{StaticResource TileButtonSimpleStyle}"
                             BorderBrush="#64748B"
                             Click="BtnNastaveniClick"/>
 
-                    <Button Content="Notifikace"
+                    <Button x:Name="BtnNotifikace"
+                            Content="Notifikace"
                             Tag="🔔"
-                            ToolTip="Přehled oznámení, upozornění a systémových zpráv"
+                            ToolTip="Zasílání notifikací členům klubu"
                             Style="{StaticResource TileButtonSimpleStyle}"
                             BorderBrush="#EAB308"
                             Click="BtnNotifikaceClick"/>
 
-                    <Button Content="Editor sestav"
+                    <Button x:Name="BtnEditorSestav"
+                            Content="Editor sestav"
                             Tag="🧩"
                             ToolTip="Příprava a úprava herních sestav"
                             Style="{StaticResource TileButtonSimpleStyle}"
