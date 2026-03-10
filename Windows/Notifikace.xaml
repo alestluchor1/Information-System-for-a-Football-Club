@@ -23,7 +23,6 @@
         <SolidColorBrush x:Key="BorderSoft" Color="#E5E7EB"/>
         <SolidColorBrush x:Key="InputBg" Color="#F8FAFC"/>
 
-        <!-- Akcentní oranžová -->
         <SolidColorBrush x:Key="Orange" Color="#F97316"/>
         <SolidColorBrush x:Key="OrangeHover" Color="#EA580C"/>
 
@@ -33,7 +32,7 @@
             <GradientStop Color="#F97316" Offset="1"/>
         </LinearGradientBrush>
 
-        <!-- Styl menších popisků -->
+        <!-- Styl popisků -->
         <Style x:Key="Lbl" TargetType="TextBlock">
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -69,11 +68,11 @@
                                           Margin="{TemplateBinding Padding}"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <!-- Zvýraznění okraje při focusu -->
+                  
                             <Trigger Property="IsKeyboardFocused" Value="True">
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="#94A3B8"/>
                             </Trigger>
-                            <!-- Ztlumení při deaktivaci -->
+            
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="Bd" Property="Opacity" Value="0.6"/>
                             </Trigger>
@@ -110,11 +109,11 @@
                                           Margin="{TemplateBinding Padding}"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <!-- Zvýraznění okraje při focusu -->
+         
                             <Trigger Property="IsKeyboardFocused" Value="True">
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="#94A3B8"/>
                             </Trigger>
-                            <!-- Ztlumení při deaktivaci -->
+        
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="Bd" Property="Opacity" Value="0.6"/>
                             </Trigger>
@@ -176,11 +175,11 @@
                                               VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <!-- Změna barvy při najetí myší -->
+                 
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="B" Property="Background" Value="{DynamicResource OrangeHover}"/>
                             </Trigger>
-                            <!-- Ztlumení při deaktivaci -->
+            
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="B" Property="Opacity" Value="0.6"/>
                             </Trigger>
@@ -196,7 +195,7 @@
         <Grid.ColumnDefinitions>
             <!-- Levý informační panel -->
             <ColumnDefinition Width="320"/>
-            <!-- Pravá pracovní část -->
+            <!-- Pravá část -->
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -308,7 +307,7 @@
                              Style="{DynamicResource MultiLineInput}"/>
                 </Grid>
 
-                <!-- Tlačítka dole -->
+                <!-- Tlačítka -->
                 <StackPanel Grid.Row="2" Grid.Column="2"
                             Orientation="Horizontal"
                             HorizontalAlignment="Right"

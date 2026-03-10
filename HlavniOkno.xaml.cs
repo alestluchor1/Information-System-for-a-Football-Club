@@ -281,7 +281,8 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnEditorSestavClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Editor sestav zatím není připojen.");
+            EditorSestav editorSestav = new EditorSestav();
+            editorSestav.ShowDialog();
         }
 
         /// <summary>
