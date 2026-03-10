@@ -4,20 +4,16 @@ using InformacniSystemKlub.Windows.EditujWindows;
 using InformacniSystemKlub.Windows.NajdiWindows;
 using InformacniSystemKlub.Windows.PridejWindows;
 using Oracle.ManagedDataAccess.Client;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
+using Microsoft.Win32;
+using System.Collections;
+using System.IO;
+using System.Text;
+using System.Windows;
 
 namespace InformacniSystemKlub.Windows
 {
@@ -343,6 +339,162 @@ namespace InformacniSystemKlub.Windows
         private void BtnZpet_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        /// <summary>
+        /// Otevře dialogové okno pro výběr umístění a názvu CSV souboru,
+        /// do kterého se uloží aktuálně zobrazený rozpis zápasů.
+        /// </summary>
+        private void BtnUlozitCsv_Click(object sender, RoutedEventArgs e)
+        {
+            // Vytvoření dialogu pro výběr umístění souboru
+            SaveFileDialog dialog = new SaveFileDialog();
+
+            dialog.Title = "Uložit rozpis zápasů";
+            dialog.Filter = "CSV soubor (*.csv)|*.csv";
+            dialog.DefaultExt = "csv";
+            dialog.AddExtension = true;
+
+            // Výchozí složka bude plocha uživatele
+            dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            dialog.FileName = "Rozpis_zapasu.csv";
+
+            bool? vysledek = dialog.ShowDialog();
+
+            if (vysledek != true)
+            {
+                return;
+            }
+
+            try
+            {
+                // Uložení dat do vybraného CSV souboru
+                UlozDoCsv(dialog.FileName);
+
+                MessageBox.Show("Soubor byl úspěšně uložen", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Chyba při ukládání souboru: " + ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Uloží aktuálně zobrazené zápasy z DataGridu do CSV souboru
+        /// </summary>
+        /// <param name="cesta">Úplná cesta k cílovému CSV souboru</param>
+        private void UlozDoCsv(string cesta)
+        {
+            IEnumerable zapasy = DgZapasy.ItemsSource;
+
+            if (zapasy == null)
+            {
+                MessageBox.Show("Nejsou k dispozici žádná data pro export", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            // Otevření textového zapisovače pro vytvoření CSV souboru v kódování UTF-8
+            using (StreamWriter writer = new StreamWriter(cesta, false, Encoding.UTF8))
+            {
+                // Zápis hlavičky sloupců do prvního řádku souboru
+                writer.WriteLine("ID zápasu;Datum;Soutěž;Domácí tým;Hosté;Stav zápasu;Výsledek;Žluté karty;Červené karty");
+
+                // Postupné zpracování všech položek v aktuálním seznamu zápasů
+                foreach (object polozka in zapasy)
+                {
+                    Zapas zapas = polozka as Zapas;
+
+                    if (zapas == null)
+                    {
+                        continue;
+                    }
+
+                    // Příprava výchozích textových hodnot pro jednotlivé sloupce
+                    string idZapas = zapas.IdZapas.ToString();
+                    string datum = "-";
+                    string soutez = "-";
+                    string domaci = "-";
+                    string hoste = "-";
+                    string stav = "-";
+                    string vysledek = "-";
+                    string zlute = "-";
+                    string cervene = "-";
+
+                    if (zapas.Datum != DateTime.MinValue)
+                    {
+                        datum = "'" + zapas.Datum.ToString("dd.MM.yyyy") + "'";
+                    }
+
+                    if (string.IsNullOrWhiteSpace(zapas.NazevSouteze) == false)
+                    {
+                        soutez = zapas.NazevSouteze;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(zapas.DomaciTym) == false)
+                    {
+                        domaci = zapas.DomaciTym;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(zapas.HosteTym) == false)
+                    {
+                        hoste = zapas.HosteTym;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(zapas.StavZapasu) == false)
+                    {
+                        stav = zapas.StavZapasu;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(zapas.Vysledek) == false)
+                    {
+                        vysledek = zapas.Vysledek;
+                    }
+
+                    if (zapas.PocetZlutychKaret.HasValue == true)
+                    {
+                        zlute = zapas.PocetZlutychKaret.Value.ToString();
+                    }
+
+                    if (zapas.PocetCervenychKaret.HasValue == true)
+                    {
+                        cervene = zapas.PocetCervenychKaret.Value.ToString();
+                    }
+
+                    // Ošetření textových hodnot kvůli správnému zápisu do CSV
+                    domaci = UpravitTextProCsv(domaci);
+                    hoste = UpravitTextProCsv(hoste);
+                    soutez = UpravitTextProCsv(soutez);
+                    stav = UpravitTextProCsv(stav);
+                    vysledek = UpravitTextProCsv(vysledek);
+
+                    // Zápis jednoho řádku reprezentujícího jeden zápas
+                    writer.WriteLine(idZapas + ";" + datum + ";" + soutez + ";" + domaci + ";" + hoste + ";" + stav + ";" + vysledek + ";" + zlute + ";" + cervene);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Upraví textovou hodnotu tak, aby byla bezpečně zapsatelná do CSV souboru
+        /// </summary>
+        /// <param name="text">Vstupní text, který se má upravit pro CSV zápis</param>
+        private string UpravitTextProCsv(string text)
+        {
+            if (text == null)
+            {
+                return "";
+            }
+
+            // Zdvojení uvozovek podle CSV formátu
+            text = text.Replace("\"", "\"\"");
+
+            // Pokud text obsahuje problematické znaky, obalí se do uvozovek
+            if (text.Contains(";") || text.Contains("\"") || text.Contains("\n"))
+            {
+                text = "\"" + text + "\"";
+            }
+
+            return text;
         }
 
     }

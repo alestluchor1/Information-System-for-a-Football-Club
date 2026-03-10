@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Images\football icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +15,7 @@
     <None Remove="Images\card.png" />
     <None Remove="Images\coach.png" />
     <None Remove="Images\contract.png" />
+    <None Remove="Images\football icon.ico" />
     <None Remove="Images\football-field.png" />
     <None Remove="Images\match.png" />
     <None Remove="Images\sportsEquipment.png" />
@@ -22,9 +24,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Images\football icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="5.0.0" />
     <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="23.26.100" />
+    <PackageReference Include="PDFsharp-MigraDoc-WPF" Version="6.2.4" />
     <PackageReference Include="Syncfusion.SfScheduler.WPF" Version="32.2.8" />
   </ItemGroup>
 
@@ -42,6 +49,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\contract.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\football icon.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\football-field.png">

@@ -216,6 +216,7 @@
                     <Button Style="{StaticResource BtnPrimary}" Content="Odeber" Margin="0,0,8,0" Click="BtnOdebrat_Click"/>
                     <Button Style="{StaticResource BtnPrimary}" Content="Edituj" Margin="0,0,8,0" Click="BtnEdituj_Click"/>
                     <Button Style="{StaticResource BtnPrimary}" Content="Najdi" Margin="0,0,8,0" Click="BtnNajdi_Click"/>
+                    <Button Style="{StaticResource BtnPrimary}" Content="Uložit do CSV" Margin="0,0,8,0" Click="BtnUlozitCsv_Click"/>
 
                 </WrapPanel>
 
