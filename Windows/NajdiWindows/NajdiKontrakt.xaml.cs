@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Media;
 
 namespace InformacniSystemKlub.Windows.NajdiWindows
 {
@@ -26,7 +25,7 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
         public NajdiKontrakt(ObservableCollection<Kontrakt> kontrakty)
         {
             InitializeComponent();
-            ApplyTheme(HlavniOkno.jeDarkModeAktivni);
+            RezimZobrazeni.NastavRezimFormularoveOkno(this, HlavniOkno.jeDarkModeAktivni);
 
             VstupniKontrakty = kontrakty;
 
@@ -36,16 +35,72 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
             }
 
             cbHrac.ItemsSource = HraciOkno.HraciData;
-            cbHrac.DisplayMemberPath = "prijmeni";
+            cbHrac.DisplayMemberPath = "Prijmeni";
             cbHrac.SelectedItem = null;
 
             dpDatumOd.SelectedDate = null;
             dpDatumDo.SelectedDate = null;
+
+            TxtVystupniKlauzule.IsEnabled = false;
         }
 
         /// <summary>
-        /// Obsluha tlačítka "Najdi"
-        /// Pokud dojde k chybě ve vstupu (validace), zobrazí se chybové hlášení a okno zůstane otevřené
+        /// Po zaškrtnutí možnosti "Má výstupní klauzuli" se zakáže druhý checkbox
+        /// a povolí se zadání konkrétní hodnoty klauzule
+        /// </summary>
+        private void ChbMaVystupniKlauzuli_Checked(object sender, RoutedEventArgs e)
+        {
+            ChbNemaVystupniKlauzuli.IsEnabled = false;
+            TxtVystupniKlauzule.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Po odškrtnutí možnosti "Má výstupní klauzuli" se znovu povolí druhý checkbox
+        /// Pokud není aktivní filtr na neexistující klauzuli, zakáže se i textbox
+        /// </summary>
+        private void ChbMaVystupniKlauzuli_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ChbNemaVystupniKlauzuli.IsEnabled = true;
+
+            if (ChbNemaVystupniKlauzuli.IsChecked != true)
+            {
+                TxtVystupniKlauzule.Text = "";
+                TxtVystupniKlauzule.IsEnabled = false;
+            }
+        }
+
+        /// <summary>
+        /// Po zaškrtnutí možnosti "Nemá výstupní klauzuli" se zakáže druhý checkbox
+        /// a zároveň se zakáže textbox pro zadání hodnoty klauzule
+        /// </summary>
+        private void ChbNemaVystupniKlauzuli_Checked(object sender, RoutedEventArgs e)
+        {
+            ChbMaVystupniKlauzuli.IsEnabled = false;
+            TxtVystupniKlauzule.Text = "";
+            TxtVystupniKlauzule.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// Po odškrtnutí možnosti "Nemá výstupní klauzuli" se znovu povolí druhý checkbox
+        /// </summary>
+        private void ChbNemaVystupniKlauzuli_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ChbMaVystupniKlauzuli.IsEnabled = true;
+
+            if (ChbMaVystupniKlauzuli.IsChecked == true)
+            {
+                TxtVystupniKlauzule.IsEnabled = true;
+            }
+            else
+            {
+                TxtVystupniKlauzule.Text = "";
+                TxtVystupniKlauzule.IsEnabled = false;
+            }
+        }
+
+        /// <summary>
+        /// Obsluha tlačítka Najdi
+        /// Pokud dojde k chybě ve vstupu, zobrazí se chybové hlášení a okno zůstane otevřené
         /// </summary>
         private void BtnNajdi_Click(object sender, RoutedEventArgs e)
         {
@@ -61,6 +116,10 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
             }
         }
 
+        /// <summary>
+        /// Zavře okno filtrování bez potvrzení změn
+        /// a nastaví výsledek dialogu na hodnotu false
+        /// </summary>
         private void BtnZrusit_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
@@ -68,20 +127,13 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
         }
 
         /// <summary>
-        /// Provede filtrování kontraktů na základě vyplněných hodnot ve formuláři
+        /// Provede filtrování kontraktů na základě vyplněných hodnot ve formuláři.
         /// </summary>
         private IEnumerable<Kontrakt> FiltrujKontrakty()
         {
             IEnumerable<Kontrakt> vysledek = VstupniKontrakty;
 
-            // ID hráče
-            if (!string.IsNullOrWhiteSpace(TxtIdHrace.Text))
-            {
-                int idHrace = InputValidator.ValidujId(TxtIdHrace.Text.Trim());
-                vysledek = vysledek.Where(k => k.IdHrac == idHrace);
-            }
-
-            // Hráč (ComboBox)
+            // Hráč
             if (cbHrac.SelectedItem != null)
             {
                 Hrac vybranyHrac = cbHrac.SelectedItem as Hrac;
@@ -93,21 +145,21 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
                 vysledek = vysledek.Where(k => k.IdHrac == vybranyHrac.Id);
             }
 
-            // Datum začátku 
+            // Datum začátku
             if (dpDatumOd.SelectedDate != null)
             {
                 DateOnly datumZacatkuFiltr = DateOnly.FromDateTime(dpDatumOd.SelectedDate.Value.Date);
                 vysledek = vysledek.Where(k => k.DatumZacatku == datumZacatkuFiltr);
             }
 
-            // Datum konce 
+            // Datum konce
             if (dpDatumDo.SelectedDate != null)
             {
                 DateOnly datumKonceFiltr = DateOnly.FromDateTime(dpDatumDo.SelectedDate.Value.Date);
                 vysledek = vysledek.Where(k => k.DatumKonce == datumKonceFiltr);
             }
 
-            // Plat 
+            // Plat
             if (!string.IsNullOrWhiteSpace(TxtPlat.Text))
             {
                 long platFiltr = InputValidator.ValidujPlatKontraktuLong(TxtPlat.Text.Trim());
@@ -131,47 +183,26 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
                 });
             }
 
-            // Výstupní klauzule 
-            if (!string.IsNullOrWhiteSpace(TxtVystupniKlauzule.Text))
+            // Pokud je zaškrtnuto, že kontrakt má výstupní klauzuli, filtruje se jen na vyplněné klauzule
+            if (ChbMaVystupniKlauzuli.IsChecked == true)
             {
-                long klauzuleFiltr = InputValidator.ValidujVystupniKlauzuliLong(TxtVystupniKlauzule.Text.Trim());
-                vysledek = vysledek.Where(k => k.VystupniKlauzule == klauzuleFiltr);
+                vysledek = vysledek.Where(k => k.JeVystupniKlauzuleVyplnena == true);
+
+                // Pokud uživatel zadal konkrétní hodnotu klauzule, filtruje se i podle ní
+                if (!string.IsNullOrWhiteSpace(TxtVystupniKlauzule.Text))
+                {
+                    long klauzuleFiltr = InputValidator.ValidujVystupniKlauzuliLong(TxtVystupniKlauzule.Text.Trim());
+                    vysledek = vysledek.Where(k => k.VystupniKlauzule == klauzuleFiltr);
+                }
+            }
+
+            // Pokud je zaškrtnuto, že kontrakt nemá výstupní klauzuli, hledají se jen nevyplněné klauzule
+            if (ChbNemaVystupniKlauzuli.IsChecked == true)
+            {
+                vysledek = vysledek.Where(k => k.JeVystupniKlauzuleVyplnena == false);
             }
 
             return vysledek;
-        }
-
-        /// <summary>
-        /// Metoda pro přepínání Light Mode / Dark Mode
-        /// </summary>
-        private void ApplyTheme(bool darkMode)
-        {
-            if (darkMode == true)
-            {
-                Resources["BgApp"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x0F, 0x19));
-                Resources["Surface"] = new SolidColorBrush(Color.FromRgb(0x11, 0x18, 0x27));
-                Resources["TextMain"] = new SolidColorBrush(Color.FromRgb(0xF9, 0xFA, 0xFB));
-                Resources["BorderSoft"] = new SolidColorBrush(Color.FromRgb(0x1F, 0x29, 0x37));
-                Resources["InputBg"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x12, 0x20));
-                Resources["Orange"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
-                Resources["OrangeHover"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
-                Resources["SidebarGradient"] = new LinearGradientBrush(Color.FromRgb(0xFB, 0x92, 0x3C),
-                    Color.FromRgb(0xF9, 0x73, 0x16), 90);
-            }
-            else
-            {
-                Resources["BgApp"] = new SolidColorBrush(Color.FromRgb(0xF6, 0xF7, 0xFB));
-                Resources["Surface"] = new SolidColorBrush(Color.FromRgb(0xFF, 0xFF, 0xFF));
-                Resources["TextMain"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x12, 0x20));
-                Resources["BorderSoft"] = new SolidColorBrush(Color.FromRgb(0xE5, 0xE7, 0xEB));
-                Resources["InputBg"] = new SolidColorBrush(Color.FromRgb(0xF8, 0xFA, 0xFC));
-                Resources["Orange"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
-                Resources["OrangeHover"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
-                Resources["SidebarGradient"] = new LinearGradientBrush(
-                    Color.FromRgb(0xFB, 0x92, 0x3C),
-                    Color.FromRgb(0xF9, 0x73, 0x16),
-                    90);
-            }
         }
     }
 }

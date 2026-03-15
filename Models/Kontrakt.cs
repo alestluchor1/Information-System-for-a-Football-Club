@@ -26,6 +26,21 @@ namespace InformacniSystemKlub.Models
 
         public long VystupniKlauzule { get; set; }
 
+        public bool JeVystupniKlauzuleVyplnena { get; set; }
+
+        public string VystupniKlauzuleText
+        {
+            get
+            {
+                if (JeVystupniKlauzuleVyplnena == true)
+                {
+                    return VystupniKlauzule.ToString();
+                }
+
+                return "-";
+            }
+        }
+
         /// <summary>
         /// Hráč, ke kterému kontrakt patří
         /// </summary>

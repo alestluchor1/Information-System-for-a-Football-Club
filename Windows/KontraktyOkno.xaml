@@ -17,10 +17,9 @@
 
     <Window.Resources>
 
-        <!-- Základní font aplikace -->
         <FontFamily x:Key="AppFont">Segoe UI</FontFamily>
 
-        <!-- Barvy okna / karet -->
+        <!-- Barvy okna -->
         <SolidColorBrush x:Key="WindowBgBrush" Color="#F6F7FB"/>
         <SolidColorBrush x:Key="CardBrush" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="CardAltBrush" Color="#F8FAFC"/>
@@ -84,7 +83,6 @@
             </Setter>
         </Style>
 
-        <!-- Sekundární tlačítko -->
         <Style x:Key="BtnSecondary" TargetType="Button" BasedOn="{StaticResource BtnPrimary}">
             <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
             <Setter Property="Background" Value="{DynamicResource CardBrush}"/>
@@ -187,7 +185,6 @@
             </Style.Triggers>
         </Style>
 
-        <!-- TextBlock default -->
         <Style TargetType="TextBlock">
             <Setter Property="Margin" Value="0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -319,7 +316,7 @@
 
                     <!-- Klauzule -->
                     <DataGridTextColumn Header="Výstupní klauzule"
-                                        Binding="{Binding VystupniKlauzule}"
+                                        Binding="{Binding VystupniKlauzuleText}"
                                         Width="150"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
@@ -331,9 +328,9 @@
                                 <TextBlock HorizontalAlignment="Center"
                                            TextAlignment="Center"
                                            Foreground="{DynamicResource TextBrush}">
-                                    <Run Text="{Binding KontraktHrace.jmeno}"/>
+                                    <Run Text="{Binding KontraktHrace.Jmeno}"/>
                                     <Run Text=" "/>
-                                    <Run Text="{Binding KontraktHrace.prijmeni}"/>
+                                    <Run Text="{Binding KontraktHrace.Prijmeni}"/>
                                 </TextBlock>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

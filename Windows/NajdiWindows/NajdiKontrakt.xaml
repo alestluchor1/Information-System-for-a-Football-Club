@@ -228,6 +228,14 @@
             </Setter>
         </Style>
 
+        <!-- CheckBox -->
+        <Style x:Key="CheckTheme" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,4,18,0"/>
+        </Style>
+
         <!-- Primární tlačítko -->
         <Style x:Key="BtnPrimary" TargetType="Button">
             <Setter Property="Height" Value="42"/>
@@ -313,13 +321,6 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- 0: ID hráče -->
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="ID hráče" Style="{DynamicResource Lbl}"/>
-                    <TextBox x:Name="TxtIdHrace"
-                             Grid.Row="0" Grid.Column="1"
-                             MaxLength="10"
-                             Style="{DynamicResource Input}"/>
-
                     <!-- 1: Hráč -->
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Hráč" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="1" Grid.Column="1" Style="{DynamicResource InputHost}">
@@ -348,7 +349,7 @@
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Plat" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtPlat"
                              Grid.Row="4" Grid.Column="1"
-                             MaxLength="18"
+                             MaxLength="10"
                              Style="{DynamicResource Input}"/>
 
                     <!-- 5: Tel.číslo agenta -->
@@ -360,10 +361,27 @@
 
                     <!-- 6: Výstupní klauzule -->
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Výstupní klauzule" Style="{DynamicResource Lbl}"/>
-                    <TextBox x:Name="TxtVystupniKlauzule"
-                             Grid.Row="6" Grid.Column="1"
-                             MaxLength="18"
-                             Style="{DynamicResource Input}"/>
+
+                    <StackPanel Grid.Row="6" Grid.Column="1" Margin="0,6,0,6">
+                        <TextBox x:Name="TxtVystupniKlauzule"
+                                 MaxLength="12"
+                                 Style="{DynamicResource Input}"
+                                 IsEnabled="False"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="4,6,0,0">
+                            <CheckBox x:Name="ChbMaVystupniKlauzuli"
+                                      Content="Má výstupní klauzuli"
+                                      Style="{StaticResource CheckTheme}"
+                                      Checked="ChbMaVystupniKlauzuli_Checked"
+                                      Unchecked="ChbMaVystupniKlauzuli_Unchecked"/>
+
+                            <CheckBox x:Name="ChbNemaVystupniKlauzuli"
+                                      Content="Nemá výstupní klauzuli"
+                                      Style="{StaticResource CheckTheme}"
+                                      Checked="ChbNemaVystupniKlauzuli_Checked"
+                                      Unchecked="ChbNemaVystupniKlauzuli_Unchecked"/>
+                        </StackPanel>
+                    </StackPanel>
 
                     <!-- 7: Tlačítka -->
                     <StackPanel Grid.Row="7" Grid.Column="1"

@@ -18,36 +18,36 @@ namespace InformacniSystemKlub.Windows.EditujWindows
         public EditujKontrakt(Kontrakt kontrakt)
         {
             InitializeComponent();
-            ApplyTheme(HlavniOkno.jeDarkModeAktivni);
+            RezimZobrazeni.NastavRezimFormularoveOkno(this, HlavniOkno.jeDarkModeAktivni);
 
             if (kontrakt == null)
             {
                 throw new ArgumentNullException(nameof(kontrakt));
             }
 
-            this.editovanyKontrakt = kontrakt;
+            editovanyKontrakt = kontrakt;
 
             NactiHraceDoComboBoxu();
 
-            // Předvyplnění datumů
+            // Předvyplnění
             dpDatumOd.SelectedDate = editovanyKontrakt.DatumZacatku.ToDateTime(TimeOnly.MinValue);
             dpDatumDo.SelectedDate = editovanyKontrakt.DatumKonce.ToDateTime(TimeOnly.MinValue);
-
             TxtTelAgenta.Text = editovanyKontrakt.TelCisloNaAgenta.ToString();
             TxtPlat.Text = editovanyKontrakt.Plat.ToString();
 
-            if (editovanyKontrakt.VystupniKlauzule == 0)
+            // Pokud výstupní klauzule není vyplněná, zobrazí se pomlčka "-"
+            if (editovanyKontrakt.JeVystupniKlauzuleVyplnena == true)
             {
-                TxtVystupniKlauzule.Text = "";
+                TxtVystupniKlauzule.Text = editovanyKontrakt.VystupniKlauzule.ToString();
             }
             else
             {
-                TxtVystupniKlauzule.Text = editovanyKontrakt.VystupniKlauzule.ToString();
+                TxtVystupniKlauzule.Text = "-";
             }
         }
 
         /// <summary>
-        /// Načte hráče do comboboxu
+        /// Načte hráče do ComboBoxu
         /// </summary>
         private void NactiHraceDoComboBoxu()
         {
@@ -57,11 +57,12 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                 {
                     HraciOkno.NactiHrace();
                 }
-
                 cbHrac.ItemsSource = HraciOkno.HraciData;
 
+                // Určuje, že se v ComboBoxu bude zobrazovat příjmení hráče
                 cbHrac.DisplayMemberPath = "Prijmeni";
 
+                // Vybere hráče, který je přiřazen k editovanému kontraktu
                 if (editovanyKontrakt.IdHrac != 0)
                 {
                     foreach (var hrac in HraciOkno.HraciData)
@@ -88,23 +89,38 @@ namespace InformacniSystemKlub.Windows.EditujWindows
         {
             try
             {
+                // Validace
                 InputValidator.ValidujRozsahDatumuKontraktu(dpDatumOd.SelectedDate, dpDatumDo.SelectedDate);
 
+                // Převede datum začátku kontraktu z DatePickeru
                 DateOnly datumOd = DateOnly.FromDateTime(dpDatumOd.SelectedDate.Value.Date);
+
+                // Převede datum konce kontraktu z DatePickeru
                 DateOnly datumDo = DateOnly.FromDateTime(dpDatumDo.SelectedDate.Value.Date);
 
                 long plat = InputValidator.ValidujPlatKontraktuLong(TxtPlat.Text);
-
                 InputValidator.ValidujTelefonniCislo(TxtTelAgenta.Text);
                 string telAgenta = TxtTelAgenta.Text.Trim();
 
-                long klauzule = InputValidator.ValidujVystupniKlauzuliLong(TxtVystupniKlauzule.Text);
+                // Pokud je pole prázdné nebo obsahuje pomlčku, klauzule se bere jako nevyplněná
+                if (TxtVystupniKlauzule.Text.Trim() == "" || TxtVystupniKlauzule.Text.Trim() == "-")
+                {
+                    editovanyKontrakt.VystupniKlauzule = 0;
+                    editovanyKontrakt.JeVystupniKlauzuleVyplnena = false;
+                }
+                else
+                {
+                    // Zvaliduje a načte výši výstupní klauzule
+                    long klauzule = InputValidator.ValidujVystupniKlauzuliLong(TxtVystupniKlauzule.Text);
+
+                    editovanyKontrakt.VystupniKlauzule = klauzule;
+                    editovanyKontrakt.JeVystupniKlauzuleVyplnena = true;
+                }
 
                 editovanyKontrakt.DatumZacatku = datumOd;
                 editovanyKontrakt.DatumKonce = datumDo;
                 editovanyKontrakt.Plat = plat;
                 editovanyKontrakt.TelCisloNaAgenta = telAgenta;
-                editovanyKontrakt.VystupniKlauzule = klauzule;
 
                 var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
                 DatabazeKontrakty.EditujKontrakt(conn, editovanyKontrakt);
@@ -115,46 +131,12 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                 this.Close();
             }
             catch (Exception ex) when (ex.Message.Contains("ORA-20022") || ex.Message.Contains("ORA-20026"))
-
             {
                 MessageBox.Show("Tento hráč už má kontrakt!", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Chyba",  MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        /// <summary>
-        /// Nastaví zvolený režim (dark/light)
-        /// </summary>
-        private void ApplyTheme(bool darkMode)
-        {
-            if (darkMode == true)
-            {
-                Resources["BgApp"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x0F, 0x19));
-                Resources["Surface"] = new SolidColorBrush(Color.FromRgb(0x11, 0x18, 0x27));
-                Resources["TextMain"] = new SolidColorBrush(Color.FromRgb(0xF9, 0xFA, 0xFB));
-                Resources["BorderSoft"] = new SolidColorBrush(Color.FromRgb(0x1F, 0x29, 0x37));
-                Resources["InputBg"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x12, 0x20));
-                Resources["Orange"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
-                Resources["OrangeHover"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
-                Resources["SidebarGradient"] = new LinearGradientBrush(Color.FromRgb(0xFB, 0x92, 0x3C),
-                    Color.FromRgb(0xF9, 0x73, 0x16), 90);
-            }
-            else
-            {
-                Resources["BgApp"] = new SolidColorBrush(Color.FromRgb(0xF6, 0xF7, 0xFB));
-                Resources["Surface"] = new SolidColorBrush(Color.FromRgb(0xFF, 0xFF, 0xFF));
-                Resources["TextMain"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x12, 0x20));
-                Resources["BorderSoft"] = new SolidColorBrush(Color.FromRgb(0xE5, 0xE7, 0xEB));
-                Resources["InputBg"] = new SolidColorBrush(Color.FromRgb(0xF8, 0xFA, 0xFC));
-                Resources["Orange"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
-                Resources["OrangeHover"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
-                Resources["SidebarGradient"] = new LinearGradientBrush(
-                    Color.FromRgb(0xFB, 0x92, 0x3C),
-                    Color.FromRgb(0xF9, 0x73, 0x16),
-                    90);
+                MessageBox.Show(ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

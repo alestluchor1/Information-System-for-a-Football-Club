@@ -31,7 +31,6 @@
             <GradientStop Color="#F97316" Offset="1"/>
         </LinearGradientBrush>
 
-        <!-- Label vlevo -->
         <Style x:Key="Lbl" TargetType="TextBlock">
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -188,6 +187,30 @@
             </Setter>
         </Style>
 
+        <!-- DatePickerTextBox -->
+        <Style TargetType="DatePickerTextBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
+            <Setter Property="Background" Value="{DynamicResource InputBg}"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DatePickerTextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="6,0,6,0"
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <!-- DatePicker -->
         <Style x:Key="DatePickerTheme" TargetType="DatePicker">
             <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
@@ -196,9 +219,61 @@
             <Setter Property="Padding" Value="6,0"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DatePicker">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="26"/>
+                            </Grid.ColumnDefinitions>
+
+                            <DatePickerTextBox x:Name="PART_TextBox"
+                                               Grid.Column="0"
+                                               Background="{DynamicResource InputBg}"
+                                               Foreground="{DynamicResource TextMain}"
+                                               BorderBrush="Transparent"
+                                               VerticalContentAlignment="Center"/>
+
+                            <Button x:Name="PART_Button"
+                                    Grid.Column="1"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0"
+                                    Focusable="False"
+                                    Cursor="Hand">
+                                <Path Data="M 3,0 L 13,0 L 13,12 L 3,12 Z M 3,4 L 13,4"
+                                      Stroke="{DynamicResource TextMain}"
+                                      StrokeThickness="1.2"
+                                      Width="14"
+                                      Height="12"
+                                      Stretch="Fill"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                            </Button>
+
+                            <Popup x:Name="PART_Popup"
+                                   Placement="Bottom"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                                   PopupAnimation="Slide">
+                                <Border Background="{DynamicResource Surface}"
+                                        BorderBrush="{DynamicResource BorderSoft}"
+                                        BorderThickness="1"
+                                        CornerRadius="12"
+                                        Padding="6">
+                                    <Calendar x:Name="PART_Calendar"
+                                              Background="{DynamicResource Surface}"
+                                              Foreground="{DynamicResource TextMain}"/>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
-        <!-- Primární tlačítko -->
         <Style x:Key="BtnPrimary" TargetType="Button">
             <Setter Property="Height" Value="42"/>
             <Setter Property="Width" Value="140"/>
@@ -302,7 +377,7 @@
                                     SelectedDateFormat="Short"/>
                     </Border>
 
-                    <!-- 3: Plat (číslo) -->
+                    <!-- 3: Plat -->
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Plat" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtPlat"
                              Grid.Row="3" Grid.Column="1"
@@ -316,14 +391,14 @@
                              MaxLength="12"
                              Style="{DynamicResource Input}"/>
 
-                    <!-- 5: Výstupní klauzule (číslo, může být prázdné) -->
+                    <!-- 5: Výstupní klauzule -->
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Výstupní klauzule" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtVystupniKlauzule"
                              Grid.Row="5" Grid.Column="1"
                              MaxLength="12"
                              Style="{DynamicResource Input}"/>
 
-                    <!-- 6: Tlačítka -->
+                    <!-- 6: Tlačítko -->
                     <StackPanel Grid.Row="6" Grid.Column="1"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right"

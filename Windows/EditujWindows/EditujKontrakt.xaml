@@ -31,7 +31,6 @@
             <GradientStop Color="#F97316" Offset="1"/>
         </LinearGradientBrush>
 
-        <!-- Label vlevo -->
         <Style x:Key="Lbl" TargetType="TextBlock">
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -338,7 +337,7 @@
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Plat" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtPlat"
                              Grid.Row="3" Grid.Column="1"
-                             MaxLength="18"
+                             MaxLength="10"
                              Style="{DynamicResource Input}"/>
 
                     <!-- 4: Tel.číslo agenta -->
@@ -352,7 +351,7 @@
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Výstupní klauzule" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtVystupniKlauzule"
                              Grid.Row="5" Grid.Column="1"
-                             MaxLength="18"
+                             MaxLength="12"
                              Style="{DynamicResource Input}"/>
 
                     <!-- 6: Tlačítka -->
