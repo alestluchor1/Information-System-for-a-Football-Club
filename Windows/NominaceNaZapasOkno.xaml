@@ -116,10 +116,8 @@
             <Setter Property="MinWidth" Value="160"/>
             <Setter Property="Padding" Value="10,0"/>
             <Setter Property="Background" Value="{DynamicResource CardBrush}"/>
-
             <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
             <Setter Property="TextElement.Foreground" Value="{DynamicResource TextBrush}"/>
-
             <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSoft}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontFamily" Value="{DynamicResource AppFont}"/>
@@ -310,6 +308,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!-- Horní panel s tlačítky -->
         <Border Grid.Row="0"
                 Background="{DynamicResource CardBrush}"
                 CornerRadius="16"
@@ -332,7 +331,7 @@
                     <Button Style="{StaticResource BtnPrimary}" Content="Přidej" Margin="0,0,8,0" Click="BtnPridej_Click"/>
                     <Button Style="{StaticResource BtnPrimary}" Content="Odeber" Margin="0,0,8,0" Click="BtnOdebrat_Click"/>
                     <Button Style="{StaticResource BtnPrimary}" Content="Edituj" Margin="0,0,8,0" Click="BtnEdituj_Click"/>
-                    <Button Style="{StaticResource BtnPrimary}" Content="Najdi" Margin="0,0,8,0"  Click="BtnNajdi_Click"/>
+                    <Button Style="{StaticResource BtnPrimary}" Content="Najdi" Margin="0,0,8,0" Click="BtnNajdi_Click"/>
 
                 </WrapPanel>
 
@@ -345,6 +344,7 @@
             </Grid>
         </Border>
 
+        <!-- Spodní panel s tabulkou nominací -->
         <Border Grid.Row="2"
                 Background="{DynamicResource CardBrush}"
                 CornerRadius="16"
@@ -366,9 +366,8 @@
                       SelectionMode="Single"
                       SelectionUnit="FullRow"
                       ColumnWidth="*"
-                      MinColumnWidth="60"
+                      MinColumnWidth="80"
                       RowHeaderWidth="0"
-                      HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Auto"
                       GridLinesVisibility="All"
                       HorizontalGridLinesBrush="{DynamicResource GridLineBrush}"
@@ -376,51 +375,63 @@
 
                 <DataGrid.Columns>
 
-                    <DataGridTextColumn Header="ID nominace" Binding="{Binding IdNominace}" Width="95"
+                    <!-- ID nominace -->
+                    <DataGridTextColumn Header="ID nominace" Binding="{Binding IdNominace}" Width="1.1*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="ID hráče" Binding="{Binding IdHrace}" Width="85"
+                    <!-- ID nominovaného hráče -->
+                    <DataGridTextColumn Header="ID hráče" Binding="{Binding IdHrace}" Width="1*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="Rodné číslo" Binding="{Binding RodneCislo}" Width="150"
+                    <!-- Rodné číslo hráče -->
+                    <DataGridTextColumn Header="Rodné číslo" Binding="{Binding RodneCislo}" Width="1.5*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="Příjmení" Binding="{Binding Prijmeni}" Width="*"
+                    <!-- Příjmení nominovaného hráče -->
+                    <DataGridTextColumn Header="Příjmení" Binding="{Binding Prijmeni}" Width="1.4*"
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
 
-                    <DataGridTextColumn Header="ID zápasu" Binding="{Binding IdZapas}" Width="90"
+                    <!-- Identifikátor zápasu -->
+                    <DataGridTextColumn Header="ID zápasu" Binding="{Binding IdZapas}" Width="1.1*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="Domácí" Binding="{Binding DomaciTym}" Width="140"
+                    <!-- Název domácího týmu -->
+                    <DataGridTextColumn Header="Domácí tým" Binding="{Binding DomaciTym}" Width="1.5*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="Hosté" Binding="{Binding HosteTym}" Width="140"
+                    <!-- Název hostujícího týmu -->
+                    <DataGridTextColumn Header="Hostující tým" Binding="{Binding HosteTym}" Width="1.5*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="Stav" Binding="{Binding StavZapasu}" Width="120"
+                    <!-- Aktuální stav zápasu -->
+                    <DataGridTextColumn Header="Stav zápasu" Binding="{Binding StavZapasu}" Width="1.3*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="Minuty" Binding="{Binding PocetOdehranychMinut}" Width="80"
+                    <!-- Počet odehraných minut hráče -->
+                    <DataGridTextColumn Header="Odehrané minuty" Binding="{Binding PocetOdehranychMinut}" Width="1.3*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="Góly" Binding="{Binding PocetGolu}" Width="60"
+                    <!-- Počet vstřelených gólů -->
+                    <DataGridTextColumn Header="Počet gólů" Binding="{Binding PocetGolu}" Width="1*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="ŽK" Binding="{Binding ZluteKarty}" Width="60"
+                    <!-- Počet žlutých karet -->
+                    <DataGridTextColumn Header="Žluté karty" Binding="{Binding ZluteKarty}" Width="1*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="ČK" Binding="{Binding CerveneKarty}" Width="60"
+                    <!-- Počet červených karet -->
+                    <DataGridTextColumn Header="Červené karty" Binding="{Binding CerveneKarty}" Width="1.1*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 

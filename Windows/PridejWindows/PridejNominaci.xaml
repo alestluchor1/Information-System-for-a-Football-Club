@@ -32,7 +32,7 @@
             <GradientStop Color="#F97316" Offset="1"/>
         </LinearGradientBrush>
 
-        <!-- Styl popisků formuláře -->
+        <!-- Styl formuláře -->
         <Style x:Key="Lbl" TargetType="TextBlock">
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -416,7 +416,7 @@
                                             Style="{DynamicResource Spin}"
                                             Value="0"
                                             Minimum="0"
-                                            Maximum="100"/>
+                                            Maximum="999"/>
                     </Border>
 
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Počet žlutých karet" Style="{DynamicResource Lbl}"/>

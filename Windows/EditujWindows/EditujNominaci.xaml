@@ -293,7 +293,7 @@
                            TextAlignment="Center"
                            TextWrapping="Wrap"/>
 
-                <TextBlock Text="Pokud se zápas teprve bude hrát, lze upravit návrh nominace podle zvolených kritérií."
+                <TextBlock Text="Pokud se zápas teprve bude hrát, lze upravit návrh nominace podle zvolených kritérií"
                            FontSize="13"
                            Foreground="#FFF7ED"
                            Margin="0,10,0,0"
@@ -417,7 +417,7 @@
                                             Style="{DynamicResource Spin}"
                                             Value="0"
                                             Minimum="0"
-                                            Maximum="100"/>
+                                            Maximum="999"/>
                     </Border>
 
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Počet žlutých karet" Style="{DynamicResource Lbl}"/>
