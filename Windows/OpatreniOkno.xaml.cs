@@ -39,7 +39,7 @@ namespace InformacniSystemKlub.Windows
         public OpatreniOkno()
         {
             InitializeComponent();
-            ApplyTheme(HlavniOkno.jeDarkModeAktivni);
+            RezimZobrazeni.NastavRezimTabulkoveOkno(this, HlavniOkno.jeDarkModeAktivni);
             NactiDisciplinarniOpatreni();
             ZapasyOkno.NactiZapasy();
 
@@ -168,7 +168,7 @@ namespace InformacniSystemKlub.Windows
 
         /// <summary>
         /// Otevře dialog pro vyhledávání opatření
-        /// Aktivuje vyhledávací mód, dokud není režim ukončen pomocí CTRL+X.
+        /// Aktivuje vyhledávací mód, dokud není režim ukončen pomocí CTRL+X
         /// </summary>
         private void BtnNajdi_Click(object sender, RoutedEventArgs e)
         {
@@ -207,42 +207,6 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Nastaví podle zvoleného režimu (dark / light)
-        /// </summary>
-        private void ApplyTheme(bool darkMode)
-        {
-            if (darkMode == true)
-            {
-                Resources["WindowBgBrush"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x0F, 0x19));
-                Resources["CardBrush"] = new SolidColorBrush(Color.FromRgb(0x11, 0x18, 0x27));
-                Resources["CardAltBrush"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x12, 0x20));
-
-                Resources["BorderBrushSoft"] = new SolidColorBrush(Color.FromRgb(0x1F, 0x29, 0x37));
-
-                Resources["TextBrush"] = new SolidColorBrush(Color.FromRgb(0xF9, 0xFA, 0xFB));
-                Resources["MutedTextBrush"] = new SolidColorBrush(Color.FromRgb(0x9C, 0xA3, 0xAF));
-
-                Resources["AccentBrush"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
-                Resources["AccentDarkBrush"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
-            }
-            else if (darkMode == false)
-            {
-                Resources["WindowBgBrush"] = new SolidColorBrush(Color.FromRgb(0xFA, 0xFA, 0xFA));
-
-                Resources["CardBrush"] = new SolidColorBrush(Color.FromRgb(0xFF, 0xFF, 0xFF));
-                Resources["CardAltBrush"] = new SolidColorBrush(Color.FromRgb(0xF8, 0xFA, 0xFC));
-
-                Resources["BorderBrushSoft"] = new SolidColorBrush(Color.FromRgb(0xE5, 0xE7, 0xEB));
-
-                Resources["TextBrush"] = new SolidColorBrush(Color.FromRgb(0x11, 0x18, 0x27));
-                Resources["MutedTextBrush"] = new SolidColorBrush(Color.FromRgb(0x6B, 0x72, 0x80));
-
-                Resources["AccentBrush"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
-                Resources["AccentDarkBrush"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
-            }
-        }
-
-        /// <summary>
         /// Otevře dialog pro přidání opatření, uloží nové opatření do databáze a obnoví seznam
         /// </summary>
         private void BtnPridat_Click(object sender, RoutedEventArgs e)
@@ -251,7 +215,7 @@ namespace InformacniSystemKlub.Windows
             {
                 if (jeVyhledavaniAktivni == true)
                 {
-                    MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
+                    MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
                         MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
@@ -297,7 +261,7 @@ namespace InformacniSystemKlub.Windows
         {
             if (jeVyhledavaniAktivni == true)
             {
-                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
                     MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
