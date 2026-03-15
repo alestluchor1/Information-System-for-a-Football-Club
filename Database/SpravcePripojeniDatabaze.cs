@@ -1,96 +1,81 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using System;
+using System.Configuration;
 using System.Data;
-using System.IO;
 
 namespace InformacniSystemKlub.Database
 {
     /// <summary>
     /// Správce připojení k Oracle databázi
-    /// Drží jedno sdílené připojení pro celou aplikaci
+    /// Jedno sdílené připojení pro celou aplikaci
     /// </summary>
     internal static class SpravcePripojeniDatabaze
     {
         /// <summary>
-        /// Připojovací řetězec 
-        /// </summary>
-        private const string connectionString ="User Id=ADMIN;Password=Lenovotluchor01_;Data Source=schooldb_medium;";
-
-        /// <summary>
-        /// Sdílené připojení
+        /// Sdílené připojení používané v celé aplikaci
         /// </summary>
         private static OracleConnection? sdilenePripojeni = null;
 
+        /// <summary>
+        /// Objekt pro synchronizaci práce se sdíleným připojením
+        /// </summary>
         private static readonly object lockObj = new object();
 
-        private static bool oracleKonfiguraceNastavena = false;
-
         /// <summary>
-        /// Najde složku s wallet soubory
+        /// Vrátí připojovací řetězec z hodnot uložených v App.config
         /// </summary>
-        private static string ZiskejWalletPath()
+        private static string ZiskejConnectionString()
         {
-            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            string userId = ConfigurationManager.AppSettings["OracleUserId"];
+            string password = ConfigurationManager.AppSettings["OraclePassword"];
+            string dataSource = ConfigurationManager.AppSettings["OracleDataSource"];
 
-            string wallet = Path.Combine(baseDir, "Wallet_schooldb");
-
-            if (!Directory.Exists(wallet))
+            if (string.IsNullOrWhiteSpace(userId))
             {
-                string parent = Directory.GetParent(baseDir)?.FullName;
-                if (parent != null)
-                {
-                    string wallet2 = Path.Combine(parent, "Wallet_schooldb");
-                    if (Directory.Exists(wallet2))
-                    {
-                        wallet = wallet2;
-                    }
-                }
+                throw new Exception("Chybí hodnota OracleUserId v App.config");
             }
 
-            if (!Directory.Exists(wallet))
+            if (string.IsNullOrWhiteSpace(password))
             {
-                throw new Exception("Nenalezen Oracle Wallet. Vložte složku 'Wallet_schooldb' vedle aplikace (bin\\Debug...).");
+                throw new Exception("Chybí hodnota OraclePassword v App.config");
             }
 
-            return wallet;
+            if (string.IsNullOrWhiteSpace(dataSource))
+            {
+                throw new Exception("Chybí hodnota OracleDataSource v App.config");
+            }
+
+            return $"User Id={userId};Password={password};Data Source={dataSource};";
         }
 
         /// <summary>
-        /// Nastaví Oracle wallet konfiguraci 
+        /// Vytvoří nové připojení k databázi a otevře ho
         /// </summary>
-        private static void NastavOracleWallet()
+        private static OracleConnection VytvorANavazPripojeni()
         {
-            if (oracleKonfiguraceNastavena)
-            {
-                return;
-            }
-
-            string walletPath = ZiskejWalletPath();
-
-            OracleConfiguration.TnsAdmin = walletPath;
-            OracleConfiguration.WalletLocation = walletPath;
-
-            oracleKonfiguraceNastavena = true;
+            OracleConnection pripojeni = new OracleConnection(ZiskejConnectionString());
+            pripojeni.Open();
+            return pripojeni;
         }
 
         /// <summary>
         /// Vrátí otevřené sdílené připojení
-        /// Pokud ještě neexistuje, vytvoří ho. Pokud je zavřené, otevře ho
+        /// Pokud ještě neexistuje, vytvoří ho. Pokud je zavřené, otevře ho znovu
         /// </summary>
         public static OracleConnection ZiskejSdilenePripojeni()
         {
             lock (lockObj)
             {
-                NastavOracleWallet();
-
                 if (sdilenePripojeni == null)
                 {
-                    sdilenePripojeni = new OracleConnection(connectionString);
+                    sdilenePripojeni = VytvorANavazPripojeni();
+                    return sdilenePripojeni;
                 }
 
                 if (sdilenePripojeni.State != ConnectionState.Open)
                 {
-                    sdilenePripojeni.Open();
+                    sdilenePripojeni.Dispose();
+                    sdilenePripojeni = VytvorANavazPripojeni();
                 }
 
                 return sdilenePripojeni;
