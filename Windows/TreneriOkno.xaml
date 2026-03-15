@@ -19,12 +19,14 @@
 
         <FontFamily x:Key="AppFont">Segoe UI</FontFamily>
 
+        <!-- Barva pozadí celého okna -->
         <SolidColorBrush x:Key="WindowBgBrush" Color="#F6F7FB"/>
 
         <SolidColorBrush x:Key="CardBrush" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="CardAltBrush" Color="#F8FAFC"/>
         <SolidColorBrush x:Key="BorderBrushSoft" Color="#E6EAF2"/>
 
+        <!-- Barvy textu -->
         <SolidColorBrush x:Key="TextBrush" Color="#0B1220"/>
         <SolidColorBrush x:Key="MutedTextBrush" Color="#64748B"/>
 
@@ -85,6 +87,7 @@
             <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSoft}"/>
         </Style>
 
+        <!-- Základní styl hlavičky sloupců -->
         <Style x:Key="DgHeaderBase" TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="{DynamicResource CardAltBrush}"/>
             <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
@@ -193,6 +196,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!-- Horní panel s akcemi -->
         <Border Grid.Row="0"
                 Background="{DynamicResource CardBrush}"
                 CornerRadius="16"
@@ -219,6 +223,7 @@
 
                 </WrapPanel>
 
+                <!-- Tlačítko pro návrat zpět -->
                 <Button Grid.Column="1"
                         Style="{StaticResource BtnSecondary}"
                         Content="Zpět"
@@ -228,6 +233,7 @@
             </Grid>
         </Border>
 
+        <!-- Panel s tabulkou trenérů -->
         <Border Grid.Row="2"
                 Background="{DynamicResource CardBrush}"
                 CornerRadius="16"
@@ -259,35 +265,49 @@
 
                 <DataGrid.Columns>
 
-                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="70"
+                    <!-- ID trenéra -->
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="0.7*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="Jméno" Binding="{Binding Jmeno}" Width="*"
+                    <!-- Jméno trenéra -->
+                    <DataGridTextColumn Header="Jméno" Binding="{Binding Jmeno}" Width="1.2*"
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
 
-                    <DataGridTextColumn Header="Příjmení" Binding="{Binding Prijmeni}" Width="*"
+                    <!-- Příjmení trenéra -->
+                    <DataGridTextColumn Header="Příjmení" Binding="{Binding Prijmeni}" Width="1.3*"
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
 
-                    <DataGridTextColumn Header="Rodné číslo" Binding="{Binding RodneCislo}" Width="150"
+                    <!-- Rodné číslo trenéra -->
+                    <DataGridTextColumn x:Name="RodneCisloSloupec"
+                                        Header="Rodné číslo"
+                                        Binding="{Binding RodneCislo}"
+                                        Width="1.5*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="Telefon" Binding="{Binding TelefonniCislo}" Width="130"
+                    <!-- Telefonní číslo trenéra -->
+                    <DataGridTextColumn x:Name="TelefonniCisloSloupec"
+                                        Header="Telefon"
+                                        Binding="{Binding TelefonniCislo}"
+                                        Width="1.3*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="Specializace" Binding="{Binding Specializace}" Width="*"
+                    <!-- Specializace trenéra -->
+                    <DataGridTextColumn Header="Specializace" Binding="{Binding Specializace}" Width="1.6*"
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
 
-                    <DataGridTextColumn Header="Trenérská licence" Binding="{Binding TrenerskaLicence}" Width="160"
+                    <!-- Typ trenérské licence -->
+                    <DataGridTextColumn Header="Trenérská licence" Binding="{Binding TrenerskaLicence}" Width="1.5*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <DataGridTextColumn Header="Let praxe" Binding="{Binding PocetLetPraxe}" Width="110"
+                    <!-- Počet let praxe -->
+                    <DataGridTextColumn Header="Let praxe" Binding="{Binding PocetLetPraxe}" Width="1*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
