@@ -6,6 +6,7 @@ Bakalářská práce zaměřená na návrh a implementaci moderního informačn�
 
 Student Univerzity Pardubice  
 Obor: **Informační technologie**
+Rok: 2026
 
 ## Téma práce
 
