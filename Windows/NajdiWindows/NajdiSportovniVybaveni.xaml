@@ -32,7 +32,6 @@
             <GradientStop Color="#F97316" Offset="1"/>
         </LinearGradientBrush>
 
-        <!-- Label vlevo -->
         <Style x:Key="Lbl" TargetType="TextBlock">
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
