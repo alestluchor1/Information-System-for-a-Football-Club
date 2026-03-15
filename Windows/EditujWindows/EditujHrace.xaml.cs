@@ -20,6 +20,7 @@ namespace InformacniSystemKlub.Windows.EditujWindows
         public EditujHrace(Hrac editovanyHrac)
         {
             InitializeComponent();
+            RezimZobrazeni.NastavRezimFormularoveOkno(this, HlavniOkno.jeDarkModeAktivni);
 
             this.editovanyHrac = editovanyHrac;
 

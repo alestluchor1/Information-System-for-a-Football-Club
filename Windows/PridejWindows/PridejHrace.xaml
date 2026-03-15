@@ -33,7 +33,6 @@
             <GradientStop Color="#F97316" Offset="1"/>
         </LinearGradientBrush>
 
-        <!-- Label vlevo -->
         <Style x:Key="Lbl" TargetType="TextBlock">
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -301,53 +300,53 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- 0 -->
+                    <!-- 0 Jméno -->
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Jméno" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtJmeno" Grid.Row="0" Grid.Column="1" MaxLength="20" Style="{DynamicResource Input}"/>
 
-                    <!-- 1 -->
+                    <!-- 1 Příjmení -->
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Příjmení" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtPrijmeni" Grid.Row="1" Grid.Column="1" MaxLength="20" Style="{DynamicResource Input}"/>
 
-                    <!-- 2 -->
+                    <!-- 2 Rodné číslo -->
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Rodné číslo" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtRodneCislo" Grid.Row="2" Grid.Column="1" MaxLength="10" Style="{DynamicResource Input}"/>
 
-                    <!-- 3 -->
+                    <!-- 3 Telefonní číslo -->
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Telefonní číslo" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtTelefonniCislo" Grid.Row="3" Grid.Column="1" MaxLength="12" Style="{DynamicResource Input}"/>
 
-                    <!-- 4 -->
+                    <!-- 4 Počet vstřelených gólů-->
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Počet vstřelených gólů" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="4" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <xctk:IntegerUpDown x:Name="iudPocetGolu"
                                             Style="{DynamicResource Spin}"
                                             Value="0"
                                             Minimum="0"
-                                            Maximum="100"/>
+                                            Maximum="999"/>
                     </Border>
 
-                    <!-- 5 -->
+                    <!-- 5 Počet  žlutých karet -->
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Počet žlutých karet" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="5" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <xctk:IntegerUpDown x:Name="iudPocetZlutychKaret"
                                             Style="{DynamicResource Spin}"
                                             Value="0"
                                             Minimum="0"
-                                            Maximum="100"/>
+                                            Maximum="999"/>
                     </Border>
 
-                    <!-- 6 -->
+                    <!-- 6 Počet červených karet -->
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Počet červených karet" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="6" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <xctk:IntegerUpDown x:Name="iudPocetCervenychKaret"
                                             Style="{DynamicResource Spin}"
                                             Value="0"
                                             Minimum="0"
-                                            Maximum="100"/>
+                                            Maximum="999"/>
                     </Border>
 
-                    <!-- 7 -->
+                    <!-- 7 Zdravotní stav -->
                     <TextBlock Grid.Row="7" Grid.Column="0" Text="Zdravotní stav" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="7" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <ComboBox x:Name="cbZdraviStav"
@@ -358,11 +357,11 @@
                         </ComboBox>
                     </Border>
 
-                    <!-- 8 -->
+                    <!-- 8 Pozice -->
                     <TextBlock Grid.Row="8" Grid.Column="0" Text="Pozice" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtPozice" Grid.Row="8" Grid.Column="1" MaxLength="50" Style="{DynamicResource Input}"/>
 
-                    <!-- 9 -->
+                    <!-- 9 Tréninková skupina -->
                     <TextBlock Grid.Row="9" Grid.Column="0" Text="Tréninková skupina" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="9" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <ComboBox x:Name="cbSkupina"

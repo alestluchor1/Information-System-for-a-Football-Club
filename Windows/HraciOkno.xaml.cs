@@ -38,8 +38,27 @@ namespace InformacniSystemKlub.Windows
 
             DgHraci.ItemsSource = HraciData;
             cbVyberTymu.SelectedIndex = 0;
+            NastavViditelnostSloupcuProUzivatele();
             ready = true;
             VyberTymu();             
+        }
+
+        /// <summary>
+        /// Nastaví viditelnost citlivých sloupců v tabulce hráčů podle role
+        /// právě přihlášeného uživatele
+        /// </summary>
+        private void NastavViditelnostSloupcuProUzivatele()
+        {
+            Uzivatel uzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+            string role = uzivatel.Role.ToLower();
+
+            RodneCisloSloupec.Visibility = Visibility.Visible;
+            TelefonniCisloSloupec.Visibility = Visibility.Visible;
+
+            if (role == "trener")
+            {
+                RodneCisloSloupec.Visibility = Visibility.Collapsed;
+            }
         }
 
         /// <summary>

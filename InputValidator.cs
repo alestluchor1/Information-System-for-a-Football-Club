@@ -146,7 +146,7 @@ namespace InformacniSystemKlub
         public static int ValidujHraciSpinnerGolyKarty(string hodnotaText, string nazevPole = "Počet gólů")
         {
             const int min = 0;
-            const int max = 100;
+            const int max = 999;
 
             if (string.IsNullOrWhiteSpace(hodnotaText))
             {

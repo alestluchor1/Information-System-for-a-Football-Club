@@ -212,7 +212,7 @@
                             Style="{StaticResource TopButtonStyle}"
                             Click="BtnMode_Click"
                             Margin="0,0,10,0"/>
-                    <Button Content="Zavřít"
+                    <Button Content="Odhlásit se"
                             Background="#111827"
                             Foreground="White"
                             Style="{StaticResource TopButtonStyle}"
