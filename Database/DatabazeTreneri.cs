@@ -45,7 +45,7 @@ namespace InformacniSystemKlub.Database
                     cmd.Parameters.Add("v_jmeno", OracleDbType.Varchar2).Value = trener.Jmeno;
                     cmd.Parameters.Add("v_prijmeni", OracleDbType.Varchar2).Value = trener.Prijmeni;
                     cmd.Parameters.Add("v_telefonni_cislo", OracleDbType.Varchar2).Value = trener.TelefonniCislo;
-                    cmd.Parameters.Add("v_trenerska_licence", OracleDbType.Varchar2).Value = trener.TrenerskaLicence;
+    
                     cmd.Parameters.Add("v_specializace", OracleDbType.Varchar2).Value = trener.Specializace;
                     cmd.Parameters.Add("v_pocet_let_praxe", OracleDbType.Int32).Value = trener.PocetLetPraxe;
 
@@ -76,7 +76,7 @@ namespace InformacniSystemKlub.Database
                     cmd.Parameters.Add("v_jmeno", OracleDbType.Varchar2).Value = trener.Jmeno;
                     cmd.Parameters.Add("v_prijmeni", OracleDbType.Varchar2).Value = trener.Prijmeni;
                     cmd.Parameters.Add("v_telefonni_cislo", OracleDbType.Varchar2).Value = trener.TelefonniCislo;
-                    cmd.Parameters.Add("v_trenerska_licence", OracleDbType.Varchar2).Value = trener.TrenerskaLicence;
+                    
                     cmd.Parameters.Add("v_specializace", OracleDbType.Varchar2).Value = trener.Specializace;
                     cmd.Parameters.Add("v_pocet_let_praxe", OracleDbType.Int32).Value = trener.PocetLetPraxe;
 

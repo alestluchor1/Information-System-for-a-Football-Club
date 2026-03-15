@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -24,23 +25,42 @@ namespace InformacniSystemKlub.Windows
         /// <summary>
         /// E-mail odesílatele
         /// </summary>
-        private const string EmailOdesilatele = "infosklhota@seznam.cz";
-        private const string HesloOdesilatele = "fotbalovyklubsklhota";
+        private static readonly string EmailOdesilatele = ConfigurationManager.AppSettings["EmailOdesilatele"];
 
         /// <summary>
-        /// SMTP server Seznamu
+        /// Heslo e-mailového účtu odesílatele
         /// </summary>
-        private const string SmtpServer = "smtp.seznam.cz";
+        private static readonly string HesloOdesilatele = ConfigurationManager.AppSettings["HesloOdesilatele"];
 
         /// <summary>
-        /// SMTP port Seznamu
+        /// SMTP server
         /// </summary>
-        private const int SmtpPort = 587;
+        private static readonly string SmtpServer = ConfigurationManager.AppSettings["SmtpServer"];
+
+        /// <summary>
+        /// SMTP port
+        /// </summary>
+        private static readonly int SmtpPort = Convert.ToInt32(ConfigurationManager.AppSettings["SmtpPort"]);
 
         public Notifikace(ObservableCollection<Uzivatel> uzivatele)
         {
             InitializeComponent();
             ApplyTheme(HlavniOkno.jeDarkModeAktivni);
+
+            if (string.IsNullOrWhiteSpace(EmailOdesilatele))
+            {
+                throw new Exception("Chybí hodnota EmailOdesilatele v App.config");
+            }
+
+            if (string.IsNullOrWhiteSpace(HesloOdesilatele))
+            {
+                throw new Exception("Chybí hodnota HesloOdesilatele v App.config");
+            }
+
+            if (string.IsNullOrWhiteSpace(SmtpServer))
+            {
+                throw new Exception("Chybí hodnota SmtpServer v App.config");
+            }
 
             if (uzivatele == null)
             {

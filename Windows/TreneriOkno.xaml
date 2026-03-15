@@ -301,11 +301,6 @@
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
 
-                    <!-- Typ trenérské licence -->
-                    <DataGridTextColumn Header="Trenérská licence" Binding="{Binding TrenerskaLicence}" Width="1.5*"
-                                        HeaderStyle="{StaticResource DgHeaderCenter}"
-                                        CellStyle="{StaticResource DgCellCenter}"/>
-
                     <!-- Počet let praxe -->
                     <DataGridTextColumn Header="Let praxe" Binding="{Binding PocetLetPraxe}" Width="1*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"

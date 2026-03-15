@@ -119,15 +119,6 @@ namespace InformacniSystemKlub.Windows
                         trener.TelefonniCislo = "-";
                     }
 
-                    if (reader["TRENERSKALICENCE"] != DBNull.Value)
-                    {
-                        trener.TrenerskaLicence = reader["TRENERSKALICENCE"].ToString();
-                    }
-                    else 
-                    {
-                        trener.TrenerskaLicence= "-";
-                    }
-
                     if (reader["POCETLETPRAXE"] != DBNull.Value)
                     {
                         trener.PocetLetPraxe = Convert.ToInt32(reader["POCETLETPRAXE"]);
