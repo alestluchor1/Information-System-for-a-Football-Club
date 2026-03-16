@@ -44,7 +44,7 @@ namespace InformacniSystemKlub.Windows
         public EditorSestav()
         {
             InitializeComponent();
-            ApplyTheme(HlavniOkno.jeDarkModeAktivni);
+            RezimZobrazeni.NastavRezimEditorSestavOkno(this, HlavniOkno.jeDarkModeAktivni);
 
             this.vsichniHraci = new ObservableCollection<Hrac>();
             this.filtrovaniHraci = new ObservableCollection<Hrac>();
@@ -433,41 +433,6 @@ namespace InformacniSystemKlub.Windows
             CvHriste.Children.Clear();
         }
 
-        /// <summary>
-        /// Nastaví barevné zdroje okna podle zvoleného režimu (dark / light)
-        /// </summary>
-        private void ApplyTheme(bool darkMode)
-        {
-            if (darkMode == true)
-            {
-                Resources["WindowBgBrush"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x0F, 0x19));
-                Resources["CardBrush"] = new SolidColorBrush(Color.FromRgb(0x11, 0x18, 0x27));
-                Resources["CardAltBrush"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x12, 0x20));
-                Resources["BorderBrushSoft"] = new SolidColorBrush(Color.FromRgb(0x1F, 0x29, 0x37));
-                Resources["TextBrush"] = new SolidColorBrush(Color.FromRgb(0xF9, 0xFA, 0xFB));
-                Resources["MutedTextBrush"] = new SolidColorBrush(Color.FromRgb(0x9C, 0xA3, 0xAF));
-                Resources["AccentBrush"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
-                Resources["AccentDarkBrush"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
-                Resources["InputBgBrush"] = new SolidColorBrush(Color.FromRgb(0x0F, 0x17, 0x26));
-                Resources["InputHoverBrush"] = new SolidColorBrush(Color.FromRgb(0x16, 0x20, 0x2D));
-                Resources["DropdownBrush"] = new SolidColorBrush(Color.FromRgb(0x0F, 0x17, 0x26));
-                Resources["FieldOverlayBrush"] = new SolidColorBrush(Color.FromArgb(0x12, 0x00, 0x00, 0x00));
-            }
-            else
-            {
-                Resources["WindowBgBrush"] = new SolidColorBrush(Color.FromRgb(0xFA, 0xFA, 0xFA));
-                Resources["CardBrush"] = new SolidColorBrush(Color.FromRgb(0xFF, 0xFF, 0xFF));
-                Resources["CardAltBrush"] = new SolidColorBrush(Color.FromRgb(0xF8, 0xFA, 0xFC));
-                Resources["BorderBrushSoft"] = new SolidColorBrush(Color.FromRgb(0xE5, 0xE7, 0xEB));
-                Resources["TextBrush"] = new SolidColorBrush(Color.FromRgb(0x11, 0x18, 0x27));
-                Resources["MutedTextBrush"] = new SolidColorBrush(Color.FromRgb(0x6B, 0x72, 0x80));
-                Resources["AccentBrush"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
-                Resources["AccentDarkBrush"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
-                Resources["InputBgBrush"] = new SolidColorBrush(Color.FromRgb(0xF9, 0xFA, 0xFB));
-                Resources["InputHoverBrush"] = new SolidColorBrush(Color.FromRgb(0xF3, 0xF4, 0xF6));
-                Resources["DropdownBrush"] = new SolidColorBrush(Color.FromRgb(0xFF, 0xFF, 0xFF));
-                Resources["FieldOverlayBrush"] = new SolidColorBrush(Color.FromArgb(0x08, 0x00, 0x00, 0x00));
-            }
-        }
+        
     }
 }

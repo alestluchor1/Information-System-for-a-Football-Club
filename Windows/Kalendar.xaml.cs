@@ -25,7 +25,7 @@ namespace InformacniSystemKlub.Windows
         public Kalendar()
         {
             InitializeComponent();
-
+            RezimZobrazeni.NastavRezimKalendarOkno(this, HlavniOkno.jeDarkModeAktivni);
             vybranyDen = DateTime.Today;
 
             //(Rok, měsíc, den)
