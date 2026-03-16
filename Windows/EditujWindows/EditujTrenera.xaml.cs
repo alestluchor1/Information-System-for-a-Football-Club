@@ -2,18 +2,7 @@
 using InformacniSystemKlub.Models;
 using Oracle.ManagedDataAccess.Client;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace InformacniSystemKlub.Windows.EditujWindows
 {
@@ -37,11 +26,8 @@ namespace InformacniSystemKlub.Windows.EditujWindows
             TxtJmeno.Text = editovanyTrener.Jmeno;
             TxtPrijmeni.Text = editovanyTrener.Prijmeni;
             TxtTelefonniCislo.Text = editovanyTrener.TelefonniCislo;
-            TxtTrenerskaLicence.Text = editovanyTrener.TrenerskaLicence;
             TxtSpecializace.Text = editovanyTrener.Specializace;
-
             iudPocetLetPraxe.Value = editovanyTrener.PocetLetPraxe;
-
         }
 
         /// <summary>
@@ -55,15 +41,13 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                 string jmeno = TxtJmeno.Text.Trim();
                 string prijmeni = TxtPrijmeni.Text.Trim();
                 string tel = TxtTelefonniCislo.Text.Trim();
-                string licence = TxtTrenerskaLicence.Text.Trim();
                 string specializace = TxtSpecializace.Text.Trim();
 
-                // Validace 
+                // Validace
                 InputValidator.ValidujRodneCislo(rodneCislo);
                 InputValidator.ValidujJmeno(jmeno);
                 InputValidator.ValidujPrijmeni(prijmeni);
                 InputValidator.ValidujTelefonniCislo(tel);
-                InputValidator.ValidujTrenerskaLicence(licence);
                 InputValidator.ValidujSpecializace(specializace);
 
                 // Validace spinneru
@@ -79,18 +63,17 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                 editovanyTrener.Jmeno = jmeno;
                 editovanyTrener.Prijmeni = prijmeni;
                 editovanyTrener.TelefonniCislo = tel;
-                editovanyTrener.TrenerskaLicence = licence;
                 editovanyTrener.Specializace = specializace;
                 editovanyTrener.PocetLetPraxe = pocetLetPraxe;
 
-                // Update DB 
+                // Update DB
                 OracleConnection conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
                 DatabazeTreneri.EditaceTrenera(conn, editovanyTrener);
 
                 MessageBox.Show("Změny byly úspěšně uloženy", "Úspěch", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 DialogResult = true;
-                this.Close();
+                Close();
             }
             catch (OracleException ex)
             {
@@ -108,8 +91,7 @@ namespace InformacniSystemKlub.Windows.EditujWindows
         private void BtnZrusit_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
-            this.Close();
+            Close();
         }
     }
 }
-

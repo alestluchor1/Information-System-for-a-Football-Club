@@ -1,18 +1,6 @@
 ﻿using InformacniSystemKlub.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace InformacniSystemKlub.Windows.PridejWindows
 {
@@ -34,7 +22,7 @@ namespace InformacniSystemKlub.Windows.PridejWindows
 
             if (novyTrener == null)
             {
-                novyTrener= new Trener();
+                novyTrener = new Trener();
             }
         }
 
@@ -51,17 +39,14 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                 InputValidator.ValidujPrijmeni(TxtPrijmeni.Text);
                 InputValidator.ValidujRodneCislo(TxtRodneCislo.Text);
                 InputValidator.ValidujTelefonniCislo(TxtTelefonniCislo.Text);
-
-                InputValidator.ValidujTrenerskaLicence(TxtTrenerskaLicence.Text);
                 InputValidator.ValidujSpecializace(TxtSpecializace.Text);
+
                 int pocetLetPraxe = InputValidator.ValidujTreneriPocetLetPraxe(iudPocetLetPraxe.Text);
 
                 novyTrener.Jmeno = TxtJmeno.Text.Trim();
                 novyTrener.Prijmeni = TxtPrijmeni.Text.Trim();
                 novyTrener.RodneCislo = TxtRodneCislo.Text.Trim();
                 novyTrener.TelefonniCislo = TxtTelefonniCislo.Text.Trim();
-
-                novyTrener.TrenerskaLicence = TxtTrenerskaLicence.Text.Trim();
                 novyTrener.Specializace = TxtSpecializace.Text.Trim();
                 novyTrener.PocetLetPraxe = pocetLetPraxe;
 
@@ -75,6 +60,5 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                 MessageBox.Show(ex.Message, "Chyba při ukládání", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
     }
 }

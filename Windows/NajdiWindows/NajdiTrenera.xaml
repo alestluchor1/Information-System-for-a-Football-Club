@@ -297,7 +297,6 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <!-- 0 -->
@@ -321,16 +320,12 @@
                     <TextBox x:Name="TxtTelefonniCislo" Grid.Row="4" Grid.Column="1" MaxLength="12" Style="{DynamicResource Input}"/>
 
                     <!-- 5 -->
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Trenérská licence" Style="{DynamicResource Lbl}"/>
-                    <TextBox x:Name="TxtTrenerskaLicence" Grid.Row="5" Grid.Column="1" MaxLength="30" Style="{DynamicResource Input}"/>
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Specializace" Style="{DynamicResource Lbl}"/>
+                    <TextBox x:Name="TxtSpecializace" Grid.Row="5" Grid.Column="1" MaxLength="40" Style="{DynamicResource Input}"/>
 
                     <!-- 6 -->
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Specializace" Style="{DynamicResource Lbl}"/>
-                    <TextBox x:Name="TxtSpecializace" Grid.Row="6" Grid.Column="1" MaxLength="40" Style="{DynamicResource Input}"/>
-
-                    <!-- 7 -->
-                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Počet let praxe" Style="{DynamicResource Lbl}"/>
-                    <Border Grid.Row="7" Grid.Column="1" Style="{DynamicResource InputHost}">
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Počet let praxe" Style="{DynamicResource Lbl}"/>
+                    <Border Grid.Row="6" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <xctk:IntegerUpDown x:Name="iudPocetLetPraxe"
                                             Style="{DynamicResource Spin}"
                                             Value="{x:Null}"
@@ -339,11 +334,10 @@
                                             AllowSpin="True"
                                             Minimum="0"
                                             Maximum="100"/>
-
                     </Border>
 
-                    <!-- 8 Tlačítko -->
-                    <Button Grid.Row="8" Grid.Column="1"
+                    <!-- 7 Tlačítko -->
+                    <Button Grid.Row="7" Grid.Column="1"
                             Content="Filtrovat"
                             Style="{DynamicResource BtnPrimary}"
                             HorizontalAlignment="Right"

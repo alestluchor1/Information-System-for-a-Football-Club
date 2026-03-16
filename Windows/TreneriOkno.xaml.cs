@@ -224,7 +224,7 @@ namespace InformacniSystemKlub.Windows
         {
             if (jeVyhledavaniAktivni == true)
             {
-                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
                     MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
@@ -258,7 +258,7 @@ namespace InformacniSystemKlub.Windows
         {
             if (jeVyhledavaniAktivni == true)
             {
-                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
                     MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }

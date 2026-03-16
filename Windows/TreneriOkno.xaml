@@ -19,14 +19,13 @@
 
         <FontFamily x:Key="AppFont">Segoe UI</FontFamily>
 
-        <!-- Barva pozadí celého okna -->
+        <!-- Barva pozadí -->
         <SolidColorBrush x:Key="WindowBgBrush" Color="#F6F7FB"/>
 
         <SolidColorBrush x:Key="CardBrush" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="CardAltBrush" Color="#F8FAFC"/>
         <SolidColorBrush x:Key="BorderBrushSoft" Color="#E6EAF2"/>
 
-        <!-- Barvy textu -->
         <SolidColorBrush x:Key="TextBrush" Color="#0B1220"/>
         <SolidColorBrush x:Key="MutedTextBrush" Color="#64748B"/>
 
@@ -196,7 +195,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Horní panel s akcemi -->
+        <!-- Horní panel -->
         <Border Grid.Row="0"
                 Background="{DynamicResource CardBrush}"
                 CornerRadius="16"

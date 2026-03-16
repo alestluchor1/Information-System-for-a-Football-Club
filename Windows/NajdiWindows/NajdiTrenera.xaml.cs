@@ -3,16 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace InformacniSystemKlub.Windows.NajdiWindows
 {
@@ -28,15 +19,16 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
         public ObservableCollection<Trener> FiltrovaniTreneri { get; private set; } = new ObservableCollection<Trener>();
 
         /// <summary>
-        /// Vstupní kolekce trenérů, ze které se filtruje 
+        /// Vstupní kolekce trenérů, ze které se filtruje
         /// </summary>
         private readonly ObservableCollection<Trener> VstupniTreneri;
+
         public NajdiTrenera(ObservableCollection<Trener> treneri)
         {
             InitializeComponent();
             RezimZobrazeni.NastavRezimFormularoveOkno(this, HlavniOkno.jeDarkModeAktivni);
 
-            this.VstupniTreneri = treneri;
+            VstupniTreneri = treneri;
         }
 
         /// <summary>
@@ -120,8 +112,5 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
 
             return vysledek;
         }
-
-        
-
     }
 }
