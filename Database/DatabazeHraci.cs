@@ -47,7 +47,22 @@ namespace InformacniSystemKlub.Database
                     cmd.Parameters.Add("v_pocet_golu", OracleDbType.Int32).Value = hrac.PocetVstrelenychGolu;
                     cmd.Parameters.Add("v_pocet_zlute", OracleDbType.Int32).Value = hrac.PocetZlutychKaret;
                     cmd.Parameters.Add("v_pocet_cervene", OracleDbType.Int32).Value = hrac.PocetCervenychKaret;
-                    cmd.Parameters.Add("v_zdravotni_stav", OracleDbType.Char).Value = hrac.ZdravotniStav;
+                    int idZdravotniStav;
+
+                    if (hrac.ZdravotniStav == 'A')
+                    {
+                        idZdravotniStav = 1;
+                    }
+                    else if (hrac.ZdravotniStav == 'N')
+                    {
+                        idZdravotniStav = 2;
+                    }
+                    else
+                    {
+                        throw new Exception("Neplatná hodnota zdravotního stavu. Povolené hodnoty jsou pouze A nebo N");
+                    }
+
+                    cmd.Parameters.Add("v_idzdravotnistav", OracleDbType.Int32).Value = idZdravotniStav;
 
                     cmd.ExecuteNonQuery();
                 }
@@ -78,7 +93,22 @@ namespace InformacniSystemKlub.Database
                 cmd.Parameters.Add("v_pocet_golu", OracleDbType.Int32).Value = hrac.PocetVstrelenychGolu;
                 cmd.Parameters.Add("v_pocet_zlute", OracleDbType.Int32).Value = hrac.PocetZlutychKaret;
                 cmd.Parameters.Add("v_pocet_cervene", OracleDbType.Int32).Value = hrac.PocetCervenychKaret;
-                cmd.Parameters.Add("v_zdravotni_stav", OracleDbType.Char).Value = hrac.ZdravotniStav;
+                int idZdravotniStav;
+
+                if (hrac.ZdravotniStav == 'A')
+                {
+                    idZdravotniStav = 1;
+                }
+                else if (hrac.ZdravotniStav == 'N')
+                {
+                    idZdravotniStav = 2;
+                }
+                else
+                {
+                    throw new Exception("Neplatná hodnota zdravotního stavu. Povolené hodnoty jsou pouze A nebo N");
+                }
+
+                cmd.Parameters.Add("v_idzdravotnistav", OracleDbType.Int32).Value = idZdravotniStav;
 
                 cmd.ExecuteNonQuery();
             }

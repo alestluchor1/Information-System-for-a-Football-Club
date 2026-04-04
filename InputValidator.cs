@@ -1,4 +1,5 @@
 ﻿using InformacniSystemKlub.Models;
+using InformacniSystemKlub.Windows;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -53,6 +54,32 @@ namespace InformacniSystemKlub
             if (!RegexPismena.IsMatch(prijmeni))
             {
                 throw new Exception("Příjmení může obsahovat pouze písmena!");
+            }
+        }
+
+        public static void ValidujUnikatniRodneCislo(string rodneCislo)
+        {
+            if (string.IsNullOrWhiteSpace(rodneCislo))
+            {
+                throw new Exception("Rodné číslo nesmí být prázdné!");
+            }
+
+            string rc = rodneCislo.Trim();
+
+            foreach (Hrac hrac in HraciOkno.HraciData)
+            {
+                if (hrac != null && hrac.RodneCislo != null && hrac.RodneCislo.Trim() == rc)
+                {
+                    throw new Exception("Hráč nebo trenér s tímto rodným číslem už v systému existuje!");
+                }
+            }
+
+            foreach (Trener trener in TreneriOkno.TreneriData)
+            {
+                if (trener != null && trener.RodneCislo != null && trener.RodneCislo.Trim() == rc)
+                {
+                    throw new Exception("Hráč nebo trenér s tímto rodným číslem už v systému existuje!");
+                }
             }
         }
 

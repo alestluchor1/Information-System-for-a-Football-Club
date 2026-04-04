@@ -45,6 +45,7 @@ namespace InformacniSystemKlub.Windows.EditujWindows
 
                 // Validace
                 InputValidator.ValidujRodneCislo(rodneCislo);
+                InputValidator.ValidujUnikatniRodneCislo(rodneCislo);
                 InputValidator.ValidujJmeno(jmeno);
                 InputValidator.ValidujPrijmeni(prijmeni);
                 InputValidator.ValidujTelefonniCislo(tel);

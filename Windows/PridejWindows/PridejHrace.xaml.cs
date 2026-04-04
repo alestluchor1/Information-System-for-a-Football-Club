@@ -40,6 +40,7 @@ namespace InformacniSystemKlub.Windows.PřidáníWindows
                 InputValidator.ValidujJmeno(TxtJmeno.Text);
                 InputValidator.ValidujPrijmeni(TxtPrijmeni.Text);
                 InputValidator.ValidujRodneCislo(TxtRodneCislo.Text);
+                InputValidator.ValidujUnikatniRodneCislo(TxtRodneCislo.Text);
                 InputValidator.ValidujTelefonniCislo(TxtTelefonniCislo.Text);
 
                 InputValidator.ValidujPozice(TxtPozice.Text);

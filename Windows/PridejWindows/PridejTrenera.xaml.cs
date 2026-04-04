@@ -38,6 +38,7 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                 InputValidator.ValidujJmeno(TxtJmeno.Text);
                 InputValidator.ValidujPrijmeni(TxtPrijmeni.Text);
                 InputValidator.ValidujRodneCislo(TxtRodneCislo.Text);
+                InputValidator.ValidujUnikatniRodneCislo(TxtRodneCislo.Text);
                 InputValidator.ValidujTelefonniCislo(TxtTelefonniCislo.Text);
                 InputValidator.ValidujSpecializace(TxtSpecializace.Text);
 

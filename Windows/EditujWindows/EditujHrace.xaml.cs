@@ -90,6 +90,7 @@ namespace InformacniSystemKlub.Windows.EditujWindows
 
                 // Validace textů
                 InputValidator.ValidujRodneCislo(rodneCislo);
+                InputValidator.ValidujUnikatniRodneCislo(rodneCislo);
                 InputValidator.ValidujJmeno(jmeno);
                 InputValidator.ValidujPrijmeni(prijmeni);
                 InputValidator.ValidujTelefonniCislo(tel);
