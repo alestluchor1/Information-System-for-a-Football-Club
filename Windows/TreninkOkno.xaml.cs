@@ -82,7 +82,7 @@ namespace InformacniSystemKlub.Windows
                         trenink.IdTrener = 0;
                     }
 
-
+                    // Rodné číslo
                     if (reader["RODNECISLO"] != DBNull.Value)
                     {
                         trenink.RodneCislo = reader["RODNECISLO"].ToString();
@@ -92,6 +92,7 @@ namespace InformacniSystemKlub.Windows
                         trenink.RodneCislo = "0";
                     }
 
+                    // Příjmení
                     if (reader["PRIJMENI"] != DBNull.Value)
                     {
                         trenink.Prijmeni = reader["PRIJMENI"].ToString();

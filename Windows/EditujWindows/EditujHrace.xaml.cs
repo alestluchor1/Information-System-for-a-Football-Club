@@ -90,7 +90,7 @@ namespace InformacniSystemKlub.Windows.EditujWindows
 
                 // Validace textů
                 InputValidator.ValidujRodneCislo(rodneCislo);
-                InputValidator.ValidujUnikatniRodneCislo(rodneCislo);
+                InputValidator.ValidujUnikatniRodneCislo(rodneCislo, editovanyHrac.Id); // při editaci, aby neházelo message, že daný hráč editovaný s rodným číslem, už existuje
                 InputValidator.ValidujJmeno(jmeno);
                 InputValidator.ValidujPrijmeni(prijmeni);
                 InputValidator.ValidujTelefonniCislo(tel);

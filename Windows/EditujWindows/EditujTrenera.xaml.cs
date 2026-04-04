@@ -45,7 +45,7 @@ namespace InformacniSystemKlub.Windows.EditujWindows
 
                 // Validace
                 InputValidator.ValidujRodneCislo(rodneCislo);
-                InputValidator.ValidujUnikatniRodneCislo(rodneCislo);
+                InputValidator.ValidujUnikatniRodneCislo(rodneCislo, editovanyTrener.Id); // při editaci, aby neházelo message, že daný trenér editovaný s rodným číslem, už existuje
                 InputValidator.ValidujJmeno(jmeno);
                 InputValidator.ValidujPrijmeni(prijmeni);
                 InputValidator.ValidujTelefonniCislo(tel);

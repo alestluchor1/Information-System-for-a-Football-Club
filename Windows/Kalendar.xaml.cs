@@ -32,14 +32,7 @@ namespace InformacniSystemKlub.Windows
             zobrazenyMesic = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
 
             seznamVsechTreninku = new List<Trenink>();
-
-            // Načtení tréninků 
-            TreninkOkno.NactiTreninky();
-
-            if (TreninkOkno.TreninkyData != null)
-            {
-                seznamVsechTreninku = TreninkOkno.TreninkyData.ToList();
-            }
+            ObnovTreninkyZDatabaze();
 
             AktualizujVsechno();
         }
@@ -56,11 +49,25 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
+        /// Načte znovu všechny tréninky z databáze
+        /// </summary>
+        private void ObnovTreninkyZDatabaze()
+        {
+            TreninkOkno.NactiTreninky();
+
+            seznamVsechTreninku = new List<Trenink>();
+
+            if (TreninkOkno.TreninkyData != null)
+            {
+                seznamVsechTreninku = TreninkOkno.TreninkyData.ToList();
+            }
+        }
+
+        /// <summary>
         /// Aktualizuje nadpis měsíce, české formátování nadpisu měsíce
         /// </summary>
         private void AktualizujNadpisMesice()
         {
-      
             CultureInfo kultura = new CultureInfo("cs-CZ");
 
             // Do textové podoby
@@ -289,8 +296,11 @@ namespace InformacniSystemKlub.Windows
                 OracleConnection pripojeni = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
                 DatabazeTreninky.PridejTrenink(pripojeni, novyTrenink);
 
-                seznamVsechTreninku.Add(novyTrenink);
+                ObnovTreninkyZDatabaze();
                 AktualizujVsechno();
+
+                MessageBox.Show("Trénink byl úspěšně přidán.", "Hotovo",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (OracleException ex)
             {
@@ -338,7 +348,11 @@ namespace InformacniSystemKlub.Windows
                 OracleConnection pripojeni = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
                 DatabazeTreninky.EditujTrenink(pripojeni, vybranyTrenink);
 
+                ObnovTreninkyZDatabaze();
                 AktualizujVsechno();
+
+                MessageBox.Show("Trénink byl úspěšně upraven.", "Hotovo",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (OracleException ex)
             {
@@ -389,15 +403,11 @@ namespace InformacniSystemKlub.Windows
                 OracleConnection pripojeni = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
                 DatabazeTreninky.OdeberTrenink(pripojeni, vybranyTrenink);
 
-                Trenink nalezenyTrenink = seznamVsechTreninku.FirstOrDefault(
-                    trenink => trenink != null && trenink.Id == vybranyTrenink.Id);
-
-                if (nalezenyTrenink != null)
-                {
-                    seznamVsechTreninku.Remove(nalezenyTrenink);
-                }
-
+                ObnovTreninkyZDatabaze();
                 AktualizujVsechno();
+
+                MessageBox.Show("Trénink byl úspěšně odebrán.", "Hotovo",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (OracleException ex)
             {

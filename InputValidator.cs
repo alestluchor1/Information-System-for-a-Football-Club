@@ -57,7 +57,7 @@ namespace InformacniSystemKlub
             }
         }
 
-        public static void ValidujUnikatniRodneCislo(string rodneCislo)
+        public static void ValidujUnikatniRodneCislo(string rodneCislo, int ignorovatId = -1)
         {
             if (string.IsNullOrWhiteSpace(rodneCislo))
             {
@@ -68,17 +68,37 @@ namespace InformacniSystemKlub
 
             foreach (Hrac hrac in HraciOkno.HraciData)
             {
-                if (hrac != null && hrac.RodneCislo != null && hrac.RodneCislo.Trim() == rc)
+                if (hrac == null || hrac.RodneCislo == null)
                 {
-                    throw new Exception("Hráč nebo trenér s tímto rodným číslem už v systému existuje!");
+                    continue;
+                }
+
+                if (hrac.Id == ignorovatId)
+                {
+                    continue;
+                }
+
+                if (hrac.RodneCislo.Trim() == rc)
+                {
+                    throw new Exception("Člen se stejným rodným číslem už v systému existuje!");
                 }
             }
 
             foreach (Trener trener in TreneriOkno.TreneriData)
             {
-                if (trener != null && trener.RodneCislo != null && trener.RodneCislo.Trim() == rc)
+                if (trener == null || trener.RodneCislo == null)
                 {
-                    throw new Exception("Hráč nebo trenér s tímto rodným číslem už v systému existuje!");
+                    continue;
+                }
+
+                if (trener.Id == ignorovatId)
+                {
+                    continue;
+                }
+
+                if (trener.RodneCislo.Trim() == rc)
+                {
+                    throw new Exception("Člen se stejným rodným číslem už v systému existuje!");
                 }
             }
         }

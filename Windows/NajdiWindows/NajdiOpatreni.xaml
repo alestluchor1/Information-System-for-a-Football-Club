@@ -225,6 +225,14 @@
             </Style.Resources>
         </Style>
 
+        <!-- CheckBox -->
+        <Style x:Key="CheckBoxTheme" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,20,0"/>
+        </Style>
+
         <!-- Primární tlačítko -->
         <Style x:Key="BtnPrimary" TargetType="Button">
             <Setter Property="Height" Value="42"/>
@@ -371,9 +379,11 @@
                                 Margin="0,6,0,6">
                         <CheckBox x:Name="chkByloVZapase"
                                   Content="Ano"
-                                  Margin="0,0,20,0"/>
+                                  Style="{DynamicResource CheckBoxTheme}"/>
                         <CheckBox x:Name="chkNebylVZapase"
-                                  Content="Ne"/>
+                                  Content="Ne"
+                                  Style="{DynamicResource CheckBoxTheme}"
+                                  Margin="0"/>
                     </StackPanel>
 
                     <!-- 4: Tlačítka -->
