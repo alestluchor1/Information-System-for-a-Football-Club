@@ -9,15 +9,15 @@ Univerzita Pardubice
 Obor: **Informační technologie**  
 Rok: **2026**
 
-## 🎯 Téma práce
+## 📘 Název bakalářské práce
 
 **Systém pro správu sportovního fotbalového klubu**
 
-Cílem práce je navrhnout a implementovat moderní informační systém pro správu sportovního fotbalového klubu. Systém umožňuje efektivní správu tréninkových skupin, hráčů, trenérů, tréninků a zápasů. Součástí systému je také editor sestav, evidence nominací na zápas, evidence statistik hráčů a přístup k jednotlivým částem aplikace podle uživatelských rolí.
+Cílem práce je navrhnout a implementovat moderní informační systém pro správu sportovního fotbalového klubu. Systém umožní efektivní správu tréninkových skupin, hráčů, trenérů, tréninků a zápasů. Systém dále umožní trenérům navrhovat sestavy týmu na zápas například podle individuálních výkonových statistik hráče, zdravotního stavu apod. Systém bude umožňovat přístup k jednotlivým funkcím podle rolí. Součástí práce je také analýza stávajících řešení, návrh architektury aplikace, výběr vhodných technologií a testování výsledné implementace.
 
 ## 🇬🇧 Thesis Goal in English
 
-The aim of the thesis is to design and implement a modern information system for the administration of a sports football club. The system enables effective management of training groups, players, coaches, training sessions and matches. It also allows coaches to design team line-ups, manage nominations, record player statistics and access selected parts of the application according to user roles.
+The aim of the thesis is to design and implement a modern information system for the administration of a sports football club. The system enables effective management of training groups, players, coaches, training sessions and matches. It also allows coaches to design team line-ups for a match, for example according to individual player performance statistics, health condition, etc. The system provides access to selected functions according to user roles. The thesis also includes an analysis of existing solutions, application architecture design, selection of appropriate technologies and testing of the final implementation.
 
 ## 🧩 Funkce systému
 
@@ -52,12 +52,23 @@ Aplikace podporuje tyto role:
 
 Každá role má odlišná oprávnění a přístup pouze k vybraným částem systému.
 
-## 🔐 Testovací účet administrátora
+## 🔐 Testovací účty
 
-Pro přihlášení do systému lze použít testovací administrátorský účet:
+Pro testovací účely lze použít následující uživatelské účty:
 
+### Administrátor
 - **Role:** admin
 - **Uživatelské jméno:** `admin`
+- **Heslo:** `pardubice`
+
+### Trenér
+- **Role:** trenér
+- **Uživatelské jméno:** `trener`
+- **Heslo:** `pardubice`
+
+### Hráč
+- **Role:** hráč
+- **Uživatelské jméno:** `hrac`
 - **Heslo:** `pardubice`
 
 ## 🛠️ Použité technologie
@@ -90,7 +101,7 @@ Instalační balíček umožňuje snadnou instalaci aplikace na cílovém počí
 Tento projekt je licencován pod licencí **MIT**.
 
 Součástí projektu je soubor `LICENSE.txt`, který obsahuje úplné znění licence.  
-Copyright © 2026 **Aleš Tůchoř**
+Copyright © 2026 **Aleš Tlučhoř**
 
 ## ℹ️ Poznámka
 
