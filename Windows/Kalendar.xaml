@@ -16,7 +16,6 @@
         Background="{DynamicResource BgApp}">
 
     <Window.Resources>
-        <!-- Výchozí LIGHT MODE hodnoty -->
         <SolidColorBrush x:Key="BgApp" Color="#F6F7FB"/>
         <SolidColorBrush x:Key="Surface" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="SurfaceAlt" Color="#EEF2F7"/>
@@ -149,7 +148,6 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Levá část -->
         <Border Grid.Column="0"
                 Background="{DynamicResource Surface}"
                 CornerRadius="20"
@@ -239,7 +237,6 @@
             </Grid>
         </Border>
 
-        <!-- Pravá část -->
         <Border Grid.Column="1"
                 Background="{DynamicResource Accent}"
                 CornerRadius="20"
@@ -319,11 +316,6 @@
                             Content="Přidat"
                             Style="{StaticResource ModernButtonStyle}"
                             Click="BtnPridat_Click"/>
-
-                    <Button x:Name="BtnEditovat"
-                            Content="Editovat"
-                            Style="{StaticResource ModernButtonStyle}"
-                            Click="BtnEditovat_Click"/>
 
                     <Button x:Name="BtnOdebrat"
                             Content="Odebrat"

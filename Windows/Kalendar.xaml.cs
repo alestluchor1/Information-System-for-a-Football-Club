@@ -1,6 +1,5 @@
 ﻿using InformacniSystemKlub.Database;
 using InformacniSystemKlub.Models;
-using InformacniSystemKlub.Windows.EditujWindows;
 using InformacniSystemKlub.Windows.PridejWindows;
 using Oracle.ManagedDataAccess.Client;
 using System;
@@ -68,9 +67,9 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void AktualizujNadpisMesice()
         {
+            // české formátování nadpisu měsíce
             CultureInfo kultura = new CultureInfo("cs-CZ");
 
-            // Do textové podoby
             string textMesice = zobrazenyMesic.ToString("MMMM yyyy", kultura);
             TxtMesicRok.Text = kultura.TextInfo.ToTitleCase(textMesice);
         }
@@ -89,17 +88,18 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void VykresliDnyKalendare()
         {
-            // Při přepnutí na další měsíc smaže dny z minulého měsíce
             GridDnyKalendare.Children.Clear();
 
+            // Nastaví celkový počet políček kalendáře na 42 (6 řádků × 7 dní)
             int pocetPolicek = 42;
 
             DateTime prvniDenMesice = new DateTime(zobrazenyMesic.Year, zobrazenyMesic.Month, 1);
             int denVTydnu = (int)prvniDenMesice.DayOfWeek;
 
-            // 0 je neděle, proto přepíšeme na pondělí. Kalendář od pondělí do neděle
+            // Pokud je den v týdnu neděle, má hodnotu 0
             if (denVTydnu == 0)
             {
+                // Změní neděli z 0 na 7, aby týden začínal pondělím
                 denVTydnu = 7;
             }
 
@@ -131,28 +131,24 @@ namespace InformacniSystemKlub.Windows
             tlacitkoDne.BorderBrush = new SolidColorBrush(Color.FromRgb(229, 231, 235));
             tlacitkoDne.Foreground = new SolidColorBrush(Color.FromRgb(11, 18, 32));
 
-            // Den mimo aktuální měsíc
             if (datumDne.Month != zobrazenyMesic.Month || datumDne.Year != zobrazenyMesic.Year)
             {
                 tlacitkoDne.Background = new SolidColorBrush(Color.FromRgb(244, 247, 251));
                 tlacitkoDne.Foreground = new SolidColorBrush(Color.FromRgb(148, 163, 184));
             }
 
-            // Když má den alespoň jeden trénink, změníme barvu
             if (MaDenTrenink(datumDne))
             {
                 tlacitkoDne.Background = new SolidColorBrush(Color.FromRgb(255, 237, 213));
                 tlacitkoDne.BorderBrush = new SolidColorBrush(Color.FromRgb(253, 186, 116));
             }
 
-            // Dnešek
             if (datumDne.Date == DateTime.Today.Date)
             {
                 tlacitkoDne.BorderBrush = new SolidColorBrush(Color.FromRgb(249, 115, 22));
                 tlacitkoDne.BorderThickness = new Thickness(2);
             }
 
-            // Vybraný den
             if (datumDne.Date == vybranyDen.Date)
             {
                 tlacitkoDne.Background = new SolidColorBrush(Color.FromRgb(249, 115, 22));
@@ -299,65 +295,11 @@ namespace InformacniSystemKlub.Windows
                 ObnovTreninkyZDatabaze();
                 AktualizujVsechno();
 
-                MessageBox.Show("Trénink byl úspěšně přidán.", "Hotovo",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
+                
             }
             catch (OracleException ex)
             {
-                MessageBox.Show("Chyba databáze při přidání tréninku:\n" + ex.Message,
-                    "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message,
-                    "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        /// <summary>
-        /// Upraví vybraný trénink
-        /// </summary>
-        private void BtnEditovat_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (LbTreninky.SelectedItem == null)
-                {
-                    MessageBox.Show("Vyberte trénink k editaci", "Upozornění",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
-                Trenink vybranyTrenink = LbTreninky.SelectedItem as Trenink;
-
-                if (vybranyTrenink == null)
-                {
-                    MessageBox.Show("Neplatný výběr tréninku", "Chyba",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
-                EditujTrenink oknoEditujTrenink = new EditujTrenink(vybranyTrenink);
-                bool? vysledekDialogu = oknoEditujTrenink.ShowDialog();
-
-                if (vysledekDialogu != true)
-                {
-                    return;
-                }
-
-                OracleConnection pripojeni = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
-                DatabazeTreninky.EditujTrenink(pripojeni, vybranyTrenink);
-
-                ObnovTreninkyZDatabaze();
-                AktualizujVsechno();
-
-                MessageBox.Show("Trénink byl úspěšně upraven.", "Hotovo",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            catch (OracleException ex)
-            {
-                MessageBox.Show("Chyba databáze při editaci tréninku:\n" + ex.Message,
-                    "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Chyba databáze při přidání tréninku:\n" + ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
@@ -375,8 +317,7 @@ namespace InformacniSystemKlub.Windows
             {
                 if (LbTreninky.SelectedItem == null)
                 {
-                    MessageBox.Show("Vyberte trénink k odebrání", "Upozornění",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Vyberte trénink k odebrání", "Upozornění", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
@@ -384,8 +325,7 @@ namespace InformacniSystemKlub.Windows
 
                 if (vybranyTrenink == null)
                 {
-                    MessageBox.Show("Neplatný výběr tréninku", "Chyba",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Neplatný výběr tréninku", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -406,8 +346,7 @@ namespace InformacniSystemKlub.Windows
                 ObnovTreninkyZDatabaze();
                 AktualizujVsechno();
 
-                MessageBox.Show("Trénink byl úspěšně odebrán.", "Hotovo",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Trénink byl úspěšně odebrán", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (OracleException ex)
             {
