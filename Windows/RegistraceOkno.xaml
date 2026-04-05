@@ -26,6 +26,7 @@
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="Height" Value="44"/>
             <Setter Property="Padding" Value="14,0,14,0"/>
+            <Setter Property="CaretBrush" Value="White"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Margin" Value="0,6,0,0"/>
             <Setter Property="Template">
@@ -52,6 +53,7 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="Height" Value="44"/>
+            <Setter Property="CaretBrush" Value="White"/>
             <Setter Property="Padding" Value="14,0,14,0"/>
             <Setter Property="Margin" Value="0,6,0,0"/>
             <Setter Property="Template">

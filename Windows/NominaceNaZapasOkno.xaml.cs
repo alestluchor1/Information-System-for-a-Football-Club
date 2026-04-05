@@ -45,10 +45,34 @@ namespace InformacniSystemKlub.Windows
             }
 
             NactiNominace();
-
+            NastavPravaPodleRole();
             DgNominace.ItemsSource = NominaceData;
 
             ZkontrolujKartyVeVsechZapasech();
+        }
+
+        // Zkontroluje roli přihlášeného uživatele a podle ní povolí nebo zakáže tlačítka
+        private void NastavPravaPodleRole()
+        {
+            Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            if (prihlasenyUzivatel != null &&
+                !string.IsNullOrWhiteSpace(prihlasenyUzivatel.Role) &&
+                (prihlasenyUzivatel.Role.Trim().ToLower() == "hrac" ||
+                 prihlasenyUzivatel.Role.Trim().ToLower() == "hráč"))
+            {
+                BtnPridej.IsEnabled = false;
+                BtnOdebrat.IsEnabled = false;
+                BtnEdituj.IsEnabled = false;
+                BtnNajdi.IsEnabled = true;
+            }
+            else
+            {
+                BtnPridej.IsEnabled = true;
+                BtnOdebrat.IsEnabled = true;
+                BtnEdituj.IsEnabled = true;
+                BtnNajdi.IsEnabled = true;
+            }
         }
 
         /// <summary>

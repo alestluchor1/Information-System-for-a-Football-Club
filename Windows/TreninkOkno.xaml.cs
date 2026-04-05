@@ -41,7 +41,7 @@ namespace InformacniSystemKlub.Windows
             InitializeComponent();
             RezimZobrazeni.NastavRezimTabulkoveOkno(this, HlavniOkno.jeDarkModeAktivni);
             NactiTreninky();
-
+            NastavPravaPodleRole();
             DgTreninky.ItemsSource = TreninkyData;
         }
 
@@ -137,6 +137,29 @@ namespace InformacniSystemKlub.Windows
             catch (Exception ex)
             {
                 MessageBox.Show($"Chyba při načítání tréninků: {ex.Message}");
+            }
+        }
+
+        // Zkontroluje roli přihlášeného uživatele a podle ní povolí nebo zakáže tlačítka
+        private void NastavPravaPodleRole()
+        {
+            Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            if (prihlasenyUzivatel != null &&
+                !string.IsNullOrWhiteSpace(prihlasenyUzivatel.Role) &&
+                (prihlasenyUzivatel.Role.Trim().ToLower() == "hrac" || prihlasenyUzivatel.Role.Trim().ToLower() == "hráč"))
+            {
+                BtnPridat.IsEnabled = false;
+                BtnOdebrat.IsEnabled = false;
+                BtnEdituj.IsEnabled = false;
+                BtnNajdi.IsEnabled = true;
+            }
+            else
+            {
+                BtnPridat.IsEnabled = true;
+                BtnOdebrat.IsEnabled = true;
+                BtnEdituj.IsEnabled = true;
+                BtnNajdi.IsEnabled = true;
             }
         }
 

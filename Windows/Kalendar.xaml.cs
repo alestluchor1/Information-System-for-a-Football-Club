@@ -32,8 +32,41 @@ namespace InformacniSystemKlub.Windows
 
             seznamVsechTreninku = new List<Trenink>();
             ObnovTreninkyZDatabaze();
-
+            NastavPravaPodleRole();
             AktualizujVsechno();
+        }
+
+        // Nastaví práva tlačítek podle role přihlášeného uživatele
+        private void NastavPravaPodleRole()
+        {
+            Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            if (prihlasenyUzivatel == null)
+            {
+                BtnPridat.IsEnabled = false;
+                BtnOdebrat.IsEnabled = false;
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(prihlasenyUzivatel.Role))
+            {
+                BtnPridat.IsEnabled = false;
+                BtnOdebrat.IsEnabled = false;
+                return;
+            }
+
+            string role = prihlasenyUzivatel.Role.Trim().ToLower();
+
+            if (role == "hrac" || role == "hráč" || role == "host")
+            {
+                BtnPridat.IsEnabled = false;
+                BtnOdebrat.IsEnabled = false;
+            }
+            else
+            {
+                BtnPridat.IsEnabled = true;
+                BtnOdebrat.IsEnabled = true;
+            }
         }
 
         /// <summary>

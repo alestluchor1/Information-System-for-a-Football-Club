@@ -37,8 +37,53 @@ namespace InformacniSystemKlub.Windows
             InitializeComponent();
             RezimZobrazeni.NastavRezimTabulkoveOkno(this, HlavniOkno.jeDarkModeAktivni);
             NactiZapasy();
-
+            NastavPravaPodleRole();
             DgZapasy.ItemsSource = ZapasyData;
+        }
+
+        // Nastaví práva tlačítek podle role přihlášeného uživatele
+        private void NastavPravaPodleRole()
+        {
+            Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            if (prihlasenyUzivatel == null)
+            {
+                BtnPridat.IsEnabled = false;
+                BtnOdebrat.IsEnabled = false;
+                BtnEdituj.IsEnabled = false;
+                BtnNajdi.IsEnabled = true;
+                BtnUlozitCsv.IsEnabled = true;
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(prihlasenyUzivatel.Role))
+            {
+                BtnPridat.IsEnabled = false;
+                BtnOdebrat.IsEnabled = false;
+                BtnEdituj.IsEnabled = false;
+                BtnNajdi.IsEnabled = true;
+                BtnUlozitCsv.IsEnabled = true;
+                return;
+            }
+
+            string role = prihlasenyUzivatel.Role.Trim().ToLower();
+
+            if (role == "hrac" || role == "hráč" || role == "host")
+            {
+                BtnPridat.IsEnabled = false;
+                BtnOdebrat.IsEnabled = false;
+                BtnEdituj.IsEnabled = false;
+                BtnNajdi.IsEnabled = true;
+                BtnUlozitCsv.IsEnabled = true;
+            }
+            else
+            {
+                BtnPridat.IsEnabled = true;
+                BtnOdebrat.IsEnabled = true;
+                BtnEdituj.IsEnabled = true;
+                BtnNajdi.IsEnabled = true;
+                BtnUlozitCsv.IsEnabled = true;
+            }
         }
 
         /// <summary>
