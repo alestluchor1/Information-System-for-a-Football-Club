@@ -4,7 +4,7 @@ Moderní desktopová aplikace vytvořená v rámci bakalářské práce pro spr�
 
 ## 👨‍🎓 Autor
 
-**Aleš Tůchoř**  
+**Aleš Tlučhoř**  
 Univerzita Pardubice  
 Obor: **Informační technologie**  
 Rok: **2026**
