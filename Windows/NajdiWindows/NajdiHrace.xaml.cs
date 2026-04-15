@@ -7,12 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace InformacniSystemKlub.Windows.NajdiWindows
 {
@@ -31,12 +26,80 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
         /// Vstupní kolekce hráčů, ze které se filtruje 
         /// </summary>
         private readonly ObservableCollection<Hrac> VstupniHraci;
+
         public NajdiHrace(ObservableCollection<Hrac> hraci)
         {
             InitializeComponent();
             RezimZobrazeni.NastavRezimFormularoveOkno(this, HlavniOkno.jeDarkModeAktivni);
 
             VstupniHraci = hraci;
+            NastavFiltryPodleRole();
+        }
+
+        /// <summary>
+        /// Vrátí roli aktuálně přihlášeného uživatele
+        /// </summary>
+        private string ZiskejRoliUzivatele()
+        {
+            Uzivatel uzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            if (uzivatel == null)
+            {
+                return "host";
+            }
+
+            if (string.IsNullOrWhiteSpace(uzivatel.Role))
+            {
+                return "host";
+            }
+
+            string role = uzivatel.Role.Trim().ToLower();
+
+            if (role == "admin")
+            {
+                return "admin";
+            }
+
+            if (role == "trenér" || role == "trener")
+            {
+                return "trener";
+            }
+
+            if (role == "hráč" || role == "hrac")
+            {
+                return "hrac";
+            }
+
+            return "host";
+        }
+
+        /// <summary>
+        /// Nastaví viditelnost filtračních polí podle role právě přihlášeného uživatele
+        /// </summary>
+        private void NastavFiltryPodleRole()
+        {
+            string role = ZiskejRoliUzivatele();
+
+            LblRodneCislo.Visibility = Visibility.Visible;
+            TxtRodneCislo.Visibility = Visibility.Visible;
+
+            LblTelefonniCislo.Visibility = Visibility.Visible;
+            TxtTelefonniCislo.Visibility = Visibility.Visible;
+
+            if (role == "trener")
+            {
+                LblRodneCislo.Visibility = Visibility.Collapsed;
+                TxtRodneCislo.Visibility = Visibility.Collapsed;
+            }
+
+            if (role == "hrac")
+            {
+                LblRodneCislo.Visibility = Visibility.Collapsed;
+                TxtRodneCislo.Visibility = Visibility.Collapsed;
+
+                LblTelefonniCislo.Visibility = Visibility.Collapsed;
+                TxtTelefonniCislo.Visibility = Visibility.Collapsed;
+            }
         }
 
         /// <summary>
@@ -45,6 +108,7 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
         private IEnumerable<Hrac> FiltrujHrace()
         {
             IEnumerable<Hrac> vysledek = VstupniHraci;
+            string role = ZiskejRoliUzivatele();
 
             // ID
             if (!string.IsNullOrWhiteSpace(TxtId.Text))
@@ -70,7 +134,7 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
             }
 
             // Rodné číslo
-            if (!string.IsNullOrWhiteSpace(TxtRodneCislo.Text))
+            if (role == "admin" && !string.IsNullOrWhiteSpace(TxtRodneCislo.Text))
             {
                 var rodneCislo = TxtRodneCislo.Text.Trim();
                 InputValidator.ValidujRodneCislo(rodneCislo);
@@ -78,7 +142,7 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
             }
 
             // Telefonní číslo
-            if (!string.IsNullOrWhiteSpace(TxtTelefonniCislo.Text))
+            if ((role == "admin" || role == "trener") && !string.IsNullOrWhiteSpace(TxtTelefonniCislo.Text))
             {
                 var telefonniCislo = TxtTelefonniCislo.Text.Trim();
                 InputValidator.ValidujTelefonniCislo(telefonniCislo);
@@ -159,6 +223,5 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
                 MessageBox.Show(ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-
     }
 }

@@ -4,19 +4,19 @@ using InformacniSystemKlub.Windows.EditujWindows;
 using InformacniSystemKlub.Windows.NajdiWindows;
 using InformacniSystemKlub.Windows.PřidáníWindows;
 using Oracle.ManagedDataAccess.Client;
-using System.Collections.ObjectModel; 
+using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 
-namespace InformacniSystemKlub.Windows 
+namespace InformacniSystemKlub.Windows
 {
     /// <summary>
     /// Okno pro správu hráčů
     /// Data se načítají z databázového pohledu HRACI_VIEW
     /// </summary>
-    public partial class HraciOkno : Window 
+    public partial class HraciOkno : Window
     {
         /// <summary>
         /// Sdílená kolekce hráčů používaná pro DataGrid
@@ -28,7 +28,8 @@ namespace InformacniSystemKlub.Windows
         /// <summary>
         /// Zda je aktivní vyhledávací mód
         /// </summary>
-        private bool jeVyhledavaniAktivni = false; // pro ukončení filtrování
+        private bool jeVyhledavaniAktivni = false;
+
         public HraciOkno()
         {
             InitializeComponent();
@@ -39,30 +40,121 @@ namespace InformacniSystemKlub.Windows
             DgHraci.ItemsSource = HraciData;
             cbVyberTymu.SelectedIndex = 0;
             NastavViditelnostSloupcuProUzivatele();
+            NastavOvladaniPodleRole();
             ready = true;
-            VyberTymu();             
+            VyberTymu();
         }
 
         /// <summary>
-        /// Nastaví viditelnost citlivých sloupců v tabulce hráčů podle role
+        /// Vrátí roli aktuálně přihlášeného uživatele
+        /// </summary>
+        private string ZiskejRoliUzivatele()
+        {
+            Uzivatel uzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            if (uzivatel == null || string.IsNullOrWhiteSpace(uzivatel.Role))
+            {
+                return "host";
+            }
+
+            string role = uzivatel.Role.Trim().ToLower();
+
+            if (role == "admin")
+            {
+                return "admin";
+            }
+
+            if (role == "trenér" || role == "trener")
+            {
+                return "trener";
+            }
+
+            if (role == "hráč" || role == "hrac")
+            {
+                return "hrac";
+            }
+
+            return "host";
+        }
+
+        /// <summary>
+        /// Nastaví viditelnost sloupců v tabulce hráčů podle role
         /// právě přihlášeného uživatele
         /// </summary>
         private void NastavViditelnostSloupcuProUzivatele()
         {
-            Uzivatel uzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
-            string role = uzivatel.Role.ToLower();
+            string role = ZiskejRoliUzivatele();
 
+            IdSloupec.Visibility = Visibility.Visible;
+            JmenoSloupec.Visibility = Visibility.Visible;
+            PrijmeniSloupec.Visibility = Visibility.Visible;
             RodneCisloSloupec.Visibility = Visibility.Visible;
             TelefonniCisloSloupec.Visibility = Visibility.Visible;
+            PoziceSloupec.Visibility = Visibility.Visible;
+            GolySloupec.Visibility = Visibility.Visible;
+            ZKSloupec.Visibility = Visibility.Visible;
+            CKSloupec.Visibility = Visibility.Visible;
+            ZdravotniStavSloupec.Visibility = Visibility.Visible;
+            TreninkovaSkupinaSloupec.Visibility = Visibility.Visible;
 
             if (role == "trener")
             {
                 RodneCisloSloupec.Visibility = Visibility.Collapsed;
             }
+
+            if (role == "hrac")
+            {
+                RodneCisloSloupec.Visibility = Visibility.Collapsed;
+                TelefonniCisloSloupec.Visibility = Visibility.Collapsed;
+            }
         }
 
         /// <summary>
-        /// Aplikuje filtr hráčů dle zvolené položky v ComboBoxu 
+        /// Nastaví povolení ovládacích prvků podle role uživatele
+        /// </summary>
+        private void NastavOvladaniPodleRole()
+        {
+            string role = ZiskejRoliUzivatele();
+
+            if (role == "admin")
+            {
+                BtnPridat.IsEnabled = true;
+                BtnOdebrat.IsEnabled = true;
+                BtnEdituj.IsEnabled = true;
+                BtnNajdi.IsEnabled = true;
+                cbVyberTymu.IsEnabled = true;
+                return;
+            }
+
+            if (role == "trener")
+            {
+                BtnPridat.IsEnabled = true;
+                BtnOdebrat.IsEnabled = true;
+                BtnEdituj.IsEnabled = true;
+                BtnNajdi.IsEnabled = true;
+                cbVyberTymu.IsEnabled = true;
+                return;
+            }
+
+            if (role == "hrac")
+            {
+                BtnPridat.IsEnabled = false;
+                BtnOdebrat.IsEnabled = false;
+                BtnEdituj.IsEnabled = false;
+                BtnNajdi.IsEnabled = true;
+                cbVyberTymu.IsEnabled = true;
+                return;
+            }
+
+            BtnPridat.IsEnabled = false;
+            BtnOdebrat.IsEnabled = false;
+            BtnEdituj.IsEnabled = false;
+            BtnNajdi.IsEnabled = false;
+            cbVyberTymu.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// Aplikuje filtr hráčů dle zvolené položky v ComboBoxu
         /// </summary>
         private void VyberTymu()
         {
@@ -78,7 +170,6 @@ namespace InformacniSystemKlub.Windows
 
             foreach (var hrac in HraciData)
             {
-                // Filtr pro A-Tým
                 if (volba == 1)
                 {
                     if (hrac.IdTreninkovaSkupina == 1)
@@ -87,7 +178,6 @@ namespace InformacniSystemKlub.Windows
                     }
                 }
 
-                // Filtr pro Dorost
                 if (volba == 2)
                 {
                     if (hrac.IdTreninkovaSkupina == 2)
@@ -96,7 +186,6 @@ namespace InformacniSystemKlub.Windows
                     }
                 }
 
-                // Filtr pro Mladší žáci
                 if (volba == 3)
                 {
                     if (hrac.IdTreninkovaSkupina == 3)
@@ -110,13 +199,13 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Událost změny výběru v ComboBoxu – provede znovu aplikace filtru
+        /// Událost změny výběru v ComboBoxu – provede znovu aplikaci filtru
         /// </summary>
         private void cbVyberTymu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ready == true)
             {
-              VyberTymu();
+                VyberTymu();
             }
         }
 
@@ -125,7 +214,6 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private static string SkupinaNaText(int idSkupiny)
         {
-            // Překlad ID tréninkové skupiny číselníku na text
             if (idSkupiny == 1)
             {
                 return "A-Tým";
@@ -186,7 +274,7 @@ namespace InformacniSystemKlub.Windows
                     {
                         hrac.RodneCislo = reader["RODNECISLO"].ToString();
                     }
-                    else 
+                    else
                     {
                         hrac.RodneCislo = "0";
                     }
@@ -258,7 +346,7 @@ namespace InformacniSystemKlub.Windows
                     {
                         hrac.ZdravotniStav = Convert.ToChar(reader["ZDRAVOTNISTAV"]);
                     }
-                    else 
+                    else
                     {
                         hrac.ZdravotniStav = 'A';
                     }
@@ -277,6 +365,13 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnEdituj_Click(object sender, RoutedEventArgs e)
         {
+            if (ZiskejRoliUzivatele() == "hrac")
+            {
+                MessageBox.Show("Jako hráč nemáte oprávnění upravovat hráče",
+                    "Přístup odepřen", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             if (jeVyhledavaniAktivni == true)
             {
                 MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
@@ -298,7 +393,6 @@ namespace InformacniSystemKlub.Windows
             if (result == true)
             {
                 VyberTymu();
-
                 DgHraci.Items.Refresh();
             }
         }
@@ -339,6 +433,7 @@ namespace InformacniSystemKlub.Windows
             {
                 jeVyhledavaniAktivni = false;
                 DgHraci.ItemsSource = HraciData;
+                VyberTymu();
                 e.Handled = true;
             }
         }
@@ -348,13 +443,19 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnPridat_Click(object sender, RoutedEventArgs e)
         {
-            if (jeVyhledavaniAktivni == true)
+            if (ZiskejRoliUzivatele() == "hrac")
             {
-                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Jako hráč nemáte oprávnění přidávat hráče",
+                    "Přístup odepřen", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
+            if (jeVyhledavaniAktivni == true)
+            {
+                MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
 
             Hrac pridanyHrac = new Hrac();
             var okno = new PridejHrace(pridanyHrac);
@@ -383,6 +484,13 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnOdebrat_Click(object sender, RoutedEventArgs e)
         {
+            if (ZiskejRoliUzivatele() == "hrac")
+            {
+                MessageBox.Show("Jako hráč nemáte oprávnění mazat hráče.",
+                    "Přístup odepřen", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             if (jeVyhledavaniAktivni == true)
             {
                 MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X.", "Info",
@@ -412,10 +520,8 @@ namespace InformacniSystemKlub.Windows
                 DatabazeHraci.OdeberHrace(conn, vybranyHrac);
 
                 HraciData.Remove(vybranyHrac);
-                VyberTymu(); // znovu aplikuje aktuální filtr z comboboxu
+                VyberTymu();
                 MessageBox.Show("Hráč byl smazán", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-
-
             }
             catch (Exception ex)
             {
@@ -428,10 +534,7 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnZpet_Click(object sender, RoutedEventArgs e)
         {
-            this.Close(); 
+            this.Close();
         }
-
-       
-
     }
 }

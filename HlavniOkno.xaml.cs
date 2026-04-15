@@ -476,6 +476,11 @@ namespace InformacniSystemKlub.Windows
 
             if (role == "hrac")
             {
+                if (modul == "Hráči")
+                {
+                    return true;
+                }
+
                 if (modul == "Tréninky")
                 {
                     return true;

@@ -305,11 +305,11 @@
                     <TextBox x:Name="TxtPrijmeni" Grid.Row="2" Grid.Column="1" MaxLength="20" Style="{DynamicResource Input}"/>
 
                     <!-- 3 Rodné číslo -->
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Rodné číslo" Style="{DynamicResource Lbl}"/>
+                    <TextBlock x:Name="LblRodneCislo" Grid.Row="3" Grid.Column="0" Text="Rodné číslo" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtRodneCislo" Grid.Row="3" Grid.Column="1" MaxLength="10" Style="{DynamicResource Input}"/>
 
                     <!-- 4 Telefonní číslo -->
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Telefonní číslo" Style="{DynamicResource Lbl}"/>
+                    <TextBlock x:Name="LblTelefonniCislo" Grid.Row="4" Grid.Column="0" Text="Telefonní číslo" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtTelefonniCislo" Grid.Row="4" Grid.Column="1" MaxLength="12" Style="{DynamicResource Input}"/>
 
                     <!-- 5  Počet vstřelených gólů-->
@@ -373,8 +373,8 @@
                     <TextBlock Grid.Row="10" Grid.Column="0" Text="Tréninková skupina" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="10" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <ComboBox x:Name="cbSkupina"
-                                    Style="{DynamicResource ComboTheme}"
-                                    SelectedIndex="0">
+                                  Style="{DynamicResource ComboTheme}"
+                                  SelectedIndex="0">
                             <ComboBoxItem Content="—" Tag="0"/>
                             <ComboBoxItem Content="A-Tým" Tag="1"/>
                             <ComboBoxItem Content="Dorost" Tag="2"/>
