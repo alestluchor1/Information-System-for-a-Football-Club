@@ -207,6 +207,46 @@ namespace InformacniSystemKlub
                 okno.Resources["DropdownBrush"] = new SolidColorBrush(Color.FromRgb(0xFF, 0xFF, 0xFF));
                 okno.Resources["FieldOverlayBrush"] = new SolidColorBrush(Color.FromArgb(0x12, 0x00, 0x00, 0x00));
             }
+
         }
+
+        /// <summary>
+        /// Nastaví barevné prostředky okna notifikací
+        /// podle zvoleného režimu zobrazení
+        /// </summary>
+        /// <param name="okno">Okno notifikací, kterému se mají nastavit barvy</param>
+        /// <param name="darkMode">Určuje, zda se použije tmavý režim</param>
+        public static void NastavRezimNotifikaceOkno(Window okno, bool darkMode)
+        {
+            if (darkMode == true)
+            {
+                okno.Resources["BgApp"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x0F, 0x19));
+                okno.Resources["Surface"] = new SolidColorBrush(Color.FromRgb(0x11, 0x18, 0x27));
+                okno.Resources["TextMain"] = new SolidColorBrush(Color.FromRgb(0xF9, 0xFA, 0xFB));
+                okno.Resources["BorderSoft"] = new SolidColorBrush(Color.FromRgb(0x1F, 0x29, 0x37));
+                okno.Resources["InputBg"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x12, 0x20));
+                okno.Resources["Orange"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
+                okno.Resources["OrangeHover"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
+                okno.Resources["SidebarGradient"] = new LinearGradientBrush(
+                    Color.FromRgb(0xFB, 0x92, 0x3C),
+                    Color.FromRgb(0xF9, 0x73, 0x16),
+                    90);
+            }
+            else
+            {
+                okno.Resources["BgApp"] = new SolidColorBrush(Color.FromRgb(0xF6, 0xF7, 0xFB));
+                okno.Resources["Surface"] = new SolidColorBrush(Color.FromRgb(0xFF, 0xFF, 0xFF));
+                okno.Resources["TextMain"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x12, 0x20));
+                okno.Resources["BorderSoft"] = new SolidColorBrush(Color.FromRgb(0xE5, 0xE7, 0xEB));
+                okno.Resources["InputBg"] = new SolidColorBrush(Color.FromRgb(0xF8, 0xFA, 0xFC));
+                okno.Resources["Orange"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
+                okno.Resources["OrangeHover"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
+                okno.Resources["SidebarGradient"] = new LinearGradientBrush(
+                    Color.FromRgb(0xFB, 0x92, 0x3C),
+                    Color.FromRgb(0xF9, 0x73, 0x16),
+                    90);
+            }
+        }
+
     }
 }

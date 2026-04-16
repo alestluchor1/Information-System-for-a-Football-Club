@@ -300,10 +300,6 @@
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
 
-                    <!-- Počet let praxe -->
-                    <DataGridTextColumn Header="Let praxe" Binding="{Binding PocetLetPraxe}" Width="1*"
-                                        HeaderStyle="{StaticResource DgHeaderCenter}"
-                                        CellStyle="{StaticResource DgCellCenter}"/>
 
                 </DataGrid.Columns>
 

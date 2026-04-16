@@ -416,11 +416,6 @@ namespace InformacniSystemKlub.Windows
                     return true;
                 }
 
-                if (modul == "Kalendář")
-                {
-                    return true;
-                }
-
                 return false;
             }
 

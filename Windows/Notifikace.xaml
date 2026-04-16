@@ -16,7 +16,6 @@
 
     <Window.Resources>
 
-        <!-- Základní barvy okna -->
         <SolidColorBrush x:Key="BgApp" Color="#F6F7FB"/>
         <SolidColorBrush x:Key="Surface" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="TextMain" Color="#0B1220"/>
@@ -42,7 +41,6 @@
             <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
         </Style>
 
-        <!-- Styl pro jednořádkový textbox -->
         <Style x:Key="Input" TargetType="TextBox">
             <Setter Property="Height" Value="36"/>
             <Setter Property="Padding" Value="12,0"/>
@@ -68,11 +66,10 @@
                                           Margin="{TemplateBinding Padding}"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                  
                             <Trigger Property="IsKeyboardFocused" Value="True">
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="#94A3B8"/>
                             </Trigger>
-            
+
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="Bd" Property="Opacity" Value="0.6"/>
                             </Trigger>
@@ -82,7 +79,6 @@
             </Setter>
         </Style>
 
-        <!-- Styl pro víceřádkový textbox -->
         <Style x:Key="MultiLineInput" TargetType="TextBox">
             <Setter Property="Padding" Value="12,10"/>
             <Setter Property="AcceptsReturn" Value="True"/>
@@ -109,11 +105,10 @@
                                           Margin="{TemplateBinding Padding}"/>
                         </Border>
                         <ControlTemplate.Triggers>
-         
                             <Trigger Property="IsKeyboardFocused" Value="True">
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="#94A3B8"/>
                             </Trigger>
-        
+
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="Bd" Property="Opacity" Value="0.6"/>
                             </Trigger>
@@ -175,11 +170,10 @@
                                               VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                 
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="B" Property="Background" Value="{DynamicResource OrangeHover}"/>
                             </Trigger>
-            
+
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="B" Property="Opacity" Value="0.6"/>
                             </Trigger>
@@ -254,53 +248,115 @@
                            Margin="0,0,0,10"
                            Foreground="{DynamicResource TextMain}"/>
 
-                <!-- Seznam příjemců -->
-                <ListBox x:Name="LbPrijemci"
-                         Grid.Row="1" Grid.Column="0"
-                         Style="{DynamicResource ListBoxTheme}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <CheckBox Content="{Binding UzivatelskeJmeno}"
-                                      IsChecked="{Binding JeVybran, Mode=TwoWay}"
-                                      Style="{DynamicResource CheckBoxTheme}"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-
-                <!-- Pravá část s předmětem a zprávou -->
-                <Grid Grid.Row="1" Grid.Column="2">
+                <!-- Levá část s výběrem příjemců -->
+                <Grid Grid.Row="1" Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <!-- Popisek předmětu -->
                         <RowDefinition Height="Auto"/>
-                        <!-- Pole předmětu -->
                         <RowDefinition Height="Auto"/>
-                        <!-- Popisek zprávy -->
                         <RowDefinition Height="Auto"/>
-                        <!-- Pole zprávy -->
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Popisek pro předmět -->
+                    <!-- Popis -->
+                    <TextBlock Grid.Row="0"
+                               Text="Vyberte všechny nebo vyhledejte konkrétní uživatelské jméno:"
+                               TextWrapping="Wrap"
+                               FontSize="12.5"
+                               Foreground="{DynamicResource TextMain}"
+                               Margin="0,0,0,6"/>
+
+                    <!-- Vyhledávání -->
+                    <TextBox x:Name="TxtHledatUzivatele"
+                             Grid.Row="1"
+                             Style="{DynamicResource Input}"
+                             MaxLength="50"
+                             TextChanged="TxtHledatUzivatele_TextChanged"/>
+
+                    <WrapPanel Grid.Row="2" Margin="0,0,0,8">
+                        <CheckBox x:Name="ChbVszichniHraci"
+                                  Content="Všichni hráči"
+                                  Style="{DynamicResource CheckBoxTheme}"
+                                  Margin="0,0,10,6"
+                                  Checked="ChbVszichniHraci_Checked"
+                                  Unchecked="ChbVszichniHraci_Unchecked"/>
+
+                        <CheckBox x:Name="ChbATym"
+                                  Content="A-Tým"
+                                  Style="{DynamicResource CheckBoxTheme}"
+                                  Margin="0,0,10,6"
+                                  Checked="ChbATym_Checked"
+                                  Unchecked="ChbATym_Unchecked"/>
+
+                        <CheckBox x:Name="ChbDorost"
+                                  Content="Dorost"
+                                  Style="{DynamicResource CheckBoxTheme}"
+                                  Margin="0,0,10,6"
+                                  Checked="ChbDorost_Checked"
+                                  Unchecked="ChbDorost_Unchecked"/>
+
+                        <CheckBox x:Name="ChbMladsiZaci"
+                                  Content="Mladší žáci"
+                                  Style="{DynamicResource CheckBoxTheme}"
+                                  Margin="0,0,10,6"
+                                  Checked="ChbMladsiZaci_Checked"
+                                  Unchecked="ChbMladsiZaci_Unchecked"/>
+
+                        <CheckBox x:Name="ChbVszichniTreneri"
+                                  Content="Všichni trenéři"
+                                  Style="{DynamicResource CheckBoxTheme}"
+                                  Margin="0,0,10,6"
+                                  Checked="ChbVszichniTreneri_Checked"
+                                  Unchecked="ChbVszichniTreneri_Unchecked"/>
+
+                        <CheckBox x:Name="ChbAdministratori"
+                                  Content="Administrátoři"
+                                  Style="{DynamicResource CheckBoxTheme}"
+                                  Margin="0,0,10,6"
+                                  Checked="ChbAdministratori_Checked"
+                                  Unchecked="ChbAdministratori_Unchecked"/>
+                    </WrapPanel>
+
+                    <!-- Seznam příjemců -->
+                    <ListBox x:Name="LbPrijemci"
+                             Grid.Row="3"
+                             Style="{DynamicResource ListBoxTheme}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox Content="{Binding UzivatelskeJmeno}"
+                                          IsChecked="{Binding JeVybran, Mode=TwoWay}"
+                                          Style="{DynamicResource CheckBoxTheme}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+
+                <Grid Grid.Row="1" Grid.Column="2">
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
                     <TextBlock Grid.Row="0"
                                Text="Předmět"
                                Style="{DynamicResource Lbl}"
                                HorizontalAlignment="Left"
                                Margin="0,0,0,4"/>
 
-                    <!-- Pole pro předmět -->
                     <TextBox x:Name="TxtPredmet"
                              Grid.Row="1"
                              MaxLength="100"
                              Style="{DynamicResource Input}"/>
 
-                    <!-- Popisek pro zprávu -->
                     <TextBlock Grid.Row="2"
                                Text="Zpráva"
                                Style="{DynamicResource Lbl}"
                                HorizontalAlignment="Left"
                                Margin="0,10,0,4"/>
 
-                    <!-- Pole pro text zprávy -->
+                    <!-- pro text zprávy -->
                     <TextBox x:Name="TxtZprava"
                              Grid.Row="3"
                              MaxLength="2000"

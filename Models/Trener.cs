@@ -10,12 +10,11 @@ namespace InformacniSystemKlub.Models
         public string Prijmeni { get; set; }
         public string TypClena { get; } = "Trener";
         public string TelefonniCislo { get; set; }
-        public int PocetLetPraxe { get; set; }
         public string Specializace { get; set; }
 
         public Trener() { }
 
-        public Trener(int id, string jmeno, string prijmeni, string rodneCislo, string telefonniCislo, string specializace, int pocetLetPraxe)
+        public Trener(int id, string jmeno, string prijmeni, string rodneCislo, string telefonniCislo, string specializace)
         {
             this.Id = id;
             this.Jmeno = jmeno;
@@ -23,7 +22,6 @@ namespace InformacniSystemKlub.Models
             this.RodneCislo = rodneCislo;
             this.TelefonniCislo = telefonniCislo;
             this.Specializace = specializace;
-            this.PocetLetPraxe = pocetLetPraxe;
         }
     }
 }

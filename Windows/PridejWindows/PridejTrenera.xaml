@@ -293,7 +293,6 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <!-- 0 Jméno -->
@@ -316,17 +315,7 @@
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Specializace" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtSpecializace" Grid.Row="4" Grid.Column="1" MaxLength="40" Style="{DynamicResource Input}"/>
 
-                    <!-- 5 Počet let praxe -->
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Počet let praxe" Style="{DynamicResource Lbl}"/>
-                    <Border Grid.Row="5" Grid.Column="1" Style="{DynamicResource InputHost}">
-                        <xctk:IntegerUpDown x:Name="iudPocetLetPraxe"
-                                            Style="{DynamicResource Spin}"
-                                            Value="0"
-                                            Minimum="0"
-                                            Maximum="100"/>
-                    </Border>
-
-                    <!-- 6 Tlačítko -->
+                    <!-- 5 Tlačítko -->
                     <Button Grid.Row="6" Grid.Column="1"
                             Content="Přidat"
                             Style="{DynamicResource BtnPrimary}"

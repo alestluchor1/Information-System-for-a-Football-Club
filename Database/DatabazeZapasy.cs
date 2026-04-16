@@ -21,9 +21,10 @@ namespace InformacniSystemKlub.Database
                     cmd.Parameters.Add("v_datum", OracleDbType.Date).Value = zapas.Datum;
                     cmd.Parameters.Add("v_id_stav", OracleDbType.Int32).Value = (int)zapas.IdStav;
                     cmd.Parameters.Add("v_id_typ_souteze", OracleDbType.Int32).Value = (int)zapas.IdTypSouteze;
+                    cmd.Parameters.Add("v_id_treninkova_skupina", OracleDbType.Int32).Value = zapas.IdTreninkovaSkupina;
                     cmd.Parameters.Add("v_domaci_tym", OracleDbType.Varchar2).Value = zapas.DomaciTym;
                     cmd.Parameters.Add("v_hoste_tym", OracleDbType.Varchar2).Value = zapas.HosteTym;
-                    cmd.Parameters.Add("v_vysledek ", OracleDbType.Varchar2).Value = zapas.Vysledek;
+                    cmd.Parameters.Add("v_vysledek", OracleDbType.Varchar2).Value = zapas.Vysledek;
                     cmd.Parameters.Add("v_pocet_zlutych_karet", OracleDbType.Int32).Value = zapas.PocetZlutychKaret;
                     cmd.Parameters.Add("v_pocet_cervenych_karet", OracleDbType.Int32).Value = zapas.PocetCervenychKaret;
 
@@ -72,9 +73,10 @@ namespace InformacniSystemKlub.Database
                     cmd.Parameters.Add("v_datum", OracleDbType.Date).Value = zapas.Datum;
                     cmd.Parameters.Add("v_id_stav", OracleDbType.Int32).Value = (int)zapas.IdStav;
                     cmd.Parameters.Add("v_id_typ_souteze", OracleDbType.Int32).Value = (int)zapas.IdTypSouteze;
+                    cmd.Parameters.Add("v_id_treninkova_skupina", OracleDbType.Int32).Value = zapas.IdTreninkovaSkupina;
                     cmd.Parameters.Add("v_domaci_tym", OracleDbType.Varchar2).Value = zapas.DomaciTym;
                     cmd.Parameters.Add("v_hoste_tym", OracleDbType.Varchar2).Value = zapas.HosteTym;
-                    cmd.Parameters.Add("v_vysledek ", OracleDbType.Varchar2).Value = zapas.Vysledek;
+                    cmd.Parameters.Add("v_vysledek", OracleDbType.Varchar2).Value = zapas.Vysledek;
                     cmd.Parameters.Add("v_pocet_zlutych_karet", OracleDbType.Int32).Value = zapas.PocetZlutychKaret;
                     cmd.Parameters.Add("v_pocet_cervenych_karet", OracleDbType.Int32).Value = zapas.PocetCervenychKaret;
 

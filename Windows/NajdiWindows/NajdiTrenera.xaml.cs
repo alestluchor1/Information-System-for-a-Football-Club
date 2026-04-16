@@ -103,13 +103,6 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
                 vysledek = vysledek.Where(t => t.Specializace == specializace);
             }
 
-            // Počet let praxe
-            if (!string.IsNullOrWhiteSpace(iudPocetLetPraxe.Text))
-            {
-                int pocetLetPraxe = InputValidator.ValidujTreneriPocetLetPraxe(iudPocetLetPraxe.Text);
-                vysledek = vysledek.Where(t => t.PocetLetPraxe == pocetLetPraxe);
-            }
-
             return vysledek;
         }
     }

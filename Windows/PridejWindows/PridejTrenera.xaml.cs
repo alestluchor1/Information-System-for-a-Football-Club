@@ -42,14 +42,11 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                 InputValidator.ValidujTelefonniCislo(TxtTelefonniCislo.Text);
                 InputValidator.ValidujSpecializace(TxtSpecializace.Text);
 
-                int pocetLetPraxe = InputValidator.ValidujTreneriPocetLetPraxe(iudPocetLetPraxe.Text);
-
                 novyTrener.Jmeno = TxtJmeno.Text.Trim();
                 novyTrener.Prijmeni = TxtPrijmeni.Text.Trim();
                 novyTrener.RodneCislo = TxtRodneCislo.Text.Trim();
                 novyTrener.TelefonniCislo = TxtTelefonniCislo.Text.Trim();
                 novyTrener.Specializace = TxtSpecializace.Text.Trim();
-                novyTrener.PocetLetPraxe = pocetLetPraxe;
 
                 MessageBox.Show("Trenér byl úspěšně přidán", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
 

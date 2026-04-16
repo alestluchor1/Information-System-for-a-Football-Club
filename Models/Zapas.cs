@@ -18,6 +18,11 @@ namespace InformacniSystemKlub.Models
         /// </summary>
         public StavZapasuEnum IdStav { get; set; }
 
+        /// <summary>
+        /// ID tréninkové skupiny z číselníku TRENINKOVA_SKUPINA
+        /// </summary>
+        public int IdTreninkovaSkupina { get; set; }
+
         public string DomaciTym { get; set; }
 
         public string HosteTym { get; set; }
@@ -54,6 +59,21 @@ namespace InformacniSystemKlub.Models
                 {
                     case StavZapasuEnum.Odehrano: return "ODEHRÁNO";
                     case StavZapasuEnum.BudeSeHrat: return "BUDE SE HRÁT";
+                    default: return "-";
+                }
+            }
+        }
+
+        // Pro zobrazení v gridu
+        public string NazevTreninkoveSkupiny
+        {
+            get
+            {
+                switch (IdTreninkovaSkupina)
+                {
+                    case 1: return "A-Tým";
+                    case 2: return "Dorost";
+                    case 3: return "Mladší žáci";
                     default: return "-";
                 }
             }

@@ -53,5 +53,7 @@ namespace InformacniSystemKlub.Models
         public int IdUzivatelskyUcet { get; set; }
         public int IdClenKlubu { get; set; }
         public int IdRole { get; set; }
+
+        public int IdTreninkovaSkupina { get; set; }
     }
 }

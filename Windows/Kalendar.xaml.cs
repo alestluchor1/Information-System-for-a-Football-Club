@@ -57,7 +57,7 @@ namespace InformacniSystemKlub.Windows
 
             string role = prihlasenyUzivatel.Role.Trim().ToLower();
 
-            if (role == "hrac" || role == "hráč" || role == "host")
+            if (role == "hrac" || role == "hráč")
             {
                 BtnPridat.IsEnabled = false;
                 BtnOdebrat.IsEnabled = false;

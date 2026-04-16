@@ -27,7 +27,6 @@ namespace InformacniSystemKlub.Windows.EditujWindows
             TxtPrijmeni.Text = editovanyTrener.Prijmeni;
             TxtTelefonniCislo.Text = editovanyTrener.TelefonniCislo;
             TxtSpecializace.Text = editovanyTrener.Specializace;
-            iudPocetLetPraxe.Value = editovanyTrener.PocetLetPraxe;
         }
 
         /// <summary>
@@ -51,21 +50,11 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                 InputValidator.ValidujTelefonniCislo(tel);
                 InputValidator.ValidujSpecializace(specializace);
 
-                // Validace spinneru
-                string praxeText = "";
-                if (iudPocetLetPraxe.Value != null)
-                {
-                    praxeText = iudPocetLetPraxe.Value.ToString();
-                }
-
-                int pocetLetPraxe = InputValidator.ValidujTreneriPocetLetPraxe(praxeText, "Počet let praxe");
-
                 editovanyTrener.RodneCislo = rodneCislo;
                 editovanyTrener.Jmeno = jmeno;
                 editovanyTrener.Prijmeni = prijmeni;
                 editovanyTrener.TelefonniCislo = tel;
                 editovanyTrener.Specializace = specializace;
-                editovanyTrener.PocetLetPraxe = pocetLetPraxe;
 
                 // Update DB
                 OracleConnection conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();

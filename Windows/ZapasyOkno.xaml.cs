@@ -8,12 +8,10 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-
 using Microsoft.Win32;
 using System.Collections;
 using System.IO;
 using System.Text;
-using System.Windows;
 
 namespace InformacniSystemKlub.Windows
 {
@@ -28,7 +26,7 @@ namespace InformacniSystemKlub.Windows
         public static ObservableCollection<Zapas> ZapasyData { get; set; } = new ObservableCollection<Zapas>();
 
         /// <summary>
-        /// Příznak, zda je aktivní vyhledávací mód
+        /// Proměnná, zda je aktivní vyhledávací mód
         /// </summary>
         private bool jeVyhledavaniAktivni = false;
 
@@ -140,6 +138,15 @@ namespace InformacniSystemKlub.Windows
                             zapas.IdTypSouteze = 0;
                         }
 
+                        if (reader["IDTRENINKOVASKUPINA"] != DBNull.Value)
+                        {
+                            zapas.IdTreninkovaSkupina = Convert.ToInt32(reader["IDTRENINKOVASKUPINA"]);
+                        }
+                        else
+                        {
+                            zapas.IdTreninkovaSkupina = 0;
+                        }
+
                         if (reader["DOMACITYM"] != DBNull.Value)
                         {
                             zapas.DomaciTym = reader["DOMACITYM"].ToString();
@@ -219,14 +226,13 @@ namespace InformacniSystemKlub.Windows
 
             if (result == true)
             {
-
                 DgZapasy.Items.Refresh();
             }
         }
 
         /// <summary>
         /// Otevře dialog pro vyhledávání zápasů
-        /// Aktivuje vyhledávací mód, dokud není režim ukončen pomocí CTRL+X.
+        /// Aktivuje vyhledávací mód, dokud není režim ukončen pomocí CTRL+X
         /// </summary>
         private void BtnNajdi_Click(object sender, RoutedEventArgs e)
         {
@@ -333,8 +339,6 @@ namespace InformacniSystemKlub.Windows
                 ZapasyData.Remove(vybranyZapas);
 
                 MessageBox.Show("Zápas byl smazán", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-
-
             }
             catch (Exception ex)
             {
@@ -356,17 +360,13 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnUlozitCsv_Click(object sender, RoutedEventArgs e)
         {
-            // Vytvoření dialogu pro výběr umístění souboru
             SaveFileDialog dialog = new SaveFileDialog();
 
             dialog.Title = "Uložit rozpis zápasů";
             dialog.Filter = "CSV soubor (*.csv)|*.csv";
             dialog.DefaultExt = "csv";
             dialog.AddExtension = true;
-
-            // Výchozí složka bude plocha uživatele
             dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-
             dialog.FileName = "Rozpis_zapasu.csv";
 
             bool? vysledek = dialog.ShowDialog();
@@ -378,7 +378,6 @@ namespace InformacniSystemKlub.Windows
 
             try
             {
-                // Uložení dat do vybraného CSV souboru
                 UlozDoCsv(dialog.FileName);
 
                 MessageBox.Show("Soubor byl úspěšně uložen", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -403,13 +402,10 @@ namespace InformacniSystemKlub.Windows
                 return;
             }
 
-            // Otevření textového zapisovače pro vytvoření CSV souboru v kódování UTF-8
             using (StreamWriter writer = new StreamWriter(cesta, false, Encoding.UTF8))
             {
-                // Zápis hlavičky sloupců do prvního řádku souboru
-                writer.WriteLine("ID zápasu;Datum;Soutěž;Domácí tým;Hosté;Stav zápasu;Výsledek;Žluté karty;Červené karty");
+                writer.WriteLine("ID zápasu;Datum;Soutěž;Tréninková skupina;Domácí tým;Hosté;Stav zápasu;Výsledek;Žluté karty;Červené karty");
 
-                // Postupné zpracování všech položek v aktuálním seznamu zápasů
                 foreach (object polozka in zapasy)
                 {
                     Zapas zapas = polozka as Zapas;
@@ -419,10 +415,10 @@ namespace InformacniSystemKlub.Windows
                         continue;
                     }
 
-                    // Příprava výchozích textových hodnot pro jednotlivé sloupce
                     string idZapas = zapas.IdZapas.ToString();
                     string datum = "-";
                     string soutez = "-";
+                    string treninkovaSkupina = "-";
                     string domaci = "-";
                     string hoste = "-";
                     string stav = "-";
@@ -438,6 +434,11 @@ namespace InformacniSystemKlub.Windows
                     if (string.IsNullOrWhiteSpace(zapas.NazevSouteze) == false)
                     {
                         soutez = zapas.NazevSouteze;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(zapas.NazevTreninkoveSkupiny) == false)
+                    {
+                        treninkovaSkupina = zapas.NazevTreninkoveSkupiny;
                     }
 
                     if (string.IsNullOrWhiteSpace(zapas.DomaciTym) == false)
@@ -470,21 +471,20 @@ namespace InformacniSystemKlub.Windows
                         cervene = zapas.PocetCervenychKaret.Value.ToString();
                     }
 
-                    // Ošetření textových hodnot kvůli správnému zápisu do CSV
                     domaci = UpravitTextProCsv(domaci);
                     hoste = UpravitTextProCsv(hoste);
                     soutez = UpravitTextProCsv(soutez);
+                    treninkovaSkupina = UpravitTextProCsv(treninkovaSkupina);
                     stav = UpravitTextProCsv(stav);
                     vysledek = UpravitTextProCsv(vysledek);
 
-                    // Zápis jednoho řádku reprezentujícího jeden zápas
-                    writer.WriteLine(idZapas + ";" + datum + ";" + soutez + ";" + domaci + ";" + hoste + ";" + stav + ";" + vysledek + ";" + zlute + ";" + cervene);
+                    writer.WriteLine(idZapas + ";" + datum + ";" + soutez + ";" + treninkovaSkupina + ";" + domaci + ";" + hoste + ";" + stav + ";" + vysledek + ";" + zlute + ";" + cervene);
                 }
             }
         }
 
         /// <summary>
-        /// Upraví textovou hodnotu tak, aby byla bezpečně zapsatelná do CSV souboru
+        /// Upraví textovou hodnotu tak, aby byla zapsatelná do CSV souboru
         /// </summary>
         /// <param name="text">Vstupní text, který se má upravit pro CSV zápis</param>
         private string UpravitTextProCsv(string text)
@@ -494,17 +494,17 @@ namespace InformacniSystemKlub.Windows
                 return "";
             }
 
-            // Zdvojení uvozovek podle CSV formátu
+            // V CSV se uvozovky uvnitř textu zapisují zdvojeně
             text = text.Replace("\"", "\"\"");
 
-            // Pokud text obsahuje problematické znaky, obalí se do uvozovek
+            // Pokud text obsahuje středník, uvozovku nebo nový řádek,
+            // je nutné celý text obalit do uvozovek,
+            // aby se v CSV správně uložil jako jedna hodnota
             if (text.Contains(";") || text.Contains("\"") || text.Contains("\n"))
             {
                 text = "\"" + text + "\"";
             }
-
             return text;
         }
-
     }
 }

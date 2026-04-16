@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace InformacniSystemKlub.Windows
@@ -21,6 +22,11 @@ namespace InformacniSystemKlub.Windows
         /// Kolekce uživatelů, kterým lze poslat notifikaci
         /// </summary>
         private ObservableCollection<Uzivatel> uzivatele;
+
+        /// <summary>
+        /// Kolekce uživatelů aktuálně zobrazených v seznamu příjemců
+        /// </summary>
+        private ObservableCollection<Uzivatel> zobrazovaniUzivatele = new ObservableCollection<Uzivatel>();
 
         /// <summary>
         /// E-mail odesílatele
@@ -45,7 +51,7 @@ namespace InformacniSystemKlub.Windows
         public Notifikace(ObservableCollection<Uzivatel> uzivatele)
         {
             InitializeComponent();
-            ApplyTheme(HlavniOkno.jeDarkModeAktivni);
+            RezimZobrazeni.NastavRezimNotifikaceOkno(this, HlavniOkno.jeDarkModeAktivni);
 
             if (string.IsNullOrWhiteSpace(EmailOdesilatele))
             {
@@ -71,12 +77,286 @@ namespace InformacniSystemKlub.Windows
                 this.uzivatele = uzivatele;
             }
 
+            if (HraciOkno.HraciData.Count == 0)
+            {
+                HraciOkno.NactiHrace();
+            }
+
             foreach (Uzivatel uzivatel in this.uzivatele)
             {
                 uzivatel.JeVybran = false;
             }
 
-            LbPrijemci.ItemsSource = this.uzivatele;
+            AplikujFiltrUzivatelu();
+        }
+
+        /// <summary>
+        /// Vrátí normalizovanou podobu role uživatele
+        /// </summary>
+        private string ZiskejNormalizovanouRoli(Uzivatel uzivatel)
+        {
+            if (uzivatel == null)
+            {
+                return "";
+            }
+
+            if (string.IsNullOrWhiteSpace(uzivatel.Role))
+            {
+                return "";
+            }
+
+            string role = uzivatel.Role.Trim().ToLower();
+
+            if (role == "hráč" || role == "hrac")
+            {
+                return "hrac";
+            }
+
+            if (role == "trenér" || role == "trener")
+            {
+                return "trener";
+            }
+
+            if (role == "admin")
+            {
+                return "admin";
+            }
+
+            if (role == "host")
+            {
+                return "host";
+            }
+
+            return role;
+        }
+
+        /// <summary>
+        /// Vrátí hráče odpovídajícího zadanému uživateli podle rodného čísla
+        /// </summary>
+        private Hrac ZiskejHracePodleRodnehoCisla(Uzivatel uzivatel)
+        {
+            if (uzivatel == null)
+            {
+                return null;
+            }
+
+            if (string.IsNullOrWhiteSpace(uzivatel.RodneCislo))
+            {
+                return null;
+            }
+
+            foreach (Hrac hrac in HraciOkno.HraciData)
+            {
+                if (string.IsNullOrWhiteSpace(hrac.RodneCislo) == false &&
+                    hrac.RodneCislo == uzivatel.RodneCislo)
+                {
+                    return hrac;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Aplikuje filtrování uživatelů podle zadaného uživatelského jména
+        /// </summary>
+        private void AplikujFiltrUzivatelu()
+        {
+            IEnumerable<Uzivatel> vysledek = uzivatele;
+
+            if (string.IsNullOrWhiteSpace(TxtHledatUzivatele.Text) == false)
+            {
+                string hledanyText = TxtHledatUzivatele.Text.Trim();
+
+
+                vysledek = vysledek.Where(u =>
+                string.IsNullOrWhiteSpace(u.UzivatelskeJmeno) == false &&
+                u.UzivatelskeJmeno.StartsWith(hledanyText, StringComparison.OrdinalIgnoreCase));
+            }
+
+            zobrazovaniUzivatele = new ObservableCollection<Uzivatel>(vysledek);
+            LbPrijemci.ItemsSource = zobrazovaniUzivatele;
+            LbPrijemci.Items.Refresh();
+        }
+
+        /// <summary>
+        /// Nastaví výběr všech hráčů
+        /// </summary>
+        private void NastavVyberVsechHracu(bool vybrat)
+        {
+            foreach (Uzivatel uzivatel in uzivatele)
+            {
+                if (ZiskejNormalizovanouRoli(uzivatel) == "hrac")
+                {
+                    uzivatel.JeVybran = vybrat;
+                }
+            }
+
+            LbPrijemci.Items.Refresh();
+        }
+
+        /// <summary>
+        /// Nastaví výběr všech trenérů
+        /// </summary>
+        private void NastavVyberVsechTreneru(bool vybrat)
+        {
+            foreach (Uzivatel uzivatel in uzivatele)
+            {
+                if (ZiskejNormalizovanouRoli(uzivatel) == "trener")
+                {
+                    uzivatel.JeVybran = vybrat;
+                }
+            }
+
+            LbPrijemci.Items.Refresh();
+        }
+
+        /// <summary>
+        /// Nastaví výběr všech administrátorů
+        /// </summary>
+        private void NastavVyberVsechAdministratoru(bool vybrat)
+        {
+            foreach (Uzivatel uzivatel in uzivatele)
+            {
+                if (ZiskejNormalizovanouRoli(uzivatel) == "admin")
+                {
+                    uzivatel.JeVybran = vybrat;
+                }
+            }
+
+            LbPrijemci.Items.Refresh();
+        }
+
+        /// <summary>
+        /// Nastaví výběr hráčů podle zadané tréninkové skupiny
+        /// </summary>
+        private void NastavVyberHracuPodleSkupiny(int idSkupiny, bool vybrat)
+        {
+            foreach (Uzivatel uzivatel in uzivatele)
+            {
+                if (ZiskejNormalizovanouRoli(uzivatel) != "hrac")
+                {
+                    continue;
+                }
+
+                Hrac hrac = ZiskejHracePodleRodnehoCisla(uzivatel);
+
+                if (hrac == null)
+                {
+                    continue;
+                }
+
+                if (hrac.IdTreninkovaSkupina == idSkupiny)
+                {
+                    uzivatel.JeVybran = vybrat;
+                }
+            }
+
+            LbPrijemci.Items.Refresh();
+        }
+
+        /// <summary>
+        /// Obsluha změny textu ve vyhledávacím poli
+        /// </summary>
+        private void TxtHledatUzivatele_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            AplikujFiltrUzivatelu();
+        }
+
+        /// <summary>
+        /// Obsluha checkboxu Všichni hráči
+        /// </summary>
+        private void ChbVszichniHraci_Checked(object sender, RoutedEventArgs e)
+        {
+            NastavVyberVsechHracu(true);
+        }
+
+        /// <summary>
+        /// Obsluha odškrtnutí checkboxu Všichni hráči
+        /// </summary>
+        private void ChbVszichniHraci_Unchecked(object sender, RoutedEventArgs e)
+        {
+            NastavVyberVsechHracu(false);
+        }
+
+        /// <summary>
+        /// Obsluha checkboxu A-Tým
+        /// </summary>
+        private void ChbATym_Checked(object sender, RoutedEventArgs e)
+        {
+            NastavVyberHracuPodleSkupiny(1, true);
+        }
+
+        /// <summary>
+        /// Obsluha odškrtnutí checkboxu A-Tým
+        /// </summary>
+        private void ChbATym_Unchecked(object sender, RoutedEventArgs e)
+        {
+            NastavVyberHracuPodleSkupiny(1, false);
+        }
+
+        /// <summary>
+        /// Obsluha checkboxu Dorost
+        /// </summary>
+        private void ChbDorost_Checked(object sender, RoutedEventArgs e)
+        {
+            NastavVyberHracuPodleSkupiny(2, true);
+        }
+
+        /// <summary>
+        /// Obsluha odškrtnutí checkboxu Dorost
+        /// </summary>
+        private void ChbDorost_Unchecked(object sender, RoutedEventArgs e)
+        {
+            NastavVyberHracuPodleSkupiny(2, false);
+        }
+
+        /// <summary>
+        /// Obsluha checkboxu Mladší žáci
+        /// </summary>
+        private void ChbMladsiZaci_Checked(object sender, RoutedEventArgs e)
+        {
+            NastavVyberHracuPodleSkupiny(3, true);
+        }
+
+        /// <summary>
+        /// Obsluha odškrtnutí checkboxu Mladší žáci
+        /// </summary>
+        private void ChbMladsiZaci_Unchecked(object sender, RoutedEventArgs e)
+        {
+            NastavVyberHracuPodleSkupiny(3, false);
+        }
+
+        /// <summary>
+        /// Obsluha checkboxu Všichni trenéři
+        /// </summary>
+        private void ChbVszichniTreneri_Checked(object sender, RoutedEventArgs e)
+        {
+            NastavVyberVsechTreneru(true);
+        }
+
+        /// <summary>
+        /// Obsluha odškrtnutí checkboxu Všichni trenéři
+        /// </summary>
+        private void ChbVszichniTreneri_Unchecked(object sender, RoutedEventArgs e)
+        {
+            NastavVyberVsechTreneru(false);
+        }
+
+        /// <summary>
+        /// Obsluha checkboxu Administrátoři
+        /// </summary>
+        private void ChbAdministratori_Checked(object sender, RoutedEventArgs e)
+        {
+            NastavVyberVsechAdministratoru(true);
+        }
+
+        /// <summary>
+        /// Obsluha odškrtnutí checkboxu Administrátoři
+        /// </summary>
+        private void ChbAdministratori_Unchecked(object sender, RoutedEventArgs e)
+        {
+            NastavVyberVsechAdministratoru(false);
         }
 
         /// <summary>
@@ -253,39 +533,6 @@ namespace InformacniSystemKlub.Windows
             return uzivatele.Where(u => u.JeVybran == true).ToList();
         }
 
-        /// <summary>
-        /// Nastaví zvolený režim (dark/light)
-        /// </summary>
-        private void ApplyTheme(bool darkMode)
-        {
-            if (darkMode == true)
-            {
-                Resources["BgApp"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x0F, 0x19));
-                Resources["Surface"] = new SolidColorBrush(Color.FromRgb(0x11, 0x18, 0x27));
-                Resources["TextMain"] = new SolidColorBrush(Color.FromRgb(0xF9, 0xFA, 0xFB));
-                Resources["BorderSoft"] = new SolidColorBrush(Color.FromRgb(0x1F, 0x29, 0x37));
-                Resources["InputBg"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x12, 0x20));
-                Resources["Orange"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
-                Resources["OrangeHover"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
-                Resources["SidebarGradient"] = new LinearGradientBrush(
-                    Color.FromRgb(0xFB, 0x92, 0x3C),
-                    Color.FromRgb(0xF9, 0x73, 0x16),
-                    90);
-            }
-            else
-            {
-                Resources["BgApp"] = new SolidColorBrush(Color.FromRgb(0xF6, 0xF7, 0xFB));
-                Resources["Surface"] = new SolidColorBrush(Color.FromRgb(0xFF, 0xFF, 0xFF));
-                Resources["TextMain"] = new SolidColorBrush(Color.FromRgb(0x0B, 0x12, 0x20));
-                Resources["BorderSoft"] = new SolidColorBrush(Color.FromRgb(0xE5, 0xE7, 0xEB));
-                Resources["InputBg"] = new SolidColorBrush(Color.FromRgb(0xF8, 0xFA, 0xFC));
-                Resources["Orange"] = new SolidColorBrush(Color.FromRgb(0xF9, 0x73, 0x16));
-                Resources["OrangeHover"] = new SolidColorBrush(Color.FromRgb(0xEA, 0x58, 0x0C));
-                Resources["SidebarGradient"] = new LinearGradientBrush(
-                    Color.FromRgb(0xFB, 0x92, 0x3C),
-                    Color.FromRgb(0xF9, 0x73, 0x16),
-                    90);
-            }
-        }
+        
     }
 }
