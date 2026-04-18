@@ -530,6 +530,95 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
+        /// Po kliknutí pravým tlačítkem označí řádek hráče jako vybraný
+        /// </summary>
+        private void DgHraci_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DependencyObject source = e.OriginalSource as DependencyObject;
+
+            while (source != null && !(source is DataGridRow))
+            {
+                source = System.Windows.Media.VisualTreeHelper.GetParent(source);
+            }
+
+            DataGridRow row = source as DataGridRow;
+
+            if (row != null)
+            {
+                row.IsSelected = true;
+                DgHraci.SelectedItem = row.Item;
+            }
+        }
+
+        /// <summary>
+        /// Zobrazí kontrakty vybraného hráče
+        /// </summary>
+        private void MenuKontrakty_Click(object sender, RoutedEventArgs e)
+        {
+            Hrac vybranyHrac = DgHraci.SelectedItem as Hrac;
+
+            if (vybranyHrac == null)
+            {
+                MessageBox.Show("Vyberte hráče!", "Upozornění", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            try
+            {
+                var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
+
+                string textKontraktu = DatabazeHraci.ZiskejKontraktyHrace(conn, vybranyHrac.Id);
+
+                if (string.IsNullOrWhiteSpace(textKontraktu))
+                {
+                    MessageBox.Show("Tento hráč nemá žádný kontrakt nyní.", "Kontrakty", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
+                MessageBox.Show(textKontraktu, "Kontrakty hráče", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Chyba při načítání kontraktů: " + ex.Message,
+                    "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Zobrazí disciplinární opatření vybraného hráče
+        /// </summary>
+        private void MenuOpatreni_Click(object sender, RoutedEventArgs e)
+        {
+            Hrac vybranyHrac = DgHraci.SelectedItem as Hrac;
+
+            if (vybranyHrac == null)
+            {
+                MessageBox.Show("Vyberte hráče!", "Upozornění", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            try
+            {
+                var conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
+
+                string textOpatreni = DatabazeHraci.ZiskejOpatreniHrace(conn, vybranyHrac.Id);
+
+                if (string.IsNullOrWhiteSpace(textOpatreni))
+                {
+                    MessageBox.Show("Tento hráč nemá žádné disciplinární opatření nyní.", "Disciplinární opatření", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
+                MessageBox.Show(textOpatreni, "Disciplinární opatření hráče", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Chyba při načítání disciplinárních opatření: " + ex.Message,
+                    "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
         /// Zavře okno a vrátí uživatele na předchozí obrazovku (Hlavní okno)
         /// </summary>
         private void BtnZpet_Click(object sender, RoutedEventArgs e)

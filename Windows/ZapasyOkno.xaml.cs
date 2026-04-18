@@ -4,14 +4,15 @@ using InformacniSystemKlub.Windows.EditujWindows;
 using InformacniSystemKlub.Windows.NajdiWindows;
 using InformacniSystemKlub.Windows.PridejWindows;
 using Oracle.ManagedDataAccess.Client;
-using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
-using Microsoft.Win32;
+using System;
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using Microsoft.Win32;
 
 namespace InformacniSystemKlub.Windows
 {
@@ -26,20 +27,31 @@ namespace InformacniSystemKlub.Windows
         public static ObservableCollection<Zapas> ZapasyData { get; set; } = new ObservableCollection<Zapas>();
 
         /// <summary>
-        /// Proměnná, zda je aktivní vyhledávací mód
+        /// Příznak, zda je aktivní vyhledávací mód
         /// </summary>
         private bool jeVyhledavaniAktivni = false;
+
+        /// <summary>
+        /// Pomocná proměnná určující, zda už proběhla inicializace okna
+        /// </summary>
+        private bool inicializaceDokoncena = false;
 
         public ZapasyOkno()
         {
             InitializeComponent();
+            inicializaceDokoncena = false;
             RezimZobrazeni.NastavRezimTabulkoveOkno(this, HlavniOkno.jeDarkModeAktivni);
             NactiZapasy();
             NastavPravaPodleRole();
             DgZapasy.ItemsSource = ZapasyData;
+            cbVyberTymu.SelectedIndex = 0;
+            inicializaceDokoncena = true;
+            VyberTymu();
         }
 
-        // Nastaví práva tlačítek podle role přihlášeného uživatele
+        /// <summary>
+        /// Nastaví práva tlačítek podle role přihlášeného uživatele
+        /// </summary>
         private void NastavPravaPodleRole()
         {
             Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
@@ -81,6 +93,65 @@ namespace InformacniSystemKlub.Windows
                 BtnEdituj.IsEnabled = true;
                 BtnNajdi.IsEnabled = true;
                 BtnUlozitCsv.IsEnabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Aplikuje filtr zápasů dle zvolené položky v ComboBoxu
+        /// </summary>
+        private void VyberTymu()
+        {
+            int volba = cbVyberTymu.SelectedIndex;
+
+            if (volba == 0)
+            {
+                DgZapasy.ItemsSource = ZapasyData;
+                return;
+            }
+
+            ObservableCollection<Zapas> vybraneZapasy = new ObservableCollection<Zapas>();
+
+            foreach (var zapas in ZapasyData)
+            {
+                // Filtr pro A-Tým
+                if (volba == 1)
+                {
+                    if (zapas.IdTreninkovaSkupina == 1)
+                    {
+                        vybraneZapasy.Add(zapas);
+                    }
+                }
+
+                // Filtr pro Dorost
+                if (volba == 2)
+                {
+                    if (zapas.IdTreninkovaSkupina == 2)
+                    {
+                        vybraneZapasy.Add(zapas);
+                    }
+                }
+
+                // Filtr pro Mladší žáci
+                if (volba == 3)
+                {
+                    if (zapas.IdTreninkovaSkupina == 3)
+                    {
+                        vybraneZapasy.Add(zapas);
+                    }
+                }
+            }
+
+            DgZapasy.ItemsSource = vybraneZapasy;
+        }
+
+        /// <summary>
+        /// Událost změny výběru v ComboBoxu – provede znovu aplikaci filtru
+        /// </summary>
+        private void cbVyberTymu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (inicializaceDokoncena == true)
+            {
+                VyberTymu();
             }
         }
 
@@ -226,13 +297,14 @@ namespace InformacniSystemKlub.Windows
 
             if (result == true)
             {
+                VyberTymu();
                 DgZapasy.Items.Refresh();
             }
         }
 
         /// <summary>
         /// Otevře dialog pro vyhledávání zápasů
-        /// Aktivuje vyhledávací mód, dokud není režim ukončen pomocí CTRL+X
+        /// Aktivuje vyhledávací mód, dokud není režim ukončen pomocí CTRL+X.
         /// </summary>
         private void BtnNajdi_Click(object sender, RoutedEventArgs e)
         {
@@ -265,7 +337,7 @@ namespace InformacniSystemKlub.Windows
             if (jeVyhledavaniAktivni && (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.X))
             {
                 jeVyhledavaniAktivni = false;
-                DgZapasy.ItemsSource = ZapasyData;
+                VyberTymu();
                 e.Handled = true;
             }
         }
@@ -296,6 +368,7 @@ namespace InformacniSystemKlub.Windows
                 DatabazeZapasy.PridejZapas(conn, pridanyZapas);
 
                 NactiZapasy();
+                VyberTymu();
             }
             catch (Exception ex)
             {
@@ -337,6 +410,7 @@ namespace InformacniSystemKlub.Windows
                 DatabazeZapasy.OdeberZapas(conn, vybranyZapas);
 
                 ZapasyData.Remove(vybranyZapas);
+                VyberTymu();
 
                 MessageBox.Show("Zápas byl smazán", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -484,11 +558,12 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Upraví textovou hodnotu tak, aby byla zapsatelná do CSV souboru
+        /// Upraví textovou hodnotu tak, aby byla bezpečně zapsatelná do CSV souboru
         /// </summary>
         /// <param name="text">Vstupní text, který se má upravit pro CSV zápis</param>
         private string UpravitTextProCsv(string text)
         {
+            // Pokud je vstupní hodnota null, vrátí se prázdný řetězec
             if (text == null)
             {
                 return "";
@@ -498,12 +573,13 @@ namespace InformacniSystemKlub.Windows
             text = text.Replace("\"", "\"\"");
 
             // Pokud text obsahuje středník, uvozovku nebo nový řádek,
-            // je nutné celý text obalit do uvozovek,
-            // aby se v CSV správně uložil jako jedna hodnota
+            // obalí se do uvozovek, aby byl správně uložen jako jedna hodnota
             if (text.Contains(";") || text.Contains("\"") || text.Contains("\n"))
             {
                 text = "\"" + text + "\"";
             }
+
+            // Vrátí upravený text vhodný pro CSV
             return text;
         }
     }

@@ -380,6 +380,7 @@
                 Effect="{StaticResource CardShadow}">
 
             <DataGrid Name="DgHraci"
+                    PreviewMouseRightButtonDown="DgHraci_PreviewMouseRightButtonDown"
                       AutoGenerateColumns="False"
                       IsReadOnly="True"
                       CanUserAddRows="False"
@@ -402,6 +403,13 @@
                       GridLinesVisibility="All"
                       HorizontalGridLinesBrush="{DynamicResource GridLineBrush}"
                       VerticalGridLinesBrush="{DynamicResource GridLineBrush}">
+
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Kontrakty" Click="MenuKontrakty_Click"/>
+                        <MenuItem Header="Disciplinární opatření" Click="MenuOpatreni_Click"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
 
                 <DataGrid.Columns>
 

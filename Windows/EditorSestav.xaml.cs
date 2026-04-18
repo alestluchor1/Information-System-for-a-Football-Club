@@ -231,6 +231,17 @@ namespace InformacniSystemKlub.Windows
                 return;
             }
 
+            if (JeHracJizNaHristi(hrac.Id) == true)
+            {
+                MessageBox.Show(
+                    "Daný hráč je již přidán na ploše hřiště",
+                    "Upozornění",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+
+                return;
+            }
+
             int sirkaKarty = 100;
             int vyskaKarty = 50;
             int levaPozice = 30;
@@ -265,11 +276,9 @@ namespace InformacniSystemKlub.Windows
             karta.MouseLeftButtonUp += Hrac_MouseLeftButtonUp;
             karta.MouseRightButtonDown += Hrac_MouseRightButtonDown;
 
-            // Nastavení pozice karty na hřišti
             Canvas.SetLeft(karta, levaPozice);
             Canvas.SetTop(karta, horniPozice);
 
-            // Přidání karty na canvas hřiště
             CvHriste.Children.Add(karta);
         }
 
@@ -385,6 +394,36 @@ namespace InformacniSystemKlub.Windows
             }
 
             CvHriste.Children.Remove(karta);
+        }
+
+        /// <summary>
+        /// Zjistí, zda je daný hráč již přidaný na ploše hřiště
+        /// </summary>
+        private bool JeHracJizNaHristi(int idHrace)
+        {
+            foreach (UIElement prvek in CvHriste.Children)
+            {
+                Border karta = prvek as Border;
+
+                if (karta == null)
+                {
+                    continue;
+                }
+
+                Hrac existujiciHrac = karta.Tag as Hrac;
+
+                if (existujiciHrac == null)
+                {
+                    continue;
+                }
+
+                if (existujiciHrac.Id == idHrace)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>

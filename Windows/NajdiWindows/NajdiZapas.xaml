@@ -363,6 +363,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <!-- 0 -->
@@ -392,8 +393,21 @@
                     </Border>
 
                     <!-- 2 -->
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Stav zápasu" Style="{DynamicResource Lbl}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Tréninková skupina" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="2" Grid.Column="1" Style="{DynamicResource InputHost}">
+                        <ComboBox x:Name="CbTreninkovaSkupina"
+                                  Style="{DynamicResource ComboTheme}"
+                                  SelectedIndex="0">
+                            <ComboBoxItem Content="—" Tag="0"/>
+                            <ComboBoxItem Content="A-Tým" Tag="1"/>
+                            <ComboBoxItem Content="Dorost" Tag="2"/>
+                            <ComboBoxItem Content="Mladší žáci" Tag="3"/>
+                        </ComboBox>
+                    </Border>
+
+                    <!-- 3 -->
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Stav zápasu" Style="{DynamicResource Lbl}"/>
+                    <Border Grid.Row="3" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <ComboBox x:Name="CbStavZapasu"
                                   Style="{DynamicResource ComboTheme}"
                                   SelectedIndex="0">
@@ -403,33 +417,33 @@
                         </ComboBox>
                     </Border>
 
-                    <!-- 3 -->
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Domácí tým" Style="{DynamicResource Lbl}"/>
-                    <TextBox x:Name="TxtDomaciTym"
-                             Grid.Row="3"
-                             Grid.Column="1"
-                             MaxLength="30"
-                             Style="{DynamicResource Input}"/>
-
                     <!-- 4 -->
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Hosté" Style="{DynamicResource Lbl}"/>
-                    <TextBox x:Name="TxtHosteTym"
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Domácí tým" Style="{DynamicResource Lbl}"/>
+                    <TextBox x:Name="TxtDomaciTym"
                              Grid.Row="4"
                              Grid.Column="1"
                              MaxLength="30"
                              Style="{DynamicResource Input}"/>
 
                     <!-- 5 -->
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Výsledek" Style="{DynamicResource Lbl}"/>
-                    <TextBox x:Name="TxtVysledek"
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Hosté" Style="{DynamicResource Lbl}"/>
+                    <TextBox x:Name="TxtHosteTym"
                              Grid.Row="5"
+                             Grid.Column="1"
+                             MaxLength="30"
+                             Style="{DynamicResource Input}"/>
+
+                    <!-- 6 -->
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Výsledek" Style="{DynamicResource Lbl}"/>
+                    <TextBox x:Name="TxtVysledek"
+                             Grid.Row="6"
                              Grid.Column="1"
                              MaxLength="5"
                              Style="{DynamicResource Input}"/>
 
-                    <!-- 6 -->
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Počet žlutých karet" Style="{DynamicResource Lbl}"/>
-                    <Border Grid.Row="6" Grid.Column="1" Style="{DynamicResource InputHost}">
+                    <!-- 7 -->
+                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Počet žlutých karet" Style="{DynamicResource Lbl}"/>
+                    <Border Grid.Row="7" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <xctk:IntegerUpDown x:Name="iudPocetZlutychKaret"
                                             Style="{DynamicResource Spin}"
                                             Value="{x:Null}"
@@ -440,9 +454,9 @@
                                             AllowSpin="True"/>
                     </Border>
 
-                    <!-- 7 -->
-                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Počet červených karet" Style="{DynamicResource Lbl}"/>
-                    <Border Grid.Row="7" Grid.Column="1" Style="{DynamicResource InputHost}">
+                    <!-- 8 -->
+                    <TextBlock Grid.Row="8" Grid.Column="0" Text="Počet červených karet" Style="{DynamicResource Lbl}"/>
+                    <Border Grid.Row="8" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <xctk:IntegerUpDown x:Name="iudPocetCervenychKaret"
                                             Style="{DynamicResource Spin}"
                                             Value="{x:Null}"
@@ -453,8 +467,8 @@
                                             AllowSpin="True"/>
                     </Border>
 
-                    <!-- 8 -->
-                    <Button Grid.Row="8" Grid.Column="1"
+                    <!-- 9 -->
+                    <Button Grid.Row="9" Grid.Column="1"
                             Content="Filtrovat"
                             Style="{DynamicResource BtnPrimary}"
                             HorizontalAlignment="Right"

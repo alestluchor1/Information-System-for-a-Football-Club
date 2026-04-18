@@ -53,6 +53,7 @@ namespace InformacniSystemKlub.Windows.PridejWindows
 
                 novyZapas.IdTypSouteze = ZiskejTypSoutezeEnum(typSoutezeText);
                 novyZapas.IdStav = ZiskejStavZapasuEnum(stavZapasuText);
+                novyZapas.IdTreninkovaSkupina = ZiskejIdTreninkoveSkupiny();
 
                 if (novyZapas.IdStav == StavZapasuEnum.Odehrano)
                 {
@@ -205,5 +206,24 @@ namespace InformacniSystemKlub.Windows.PridejWindows
             throw new Exception("Neplatný stav zápasu!");
         }
 
+        /// <summary>
+        /// Vrátí ID vybrané tréninkové skupiny z ComboBoxu
+        /// </summary>
+        private int ZiskejIdTreninkoveSkupiny()
+        {
+            ComboBoxItem vybranaPolozka = CbTreninkovaSkupina.SelectedItem as ComboBoxItem;
+
+            if (vybranaPolozka == null)
+            {
+                throw new Exception("Musíte vybrat tréninkovou skupinu!");
+            }
+
+            if (vybranaPolozka.Tag == null)
+            {
+                throw new Exception("Vybraná tréninková skupina nemá platné ID!");
+            }
+
+            return Convert.ToInt32(vybranaPolozka.Tag);
+        }
     }
 }

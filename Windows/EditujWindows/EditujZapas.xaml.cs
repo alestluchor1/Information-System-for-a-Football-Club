@@ -47,6 +47,7 @@ namespace InformacniSystemKlub.Windows.EditujWindows
             }
 
             NastavTypSouteze(editovanyZapas.IdTypSouteze);
+            NastavTreninkovouSkupinu(editovanyZapas.IdTreninkovaSkupina);
             NastavStavZapasu(editovanyZapas.IdStav);
             NastavPoleProStavZapasu();
         }
@@ -100,6 +101,30 @@ namespace InformacniSystemKlub.Windows.EditujWindows
         }
 
         /// <summary>
+        /// Nastaví vybranou položku ComboBoxu tréninkové skupiny podle ID
+        /// </summary>
+        private void NastavTreninkovouSkupinu(int idTreninkoveSkupiny)
+        {
+            foreach (object item in CbTreninkovaSkupina.Items)
+            {
+                ComboBoxItem polozka = item as ComboBoxItem;
+
+                if (polozka != null && polozka.Tag != null)
+                {
+                    int id = Convert.ToInt32(polozka.Tag);
+
+                    if (id == idTreninkoveSkupiny)
+                    {
+                        CbTreninkovaSkupina.SelectedItem = polozka;
+                        return;
+                    }
+                }
+            }
+
+            CbTreninkovaSkupina.SelectedIndex = 0;
+        }
+
+        /// <summary>
         /// Nastaví vybranou položku ComboBoxu stavu zápasu podle enum hodnoty
         /// </summary>
         private void NastavStavZapasu(StavZapasuEnum stavZapasu)
@@ -150,6 +175,7 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                 editovanyZapas.HosteTym = hosteTym;
                 editovanyZapas.IdTypSouteze = ZiskejTypSoutezeEnum(typSoutezeText);
                 editovanyZapas.IdStav = ZiskejStavZapasuEnum(stavZapasuText);
+                editovanyZapas.IdTreninkovaSkupina = ZiskejIdTreninkoveSkupiny();
 
                 if (editovanyZapas.IdStav == StavZapasuEnum.Odehrano)
                 {
@@ -318,6 +344,24 @@ namespace InformacniSystemKlub.Windows.EditujWindows
             throw new Exception("Neplatný stav zápasu!");
         }
 
-       
+        /// <summary>
+        /// Vrátí ID vybrané tréninkové skupiny z ComboBoxu
+        /// </summary>
+        private int ZiskejIdTreninkoveSkupiny()
+        {
+            ComboBoxItem vybranaPolozka = CbTreninkovaSkupina.SelectedItem as ComboBoxItem;
+
+            if (vybranaPolozka == null)
+            {
+                throw new Exception("Musíte vybrat tréninkovou skupinu!");
+            }
+
+            if (vybranaPolozka.Tag == null)
+            {
+                throw new Exception("Vybraná tréninková skupina nemá platné ID!");
+            }
+
+            return Convert.ToInt32(vybranaPolozka.Tag);
+        }
     }
 }

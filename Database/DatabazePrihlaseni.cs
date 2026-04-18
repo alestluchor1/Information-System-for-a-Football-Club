@@ -99,7 +99,6 @@ namespace InformacniSystemKlub.Database
                     uzivatel.Email = email;
 
                     return uzivatel;
-                    return uzivatel;
                 }
             }
             catch (OracleException ex)

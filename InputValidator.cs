@@ -276,34 +276,6 @@ namespace InformacniSystemKlub
 
         }
 
-        public static int ValidujTreneriPocetLetPraxe(string hodnotaText, string nazevPole = "Počet let")
-        {
-            const int min = 0;
-            const int max = 100;
-
-            if (string.IsNullOrWhiteSpace(hodnotaText))
-            {
-                throw new Exception($"{nazevPole} nesmí být prázdné");
-            }
-
-            if (!int.TryParse(hodnotaText.Trim(), out int hodnota))
-            {
-                throw new Exception($"{nazevPole} musí být celé číslo");
-            }
-
-            if (hodnota < min)
-            {
-                throw new Exception($"{nazevPole} nesmí být menší než {min}");
-            }
-
-            if (hodnota > max)
-            {
-                throw new Exception($"{nazevPole} nesmí být větší než {max}");
-            }
-
-            return hodnota;
-        }
-
         public static void ValidujVyberTrenera(object selectedItem)
         {
             if (selectedItem == null)

@@ -59,6 +59,20 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
                 }
             }
 
+            // Tréninková skupina
+            if (CbTreninkovaSkupina.SelectedItem is ComboBoxItem polozkaSkupina)
+            {
+                if (polozkaSkupina.Tag != null)
+                {
+                    int idTreninkoveSkupiny = Convert.ToInt32(polozkaSkupina.Tag);
+
+                    if (idTreninkoveSkupiny != 0)
+                    {
+                        vysledek = vysledek.Where(z => z.IdTreninkovaSkupina == idTreninkoveSkupiny);
+                    }
+                }
+            }
+
             // Stav zápasu
             if (CbStavZapasu.SelectedItem is ComboBoxItem polozkaStav)
             {
@@ -185,7 +199,5 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
 
             throw new Exception("Neplatný stav zápasu!");
         }
-
-        
     }
 }
