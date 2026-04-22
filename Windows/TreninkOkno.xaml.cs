@@ -163,12 +163,14 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Nastaví viditelnost sloupců podle role
+        /// Nastaví viditelnost sloupců podle role přihlášeného uživatele
+        /// Administrátor vidí všechny sloupce, trenér a hráč nevidí rodné číslo trenéra
         /// </summary>
         private void NastavViditelnostSloupcuPodleRole()
         {
             Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
 
+            // Ve výchozím stavu je sloupec viditelný
             RodneCisloTreneraSloupec.Visibility = Visibility.Visible;
 
             if (prihlasenyUzivatel == null || string.IsNullOrWhiteSpace(prihlasenyUzivatel.Role))
@@ -178,7 +180,8 @@ namespace InformacniSystemKlub.Windows
 
             string role = prihlasenyUzivatel.Role.Trim().ToLower();
 
-            if (role == "hrac" || role == "hráč")
+            // Trenér ani hráč nesmí vidět rodné číslo trenéra
+            if (role == "trener" || role == "trenér" || role == "hrac" || role == "hráč")
             {
                 RodneCisloTreneraSloupec.Visibility = Visibility.Collapsed;
             }

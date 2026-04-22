@@ -241,7 +241,7 @@ namespace InformacniSystemKlub.Windows
                 BtnPridat.IsEnabled = true;
                 BtnNajdi.IsEnabled = true;
                 cbVyberTymu.IsEnabled = jeVyhledavaniAktivni == false;
-                DgHraci.ContextMenu = null;
+                DgHraci.ContextMenu = ContextMenuHraci;
 
                 Hrac vybranyHrac = DgHraci.SelectedItem as Hrac;
 
@@ -323,7 +323,7 @@ namespace InformacniSystemKlub.Windows
                     return;
                 }
 
-                if (vybranaPolozka == "Hráči mojí skupiny")
+                if (vybranaPolozka == "Hráči mé skupiny")
                 {
                     foreach (Hrac hrac in HraciData)
                     {
@@ -751,11 +751,14 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Pravý klik funguje jen pro admina
+        /// Pravým tlačítkem vybere řádek pod kurzorem a povolí kontextové menu
+        /// pouze pro roli admin a trener.
         /// </summary>
         private void DgHraci_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (ZiskejRoliUzivatele() != "admin")
+            string role = ZiskejRoliUzivatele();
+
+            if (role != "admin" && role != "trener")
             {
                 e.Handled = true;
                 return;
@@ -775,6 +778,20 @@ namespace InformacniSystemKlub.Windows
                 row.IsSelected = true;
                 DgHraci.SelectedItem = row.Item;
             }
+        }
+
+        /// <summary>
+        /// Nastaví dostupnost položek kontextového menu podle role
+        /// aktuálně přihlášeného uživatele.
+        /// Admin může otevřít kontrakty i disciplinární opatření,
+        /// trenér může otevřít pouze disciplinární opatření.
+        /// </summary>
+        private void ContextMenuHraci_Opened(object sender, RoutedEventArgs e)
+        {
+            string role = ZiskejRoliUzivatele();
+
+            MenuKontrakty.IsEnabled = role == "admin";
+            MenuOpatreni.IsEnabled = role == "admin" || role == "trener";
         }
 
         /// <summary>
@@ -821,7 +838,9 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void MenuOpatreni_Click(object sender, RoutedEventArgs e)
         {
-            if (ZiskejRoliUzivatele() != "admin")
+            string role = ZiskejRoliUzivatele();
+
+            if (role != "admin" && role != "trener")
             {
                 return;
             }

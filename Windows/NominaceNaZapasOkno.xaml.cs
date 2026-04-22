@@ -6,6 +6,8 @@ using InformacniSystemKlub.Windows.PridejWindows;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -139,8 +141,8 @@ namespace InformacniSystemKlub.Windows
 
             if (result == true)
             {
-
                 DgNominace.Items.Refresh();
+                ZkontrolujKartyVeVsechZapasech();
             }
         }
 
@@ -368,10 +370,13 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Projede všechny zápasy a u každého zkontroluje, jestli součty karet v nominacích nepřesahují počet karet v zápase
+        /// Projde všechny zápasy a zkontroluje, jestli počet karet v nominacích
+        /// nepřesahuje počet karet zadaný u zápasu
         /// </summary>
         private void ZkontrolujKartyVeVsechZapasech()
         {
+            List<string> chyby = new List<string>();
+
             foreach (var zapas in ZapasyOkno.ZapasyData)
             {
                 if (zapas == null)
@@ -379,36 +384,51 @@ namespace InformacniSystemKlub.Windows
                     continue;
                 }
 
-                int idZapas = zapas.IdZapas;
-
-                if (idZapas <= 0)
+                if (zapas.IdZapas <= 0)
                 {
                     continue;
                 }
 
-                ZkontrolujKartyProZapas(zapas);
+                string chyba = ZiskejChybuKaretProZapas(zapas);
+
+                if (string.IsNullOrWhiteSpace(chyba) == false)
+                {
+                    chyby.Add(chyba);
+                }
+            }
+
+            if (chyby.Count > 0)
+            {
+                string text = string.Join("\n\n", chyby);
+
+                MessageBox.Show(
+                    text,
+                    "Nesoulad karet mezi zápasy a nominacemi",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
             }
         }
 
         /// <summary>
-        /// Zkontroluje jeden konkrétní zápas: sečte ŽK/ČK ze všech nominací pro daný zápas
-        /// a porovná s hodnotami v tabulce zápasů
+        /// Vrátí text chyby pro jeden zápas, pokud součet karet v nominacích
+        /// překračuje karty zadané u zápasu. Když je vše v pořádku, vrátí prázdný text
         /// </summary>
-        private void ZkontrolujKartyProZapas(Zapas zapas)
+        private string ZiskejChybuKaretProZapas(Zapas zapas)
         {
-            int idZapas = zapas.IdZapas;
-
             int soucetZlute = 0;
             int soucetCervene = 0;
 
             foreach (var n in NominaceData)
             {
-                if (n.IdZapas == idZapas)
+                if (n.IdZapas == zapas.IdZapas)
                 {
-                    soucetZlute = soucetZlute + n.ZluteKarty;
-                    soucetCervene = soucetCervene + n.CerveneKarty;
+                    soucetZlute += n.ZluteKarty;
+                    soucetCervene += n.CerveneKarty;
                 }
             }
+
+            List<string> radky = new List<string>();
 
             if (zapas.PocetZlutychKaret != null)
             {
@@ -416,14 +436,7 @@ namespace InformacniSystemKlub.Windows
 
                 if (soucetZlute > maxZlute)
                 {
-                    MessageBox.Show(
-                        "Zápas ID " + idZapas + " (" + zapas.DomaciTym + " vs " + zapas.HosteTym + ")\n" +
-                        "V nominacích je moc ŽK: " + soucetZlute + "\n" +
-                        "V zápase je: " + maxZlute,
-                        "Chyba",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning
-                    );
+                    radky.Add("ŽK v nominacích: " + soucetZlute + ", v zápase: " + maxZlute);
                 }
             }
 
@@ -433,16 +446,17 @@ namespace InformacniSystemKlub.Windows
 
                 if (soucetCervene > maxCervene)
                 {
-                    MessageBox.Show(
-                        "Zápas ID " + idZapas + " (" + zapas.DomaciTym + " vs " + zapas.HosteTym + ")\n" +
-                        "V nominacích je moc ČK: " + soucetCervene + "\n" +
-                        "V zápase je: " + maxCervene,
-                        "Chyba",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning
-                    );
+                    radky.Add("ČK v nominacích: " + soucetCervene + ", v zápase: " + maxCervene);
                 }
             }
+
+            if (radky.Count == 0)
+            {
+                return "";
+            }
+
+            return "Zápas ID " + zapas.IdZapas + " (" + zapas.DomaciTym + " vs " + zapas.HosteTym + ")\n"
+                   + string.Join("\n", radky);
         }
 
         /// <summary>
@@ -465,7 +479,5 @@ namespace InformacniSystemKlub.Windows
         {
             this.Close();
         }
-
-    
     }
 }

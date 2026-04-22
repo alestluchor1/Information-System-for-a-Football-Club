@@ -399,9 +399,13 @@
                       VerticalGridLinesBrush="{DynamicResource GridLineBrush}">
 
                 <DataGrid.ContextMenu>
-                    <ContextMenu x:Name="ContextMenuHraci">
-                        <MenuItem Header="Kontrakty" Click="MenuKontrakty_Click"/>
-                        <MenuItem Header="Disciplinární opatření" Click="MenuOpatreni_Click"/>
+                    <ContextMenu x:Name="ContextMenuHraci" Opened="ContextMenuHraci_Opened">
+                        <MenuItem x:Name="MenuKontrakty"
+                                  Header="Kontrakty"
+                                  Click="MenuKontrakty_Click"/>
+                        <MenuItem x:Name="MenuOpatreni"
+                                  Header="Disciplinární opatření"
+                                  Click="MenuOpatreni_Click"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
 
