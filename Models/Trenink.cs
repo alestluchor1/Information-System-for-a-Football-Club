@@ -13,7 +13,7 @@ namespace InformacniSystemKlub.Models
         /// <summary>
         /// ID trenéra
         /// </summary>
-        public int IdTrener { get; set; }   
+        public int IdTrener { get; set; }
 
         /// <summary>
         /// Rodné číslo trenéra
@@ -25,6 +25,16 @@ namespace InformacniSystemKlub.Models
         /// </summary>
         public string Prijmeni { get; set; }
 
+        /// <summary>
+        /// ID tréninkové skupiny trenéra
+        /// </summary>
+        public int IdTreninkovaSkupina { get; set; }
+
+        /// <summary>
+        /// Název tréninkové skupiny trenéra
+        /// </summary>
+        public string NazevSkupiny { get; set; }
+
         public DateTime Datum { get; set; }
 
         public string Misto { get; set; }
@@ -33,5 +43,4 @@ namespace InformacniSystemKlub.Models
 
         public Trenink() { }
     }
-
 }

@@ -111,7 +111,7 @@
 
         <Style x:Key="CbModern" TargetType="ComboBox">
             <Setter Property="Height" Value="36"/>
-            <Setter Property="MinWidth" Value="160"/>
+            <Setter Property="MinWidth" Value="180"/>
             <Setter Property="Padding" Value="10,0"/>
             <Setter Property="Background" Value="{DynamicResource CardBrush}"/>
             <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
@@ -352,14 +352,7 @@
                     <ComboBox x:Name="cbVyberTymu"
                               Style="{StaticResource CbModern}"
                               Margin="0,0,8,0"
-                              SelectionChanged="cbVyberTymu_SelectionChanged"
-                              SelectedIndex="0">
-                        <ComboBoxItem Content="Všichni"/>
-                        <ComboBoxItem Content="A-Tým"/>
-                        <ComboBoxItem Content="Dorost"/>
-                        <ComboBoxItem Content="Mladší žáci"/>
-                    </ComboBox>
-
+                              SelectionChanged="cbVyberTymu_SelectionChanged"/>
                 </WrapPanel>
 
                 <Button Grid.Column="1"
@@ -380,7 +373,8 @@
                 Effect="{StaticResource CardShadow}">
 
             <DataGrid Name="DgHraci"
-                    PreviewMouseRightButtonDown="DgHraci_PreviewMouseRightButtonDown"
+                      PreviewMouseRightButtonDown="DgHraci_PreviewMouseRightButtonDown"
+                      SelectionChanged="DgHraci_SelectionChanged"
                       AutoGenerateColumns="False"
                       IsReadOnly="True"
                       CanUserAddRows="False"
@@ -405,7 +399,7 @@
                       VerticalGridLinesBrush="{DynamicResource GridLineBrush}">
 
                 <DataGrid.ContextMenu>
-                    <ContextMenu>
+                    <ContextMenu x:Name="ContextMenuHraci">
                         <MenuItem Header="Kontrakty" Click="MenuKontrakty_Click"/>
                         <MenuItem Header="Disciplinární opatření" Click="MenuOpatreni_Click"/>
                     </ContextMenu>

@@ -359,6 +359,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <!-- 0: Trenér -->
@@ -369,30 +370,42 @@
                                   IsEditable="False"/>
                     </Border>
 
-                    <!-- 1: Datum -->
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Datum" Style="{DynamicResource Lbl}"/>
+                    <!-- 1: Tréninková skupina -->
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Tréninková skupina" Style="{DynamicResource Lbl}"/>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{DynamicResource InputHost}">
+                        <ComboBox x:Name="cbTreninkovaSkupina"
+                                  Style="{DynamicResource ComboTheme}"
+                                  IsEditable="False">
+                            <ComboBoxItem Tag="1">A-tým</ComboBoxItem>
+                            <ComboBoxItem Tag="2">Dorost</ComboBoxItem>
+                            <ComboBoxItem Tag="3">Mladší žáci</ComboBoxItem>
+                        </ComboBox>
+                    </Border>
+
+                    <!-- 2: Datum -->
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Datum" Style="{DynamicResource Lbl}"/>
                     <DatePicker x:Name="dpDatum"
-                                Grid.Row="1" Grid.Column="1"
+                                Grid.Row="2" Grid.Column="1"
                                 Style="{DynamicResource DatePickerTheme}"
                                 SelectedDateFormat="Short"
                                 Margin="0,6,0,6"/>
 
-                    <!-- 2: Místo -->
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Místo" Style="{DynamicResource Lbl}"/>
+                    <!-- 3: Místo -->
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Místo" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtMisto"
-                             Grid.Row="2" Grid.Column="1"
-                             MaxLength="50"
-                             Style="{DynamicResource Input}"/>
-
-                    <!-- 3: Popis -->
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Popis" Style="{DynamicResource Lbl}"/>
-                    <TextBox x:Name="TxtPopis"
                              Grid.Row="3" Grid.Column="1"
                              MaxLength="50"
                              Style="{DynamicResource Input}"/>
 
-                    <!-- 4: Tlačítka -->
-                    <StackPanel Grid.Row="5" Grid.Column="1"
+                    <!-- 4: Popis -->
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Popis" Style="{DynamicResource Lbl}"/>
+                    <TextBox x:Name="TxtPopis"
+                             Grid.Row="4" Grid.Column="1"
+                             MaxLength="50"
+                             Style="{DynamicResource Input}"/>
+
+                    <!-- 5: Tlačítka -->
+                    <StackPanel Grid.Row="6" Grid.Column="1"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right"
                                 Margin="0,14,0,0">

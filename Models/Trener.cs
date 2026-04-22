@@ -12,9 +12,20 @@ namespace InformacniSystemKlub.Models
         public string TelefonniCislo { get; set; }
         public string Specializace { get; set; }
 
+        public int IdTreninkovaSkupina { get; set; }
+        public string NazevSkupiny { get; set; }
+
         public Trener() { }
 
-        public Trener(int id, string jmeno, string prijmeni, string rodneCislo, string telefonniCislo, string specializace)
+        public Trener(
+            int id,
+            string jmeno,
+            string prijmeni,
+            string rodneCislo,
+            string telefonniCislo,
+            string specializace,
+            int idTreninkovaSkupina,
+            string nazevSkupiny)
         {
             this.Id = id;
             this.Jmeno = jmeno;
@@ -22,6 +33,8 @@ namespace InformacniSystemKlub.Models
             this.RodneCislo = rodneCislo;
             this.TelefonniCislo = telefonniCislo;
             this.Specializace = specializace;
+            this.IdTreninkovaSkupina = idTreninkovaSkupina;
+            this.NazevSkupiny = nazevSkupiny;
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using InformacniSystemKlub.Database;
 using InformacniSystemKlub.Models;
-using InformacniSystemKlub.Windows.PridejWindows;
-using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -20,53 +18,311 @@ namespace InformacniSystemKlub.Windows
         private DateTime vybranyDen;
         private DateTime zobrazenyMesic;
         private List<Trenink> seznamVsechTreninku;
+        private bool inicializaceDokoncena = false;
 
         public Kalendar()
         {
             InitializeComponent();
             RezimZobrazeni.NastavRezimKalendarOkno(this, HlavniOkno.jeDarkModeAktivni);
+
             vybranyDen = DateTime.Today;
-
-            //(Rok, měsíc, den)
             zobrazenyMesic = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
-
             seznamVsechTreninku = new List<Trenink>();
+
+            inicializaceDokoncena = false;
+
             ObnovTreninkyZDatabaze();
-            NastavPravaPodleRole();
+            NaplnPomocnaData();
+            NaplnComboBoxSkupin();
+            NastavFiltrSkupinyPodleRole();
             AktualizujVsechno();
+
+            inicializaceDokoncena = true;
         }
 
-        // Nastaví práva tlačítek podle role přihlášeného uživatele
-        private void NastavPravaPodleRole()
+        /// <summary>
+        /// Načte pomocná data pro dohledání skupin trenérů/hráčů
+        /// </summary>
+        private void NaplnPomocnaData()
+        {
+            if (TreneriOkno.TreneriData == null || TreneriOkno.TreneriData.Count == 0)
+            {
+                TreneriOkno.NactiTreneri();
+            }
+
+            if (HraciOkno.HraciData == null || HraciOkno.HraciData.Count == 0)
+            {
+                HraciOkno.NactiHrace();
+            }
+        }
+
+        /// <summary>
+        /// Naplní ComboBox tréninkových skupin podle role
+        /// </summary>
+        private void NaplnComboBoxSkupin()
+        {
+            cbSkupina.Items.Clear();
+
+            Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            if (prihlasenyUzivatel != null && !string.IsNullOrWhiteSpace(prihlasenyUzivatel.Role))
+            {
+                string role = prihlasenyUzivatel.Role.Trim().ToLower();
+
+                if (role == "admin")
+                {
+                    cbSkupina.Items.Add("A");
+                    cbSkupina.Items.Add("Dorost");
+                    cbSkupina.Items.Add("Mladší žáci");
+                    return;
+                }
+            }
+
+            cbSkupina.Items.Add("Všechny skupiny");
+            cbSkupina.Items.Add("A");
+            cbSkupina.Items.Add("Dorost");
+            cbSkupina.Items.Add("Mladší žáci");
+        }
+
+        /// <summary>
+        /// Nastaví výchozí filtr skupiny podle role přihlášeného uživatele
+        /// </summary>
+        private void NastavFiltrSkupinyPodleRole()
         {
             Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
 
-            if (prihlasenyUzivatel == null)
+            if (prihlasenyUzivatel == null || string.IsNullOrWhiteSpace(prihlasenyUzivatel.Role))
             {
-                BtnPridat.IsEnabled = false;
-                BtnOdebrat.IsEnabled = false;
-                return;
-            }
+                if (cbSkupina.Items.Count > 0)
+                {
+                    cbSkupina.SelectedIndex = 0;
+                }
 
-            if (string.IsNullOrWhiteSpace(prihlasenyUzivatel.Role))
-            {
-                BtnPridat.IsEnabled = false;
-                BtnOdebrat.IsEnabled = false;
+                cbSkupina.IsEnabled = false;
                 return;
             }
 
             string role = prihlasenyUzivatel.Role.Trim().ToLower();
 
-            if (role == "hrac" || role == "hráč")
+            if (role == "admin")
             {
-                BtnPridat.IsEnabled = false;
-                BtnOdebrat.IsEnabled = false;
+                if (cbSkupina.Items.Count > 0)
+                {
+                    cbSkupina.SelectedIndex = 0;
+                }
+
+                cbSkupina.IsEnabled = true;
+                return;
             }
-            else
+
+            if (role == "trener" || role == "trenér" || role == "hrac" || role == "hráč")
             {
-                BtnPridat.IsEnabled = true;
-                BtnOdebrat.IsEnabled = true;
+                string nazevSkupiny = ZiskejNazevSkupinyPrihlasenehoUzivatele();
+
+                if (!string.IsNullOrWhiteSpace(nazevSkupiny))
+                {
+                    bool nalezeno = false;
+
+                    foreach (object polozka in cbSkupina.Items)
+                    {
+                        if (polozka == null)
+                        {
+                            continue;
+                        }
+
+                        string text = polozka.ToString();
+
+                        if (string.Equals(text.Trim(), nazevSkupiny.Trim(), StringComparison.OrdinalIgnoreCase))
+                        {
+                            cbSkupina.SelectedItem = polozka;
+                            nalezeno = true;
+                            break;
+                        }
+                    }
+
+                    if (nalezeno == false && cbSkupina.Items.Count > 0)
+                    {
+                        cbSkupina.SelectedIndex = 0;
+                    }
+                }
+                else
+                {
+                    if (cbSkupina.Items.Count > 0)
+                    {
+                        cbSkupina.SelectedIndex = 0;
+                    }
+                }
+
+                cbSkupina.IsEnabled = false;
+                return;
             }
+
+            if (cbSkupina.Items.Count > 0)
+            {
+                cbSkupina.SelectedIndex = 0;
+            }
+
+            cbSkupina.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// Vrátí název skupiny přihlášeného uživatele
+        /// </summary>
+        private string ZiskejNazevSkupinyPrihlasenehoUzivatele()
+        {
+            Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            if (prihlasenyUzivatel == null)
+            {
+                return "";
+            }
+
+            string role = "";
+            if (!string.IsNullOrWhiteSpace(prihlasenyUzivatel.Role))
+            {
+                role = prihlasenyUzivatel.Role.Trim().ToLower();
+            }
+
+            if (prihlasenyUzivatel.IdTreninkovaSkupina > 0)
+            {
+                return PrevedIdSkupinyNaNazev(prihlasenyUzivatel.IdTreninkovaSkupina);
+            }
+
+            if ((role == "trener" || role == "trenér") && prihlasenyUzivatel.IdClenKlubu > 0)
+            {
+                if (TreneriOkno.TreneriData == null || TreneriOkno.TreneriData.Count == 0)
+                {
+                    TreneriOkno.NactiTreneri();
+                }
+
+                foreach (Trener trener in TreneriOkno.TreneriData)
+                {
+                    if (trener.Id == prihlasenyUzivatel.IdClenKlubu)
+                    {
+                        if (trener.IdTreninkovaSkupina > 0)
+                        {
+                            return PrevedIdSkupinyNaNazev(trener.IdTreninkovaSkupina);
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(trener.NazevSkupiny))
+                        {
+                            return NormalizujNazevSkupiny(trener.NazevSkupiny);
+                        }
+                    }
+                }
+            }
+
+            if ((role == "hrac" || role == "hráč") && prihlasenyUzivatel.IdClenKlubu > 0)
+            {
+                if (HraciOkno.HraciData == null || HraciOkno.HraciData.Count == 0)
+                {
+                    HraciOkno.NactiHrace();
+                }
+
+                foreach (Hrac hrac in HraciOkno.HraciData)
+                {
+                    if (hrac.Id == prihlasenyUzivatel.IdClenKlubu)
+                    {
+                        if (hrac.IdTreninkovaSkupina > 0)
+                        {
+                            return PrevedIdSkupinyNaNazev(hrac.IdTreninkovaSkupina);
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(hrac.TreninkovaSkupinaText))
+                        {
+                            return NormalizujNazevSkupiny(hrac.TreninkovaSkupinaText);
+                        }
+                    }
+                }
+            }
+
+            return "";
+        }
+
+        /// <summary>
+        /// Převede ID skupiny na název skupiny
+        /// </summary>
+        private string PrevedIdSkupinyNaNazev(int idSkupiny)
+        {
+            if (idSkupiny == 1)
+            {
+                return "A";
+            }
+
+            if (idSkupiny == 2)
+            {
+                return "Dorost";
+            }
+
+            if (idSkupiny == 3)
+            {
+                return "Mladší žáci";
+            }
+
+            return "";
+        }
+
+        /// <summary>
+        /// Normalizuje název skupiny pro porovnávání
+        /// </summary>
+        private string NormalizujNazevSkupiny(string nazevSkupiny)
+        {
+            if (string.IsNullOrWhiteSpace(nazevSkupiny))
+            {
+                return "";
+            }
+
+            string normalizovanyNazev = nazevSkupiny.Trim();
+
+            if (string.Equals(normalizovanyNazev, "A-tým", StringComparison.OrdinalIgnoreCase))
+            {
+                return "A";
+            }
+
+            if (string.Equals(normalizovanyNazev, "A-Tým", StringComparison.OrdinalIgnoreCase))
+            {
+                return "A";
+            }
+
+            return normalizovanyNazev;
+        }
+
+        /// <summary>
+        /// Vrátí tréninky podle aktuálně vybrané skupiny
+        /// </summary>
+        private List<Trenink> ZiskejTreninkyPodleAktualniSkupiny()
+        {
+            List<Trenink> vysledek = new List<Trenink>();
+
+            string vybranaSkupina = "";
+
+            if (cbSkupina.SelectedItem != null)
+            {
+                vybranaSkupina = cbSkupina.SelectedItem.ToString();
+            }
+
+            if (string.IsNullOrWhiteSpace(vybranaSkupina) || vybranaSkupina == "Všechny skupiny")
+            {
+                return seznamVsechTreninku.ToList();
+            }
+
+            foreach (Trenink trenink in seznamVsechTreninku)
+            {
+                if (trenink == null)
+                {
+                    continue;
+                }
+
+                string nazevSkupiny = NormalizujNazevSkupiny(trenink.NazevSkupiny);
+
+                if (!string.IsNullOrWhiteSpace(nazevSkupiny) &&
+                    string.Equals(nazevSkupiny.Trim(), vybranaSkupina.Trim(), StringComparison.OrdinalIgnoreCase))
+                {
+                    vysledek.Add(trenink);
+                }
+            }
+
+            return vysledek;
         }
 
         /// <summary>
@@ -96,13 +352,11 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Aktualizuje nadpis měsíce, české formátování nadpisu měsíce
+        /// Aktualizuje nadpis měsíce
         /// </summary>
         private void AktualizujNadpisMesice()
         {
-            // české formátování nadpisu měsíce
             CultureInfo kultura = new CultureInfo("cs-CZ");
-
             string textMesice = zobrazenyMesic.ToString("MMMM yyyy", kultura);
             TxtMesicRok.Text = kultura.TextInfo.ToTitleCase(textMesice);
         }
@@ -123,16 +377,13 @@ namespace InformacniSystemKlub.Windows
         {
             GridDnyKalendare.Children.Clear();
 
-            // Nastaví celkový počet políček kalendáře na 42 (6 řádků × 7 dní)
             int pocetPolicek = 42;
 
             DateTime prvniDenMesice = new DateTime(zobrazenyMesic.Year, zobrazenyMesic.Month, 1);
             int denVTydnu = (int)prvniDenMesice.DayOfWeek;
 
-            // Pokud je den v týdnu neděle, má hodnotu 0
             if (denVTydnu == 0)
             {
-                // Změní neděli z 0 na 7, aby týden začínal pondělím
                 denVTydnu = 7;
             }
 
@@ -207,7 +458,7 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private bool MaDenTrenink(DateTime datumDne)
         {
-            foreach (Trenink trenink in seznamVsechTreninku)
+            foreach (Trenink trenink in ZiskejTreninkyPodleAktualniSkupiny())
             {
                 if (trenink == null)
                 {
@@ -278,7 +529,7 @@ namespace InformacniSystemKlub.Windows
         {
             List<Trenink> treninkyProVybranyDen = new List<Trenink>();
 
-            foreach (Trenink trenink in seznamVsechTreninku)
+            foreach (Trenink trenink in ZiskejTreninkyPodleAktualniSkupiny())
             {
                 if (trenink == null)
                 {
@@ -305,92 +556,16 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Přidá nový trénink
+        /// Obsluha změny skupiny v ComboBoxu
         /// </summary>
-        private void BtnPridat_Click(object sender, RoutedEventArgs e)
+        private void cbSkupina_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
+            if (inicializaceDokoncena == false)
             {
-                Trenink novyTrenink = new Trenink();
-                novyTrenink.Datum = vybranyDen;
-
-                PridejTrenink oknoPridejTrenink = new PridejTrenink(novyTrenink);
-                bool? vysledekDialogu = oknoPridejTrenink.ShowDialog();
-
-                if (vysledekDialogu != true)
-                {
-                    return;
-                }
-
-                OracleConnection pripojeni = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
-                DatabazeTreninky.PridejTrenink(pripojeni, novyTrenink);
-
-                ObnovTreninkyZDatabaze();
-                AktualizujVsechno();
-
-                
+                return;
             }
-            catch (OracleException ex)
-            {
-                MessageBox.Show("Chyba databáze při přidání tréninku:\n" + ex.Message, "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message,
-                    "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
 
-        /// <summary>
-        /// Odebere vybraný trénink
-        /// </summary>
-        private void BtnOdebrat_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (LbTreninky.SelectedItem == null)
-                {
-                    MessageBox.Show("Vyberte trénink k odebrání", "Upozornění", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
-                Trenink vybranyTrenink = LbTreninky.SelectedItem as Trenink;
-
-                if (vybranyTrenink == null)
-                {
-                    MessageBox.Show("Neplatný výběr tréninku", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
-                MessageBoxResult potvrzeniSmazani = MessageBox.Show(
-                    "Opravdu chcete odebrat vybraný trénink?",
-                    "Potvrzení",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
-
-                if (potvrzeniSmazani != MessageBoxResult.Yes)
-                {
-                    return;
-                }
-
-                OracleConnection pripojeni = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
-                DatabazeTreninky.OdeberTrenink(pripojeni, vybranyTrenink);
-
-                ObnovTreninkyZDatabaze();
-                AktualizujVsechno();
-
-                MessageBox.Show("Trénink byl úspěšně odebrán", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            catch (OracleException ex)
-            {
-                MessageBox.Show("Chyba databáze při odebírání tréninku:\n" + ex.Message,
-                    "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message,
-                    "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            AktualizujVsechno();
         }
     }
 }

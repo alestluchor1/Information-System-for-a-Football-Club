@@ -19,9 +19,7 @@
 
         <FontFamily x:Key="AppFont">Segoe UI</FontFamily>
 
-        <!-- Barva pozadí -->
         <SolidColorBrush x:Key="WindowBgBrush" Color="#F6F7FB"/>
-
         <SolidColorBrush x:Key="CardBrush" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="CardAltBrush" Color="#F8FAFC"/>
         <SolidColorBrush x:Key="BorderBrushSoft" Color="#E6EAF2"/>
@@ -86,7 +84,6 @@
             <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSoft}"/>
         </Style>
 
-        <!-- Základní styl hlavičky sloupců -->
         <Style x:Key="DgHeaderBase" TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="{DynamicResource CardAltBrush}"/>
             <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
@@ -195,7 +192,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Horní panel -->
         <Border Grid.Row="0"
                 Background="{DynamicResource CardBrush}"
                 CornerRadius="16"
@@ -215,14 +211,32 @@
                            ItemHeight="36"
                            Margin="0,0,10,0">
 
-                    <Button Style="{StaticResource BtnPrimary}" Content="Přidej" Margin="0,0,8,0" Click="BtnPridat_Click"/>
-                    <Button Style="{StaticResource BtnPrimary}" Content="Odeber" Margin="0,0,8,0" Click="BtnOdebrat_Click"/>
-                    <Button Style="{StaticResource BtnPrimary}" Content="Edituj" Margin="0,0,8,0" Click="BtnEdituj_Click"/>
-                    <Button Style="{StaticResource BtnPrimary}" Content="Najdi" Margin="0,0,8,0" Click="BtnNajdi_Click"/>
+                    <Button x:Name="BtnPridat"
+                            Style="{StaticResource BtnPrimary}"
+                            Content="Přidej"
+                            Margin="0,0,8,0"
+                            Click="BtnPridat_Click"/>
+
+                    <Button x:Name="BtnOdebrat"
+                            Style="{StaticResource BtnPrimary}"
+                            Content="Odeber"
+                            Margin="0,0,8,0"
+                            Click="BtnOdebrat_Click"/>
+
+                    <Button x:Name="BtnEdituj"
+                            Style="{StaticResource BtnPrimary}"
+                            Content="Edituj"
+                            Margin="0,0,8,0"
+                            Click="BtnEdituj_Click"/>
+
+                    <Button x:Name="BtnNajdi"
+                            Style="{StaticResource BtnPrimary}"
+                            Content="Najdi"
+                            Margin="0,0,8,0"
+                            Click="BtnNajdi_Click"/>
 
                 </WrapPanel>
 
-                <!-- Tlačítko pro návrat zpět -->
                 <Button Grid.Column="1"
                         Style="{StaticResource BtnSecondary}"
                         Content="Zpět"
@@ -232,7 +246,6 @@
             </Grid>
         </Border>
 
-        <!-- Panel s tabulkou trenérů -->
         <Border Grid.Row="2"
                 Background="{DynamicResource CardBrush}"
                 CornerRadius="16"
@@ -264,22 +277,18 @@
 
                 <DataGrid.Columns>
 
-                    <!-- ID trenéra -->
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="0.7*"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <!-- Jméno trenéra -->
                     <DataGridTextColumn Header="Jméno" Binding="{Binding Jmeno}" Width="1.2*"
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
 
-                    <!-- Příjmení trenéra -->
                     <DataGridTextColumn Header="Příjmení" Binding="{Binding Prijmeni}" Width="1.3*"
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
 
-                    <!-- Rodné číslo trenéra -->
                     <DataGridTextColumn x:Name="RodneCisloSloupec"
                                         Header="Rodné číslo"
                                         Binding="{Binding RodneCislo}"
@@ -287,7 +296,6 @@
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <!-- Telefonní číslo trenéra -->
                     <DataGridTextColumn x:Name="TelefonniCisloSloupec"
                                         Header="Telefon"
                                         Binding="{Binding TelefonniCislo}"
@@ -295,11 +303,13 @@
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 
-                    <!-- Specializace trenéra -->
                     <DataGridTextColumn Header="Specializace" Binding="{Binding Specializace}" Width="1.6*"
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
 
+                    <DataGridTextColumn Header="Tréninková skupina" Binding="{Binding NazevSkupiny}" Width="1.4*"
+                                        HeaderStyle="{StaticResource DgHeaderLeft}"
+                                        CellStyle="{StaticResource DgCellLeft}"/>
 
                 </DataGrid.Columns>
 

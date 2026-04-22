@@ -10,11 +10,10 @@ namespace InformacniSystemKlub.Windows.EditujWindows
     /// <summary>
     /// Okno pro editaci vybraného hráče
     /// Při otevření se formulář předvyplní hodnotami hráče a po potvrzení se změny uloží do databáze
-    /// pomocí procedury <c>PKG_HRACI.SP_UPDATE_HRAC</c> 
+    /// pomocí procedury <c>PKG_HRACI.SP_UPDATE_HRAC</c>
     /// </summary>
     public partial class EditujHrace : Window
     {
-
         private Hrac editovanyHrac;
 
         public EditujHrace(Hrac editovanyHrac)
@@ -33,21 +32,15 @@ namespace InformacniSystemKlub.Windows.EditujWindows
             iudPocetGolu.Value = editovanyHrac.PocetVstrelenychGolu;
             iudPocetZlutychKaret.Value = editovanyHrac.PocetZlutychKaret;
             iudPocetCervenychKaret.Value = editovanyHrac.PocetCervenychKaret;
-            cbSkupina.SelectedIndex = editovanyHrac.IdTreninkovaSkupina;
 
-            if (cbSkupina.SelectedIndex < 0 || cbSkupina.SelectedIndex > 3)
-            {
-                cbSkupina.SelectedIndex = 0;
-            }
-
+            NastavSkupinuPodleId(editovanyHrac.IdTreninkovaSkupina);
             NastavZdravotniStav(editovanyHrac.ZdravotniStav);
+            NastavSkupinuPodleRole();
         }
 
         /// <summary>
         /// Nastaví vybranou položku v ComboBoxu zdravotního stavu podle hodnoty (A/N)
-        /// Pokud se položka nenajde, nastaví se defaultně "—"
         /// </summary>
-        /// <param name="stav">Zdravotní stav (typicky 'A' nebo 'N')</param>
         private void NastavZdravotniStav(char stav)
         {
             foreach (object item in cbZdraviStav.Items)
@@ -60,19 +53,172 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                     {
                         text = text.Trim();
 
-                        if (text.Length == 1)
+                        if (text.Length == 1 && text[0] == stav)
                         {
-                            if (text[0] == stav)
-                            {
-                                cbZdraviStav.SelectedItem = polozka;
-                                return;
-                            }
+                            cbZdraviStav.SelectedItem = polozka;
+                            return;
                         }
                     }
                 }
             }
 
-            cbZdraviStav.SelectedIndex = 0; // —
+            cbZdraviStav.SelectedIndex = 0;
+        }
+
+        /// <summary>
+        /// Vybere v ComboBoxu skupinu podle jejího ID
+        /// Pokud ji nenajde, nastaví první položku
+        /// </summary>
+        /// <param name="idSkupiny">ID tréninkové skupiny.</param>
+        private void NastavSkupinuPodleId(int idSkupiny)
+        {
+            foreach (object item in cbSkupina.Items)
+            {
+                ComboBoxItem polozka = item as ComboBoxItem;
+                if (polozka == null)
+                {
+                    continue;
+                }
+
+                if (polozka.Tag == null)
+                {
+                    continue;
+                }
+
+                int tag = Convert.ToInt32(polozka.Tag);
+
+                if (tag == idSkupiny)
+                {
+                    cbSkupina.SelectedItem = polozka;
+                    return;
+                }
+            }
+
+            cbSkupina.SelectedIndex = 0;
+        }
+
+        /// <summary>
+        /// Vrátí roli právě přihlášeného uživatele
+        /// ve sjednoceném tvaru: admin, trener, hrac nebo host
+        /// </summary>
+        /// <returns>Role aktuálního uživatele</returns>
+        private string ZiskejRoliUzivatele()
+        {
+            Uzivatel uzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            if (uzivatel == null || string.IsNullOrWhiteSpace(uzivatel.Role))
+            {
+                return "host";
+            }
+
+            string role = uzivatel.Role.Trim().ToLower();
+
+            if (role == "admin")
+            {
+                return "admin";
+            }
+
+            if (role == "trenér" || role == "trener")
+            {
+                return "trener";
+            }
+
+            if (role == "hráč" || role == "hrac")
+            {
+                return "hrac";
+            }
+
+            return "host";
+        }
+
+        /// <summary>
+        /// Vrátí ID tréninkové skupiny přihlášeného trenéra
+        /// Pokud ji nelze zjistit, vrátí 0
+        /// </summary>
+        /// <returns>ID skupiny přihlášeného trenéra</returns>
+        private int ZiskejIdTreninkoveSkupinyPrihlasenehoTrenera()
+        {
+            Uzivatel uzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            if (uzivatel == null)
+            {
+                return 0;
+            }
+
+            if (uzivatel.IdTreninkovaSkupina > 0)
+            {
+                return uzivatel.IdTreninkovaSkupina;
+            }
+
+            if (uzivatel.IdClenKlubu <= 0)
+            {
+                return 0;
+            }
+
+            if (TreneriOkno.TreneriData == null || TreneriOkno.TreneriData.Count == 0)
+            {
+                TreneriOkno.NactiTreneri();
+            }
+
+            foreach (Trener trener in TreneriOkno.TreneriData)
+            {
+                if (trener.Id == uzivatel.IdClenKlubu)
+                {
+                    return trener.IdTreninkovaSkupina;
+                }
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Nastaví zamčení / odemčení skupiny podle role
+        /// </summary>
+        private void NastavSkupinuPodleRole()
+        {
+            string role = ZiskejRoliUzivatele();
+
+            if (role == "admin")
+            {
+                cbSkupina.IsEnabled = true;
+                return;
+            }
+
+            if (role == "trener")
+            {
+                int idSkupinyTrenera = ZiskejIdTreninkoveSkupinyPrihlasenehoTrenera();
+
+                if (idSkupinyTrenera > 0)
+                {
+                    NastavSkupinuPodleId(idSkupinyTrenera);
+                }
+
+                cbSkupina.IsEnabled = false;
+                return;
+            }
+
+            cbSkupina.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// Převede ID skupiny na text
+        /// </summary>
+        private string SkupinaNaText(int idSkupiny)
+        {
+            if (idSkupiny == 1)
+            {
+                return "A";
+            }
+            else if (idSkupiny == 2)
+            {
+                return "Dorost";
+            }
+            else if (idSkupiny == 3)
+            {
+                return "Mladší žáci";
+            }
+
+            return "Neznámá";
         }
 
         /// <summary>
@@ -88,15 +234,13 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                 string tel = TxtTelefonniCislo.Text.Trim();
                 string pozice = TxtPozice.Text.Trim();
 
-                // Validace textů
                 InputValidator.ValidujRodneCislo(rodneCislo);
-                InputValidator.ValidujUnikatniRodneCislo(rodneCislo, editovanyHrac.Id); // při editaci, aby neházelo message, že daný hráč editovaný s rodným číslem, už existuje
+                InputValidator.ValidujUnikatniRodneCislo(rodneCislo, editovanyHrac.Id);
                 InputValidator.ValidujJmeno(jmeno);
                 InputValidator.ValidujPrijmeni(prijmeni);
                 InputValidator.ValidujTelefonniCislo(tel);
                 InputValidator.ValidujPozice(pozice);
 
-                // Hodnoty ze spinnerů
                 string golyText = "";
                 if (iudPocetGolu.Value != null)
                 {
@@ -119,19 +263,34 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                 int zlute = InputValidator.ValidujHraciSpinnerGolyKarty(zluteText, "Počet žlutých karet");
                 int cervene = InputValidator.ValidujHraciSpinnerGolyKarty(cerveneText, "Počet červených karet");
 
-                // Zdravotní stav
                 char zdrav = InputValidator.ValidujZdravotniStav(cbZdraviStav.SelectedItem);
 
-                // Tréninková skupina
-                if (cbSkupina.SelectedIndex == 0)
+                ComboBoxItem vybranaSkupina = cbSkupina.SelectedItem as ComboBoxItem;
+                if (vybranaSkupina == null || vybranaSkupina.Tag == null)
                 {
                     MessageBox.Show("Vyber tréninkovou skupinu!", "Chyba", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                int idSkupiny = cbSkupina.SelectedIndex;
+                int idSkupiny = Convert.ToInt32(vybranaSkupina.Tag);
 
-                // Uložení do objektu
+                if (idSkupiny == 0)
+                {
+                    MessageBox.Show("Vyber tréninkovou skupinu!", "Chyba", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (ZiskejRoliUzivatele() == "trener")
+                {
+                    int idSkupinyTrenera = ZiskejIdTreninkoveSkupinyPrihlasenehoTrenera();
+
+                    if (idSkupiny != idSkupinyTrenera)
+                    {
+                        MessageBox.Show("Můžete upravovat hráče pouze ve své tréninkové skupině!", "Přístup odepřen", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+
                 editovanyHrac.RodneCislo = rodneCislo;
                 editovanyHrac.Jmeno = jmeno;
                 editovanyHrac.Prijmeni = prijmeni;
@@ -144,26 +303,8 @@ namespace InformacniSystemKlub.Windows.EditujWindows
 
                 editovanyHrac.ZdravotniStav = zdrav;
                 editovanyHrac.IdTreninkovaSkupina = idSkupiny;
+                editovanyHrac.TreninkovaSkupinaText = SkupinaNaText(idSkupiny);
 
-                // Aktualizace textu pro DataGrid
-                if (idSkupiny == 1)
-                {
-                    editovanyHrac.TreninkovaSkupinaText = "A-Tým";
-                }
-                else if (idSkupiny == 2)
-                {
-                    editovanyHrac.TreninkovaSkupinaText = "Dorost";
-                }
-                else if (idSkupiny == 3)
-                {
-                    editovanyHrac.TreninkovaSkupinaText = "Mladší žáci";
-                }
-                else
-                {
-                    editovanyHrac.TreninkovaSkupinaText = "Neznámá";
-                }
-
-                // Uložení do DB
                 OracleConnection conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();
                 DatabazeHraci.EditaceHrace(conn, editovanyHrac);
 

@@ -1,6 +1,7 @@
 ﻿using InformacniSystemKlub.Models;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace InformacniSystemKlub.Windows.PridejWindows
 {
@@ -24,6 +25,8 @@ namespace InformacniSystemKlub.Windows.PridejWindows
             {
                 novyTrener = new Trener();
             }
+
+            CbTreninkovaSkupina.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -42,11 +45,20 @@ namespace InformacniSystemKlub.Windows.PridejWindows
                 InputValidator.ValidujTelefonniCislo(TxtTelefonniCislo.Text);
                 InputValidator.ValidujSpecializace(TxtSpecializace.Text);
 
+                ComboBoxItem vybranaPolozka = CbTreninkovaSkupina.SelectedItem as ComboBoxItem;
+
+                if (vybranaPolozka == null)
+                {
+                    throw new Exception("Vyberte tréninkovou skupinu");
+                }
+
                 novyTrener.Jmeno = TxtJmeno.Text.Trim();
                 novyTrener.Prijmeni = TxtPrijmeni.Text.Trim();
                 novyTrener.RodneCislo = TxtRodneCislo.Text.Trim();
                 novyTrener.TelefonniCislo = TxtTelefonniCislo.Text.Trim();
                 novyTrener.Specializace = TxtSpecializace.Text.Trim();
+                novyTrener.IdTreninkovaSkupina = Convert.ToInt32(vybranaPolozka.Tag);
+                novyTrener.NazevSkupiny = vybranaPolozka.Content.ToString();
 
                 MessageBox.Show("Trenér byl úspěšně přidán", "Hotovo", MessageBoxButton.OK, MessageBoxImage.Information);
 

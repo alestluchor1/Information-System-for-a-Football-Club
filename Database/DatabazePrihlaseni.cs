@@ -6,14 +6,18 @@ using System.Data;
 namespace InformacniSystemKlub.Database
 {
     /// <summary>
-    /// Databázová třída pro přihlášení (načtení login dat + update posledního přihlášení)
+    /// Třída zajišťující práci s databází při přihlášení uživatele
+    /// Slouží pro načtení přihlašovacích údajů z databáze
+    /// a také pro aktualizaci času posledního přihlášení
     /// </summary>
     public class DatabazePrihlaseni
     {
         /// <summary>
-        /// Načte login data uživatele pomocí procedury <c>PKG_PRIHLASENI.SP_GET_LOGIN_DATA</c>
-        /// Když uživatel neexistuje, vrátí null
+        /// Načte z databáze přihlašovací údaje uživatele podle zadaného uživatelského jména
+        /// Pomocí uložené procedury vrací informace o tom, zda uživatel existuje,
+        /// jeho hash hesla, salt, roli, email a ID člena klubu
         /// </summary>
+
         public static Uzivatel NactiLoginData(OracleConnection conn, string uzivJmeno, out string ulozenyHash, out string ulozenySalt)
         {
             ulozenyHash = "";
@@ -23,13 +27,14 @@ namespace InformacniSystemKlub.Database
             {
                 using (var cmd = new OracleCommand("PKG_PRIHLASENI.SP_GET_LOGIN_DATA", conn))
                 {
+                    // Nastavení typu příkazu na stored procedure
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.BindByName = true;
 
-                    // IN parametr (posíláme do DB)
+                    // Vstupní parametr - uživatelské jméno
                     cmd.Parameters.Add("v_uzivatelske_jmeno", OracleDbType.Varchar2).Value = uzivJmeno;
 
-                    // OUT parametry (DB nám je vrátí zpět)
+                    // Výstupní parametr - informace, zda uživatel existuje
                     var pExistuje = cmd.Parameters.Add("v_existuje", OracleDbType.Int32);
                     pExistuje.Direction = ParameterDirection.Output;
 
@@ -48,55 +53,69 @@ namespace InformacniSystemKlub.Database
                     var pEmail = cmd.Parameters.Add("v_out_email", OracleDbType.Varchar2, 100);
                     pEmail.Direction = ParameterDirection.Output;
 
-                    // zavolá proceduru
+                    var pIdClenKlubu = cmd.Parameters.Add("v_out_idclenklubu", OracleDbType.Varchar2, 50);
+                    pIdClenKlubu.Direction = ParameterDirection.Output;
+
                     cmd.ExecuteNonQuery();
 
-                    // přečteme, jestli existuje uživatel
                     int existuje = 0;
-                    if (pExistuje.Value != null)
+                    if (pExistuje.Value != null && pExistuje.Value != DBNull.Value)
                     {
                         existuje = Convert.ToInt32(pExistuje.Value.ToString());
                     }
 
                     if (existuje != 1)
                     {
-                        return null; // uživatel neexistuje
+                        return null;
                     }
 
-                    // načtení hodnot z OUT parametrů 
                     string uzivJmenoDb = "";
-                    if (pJmeno.Value != null)
+                    if (pJmeno.Value != null && pJmeno.Value != DBNull.Value)
                     {
                         uzivJmenoDb = pJmeno.Value.ToString();
                     }
 
-                    if (pHash.Value != null)
+                    if (pHash.Value != null && pHash.Value != DBNull.Value)
                     {
                         ulozenyHash = pHash.Value.ToString();
                     }
 
-                    if (pSalt.Value != null)
+                    if (pSalt.Value != null && pSalt.Value != DBNull.Value)
                     {
                         ulozenySalt = pSalt.Value.ToString();
                     }
 
                     string role = "";
-                    if (pRole.Value != null)
+                    if (pRole.Value != null && pRole.Value != DBNull.Value)
                     {
                         role = pRole.Value.ToString();
                     }
 
                     string email = "";
-                    if (pEmail.Value != null)
+                    if (pEmail.Value != null && pEmail.Value != DBNull.Value)
                     {
                         email = pEmail.Value.ToString();
                     }
 
-                    // Uložení do objektu
+                    int idClenKlubu = 0;
+                    string rawIdClenKlubu = "";
+
+                    if (pIdClenKlubu.Value != null && pIdClenKlubu.Value != DBNull.Value)
+                    {
+                        rawIdClenKlubu = pIdClenKlubu.Value.ToString();
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(rawIdClenKlubu) &&
+                        rawIdClenKlubu.Trim().ToLower() != "null")
+                    {
+                        idClenKlubu = Convert.ToInt32(rawIdClenKlubu);
+                    }
+
                     Uzivatel uzivatel = new Uzivatel();
                     uzivatel.UzivatelskeJmeno = uzivJmenoDb;
                     uzivatel.Role = role;
                     uzivatel.Email = email;
+                    uzivatel.IdClenKlubu = idClenKlubu;
 
                     return uzivatel;
                 }

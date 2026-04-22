@@ -17,7 +17,6 @@
 
     <Window.Resources>
 
-        <!-- Barvy (výchozí LIGHT MODE) -->
         <SolidColorBrush x:Key="BgApp" Color="#F6F7FB"/>
         <SolidColorBrush x:Key="Surface" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="TextMain" Color="#0B1220"/>
@@ -41,7 +40,6 @@
             <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
         </Style>
 
-        <!-- TextBox -->
         <Style x:Key="Input" TargetType="TextBox">
             <Setter Property="Height" Value="36"/>
             <Setter Property="Padding" Value="12,0"/>
@@ -85,7 +83,6 @@
             <Setter Property="Padding" Value="8,0"/>
         </Style>
 
-        <!-- ComboBox -->
         <Style x:Key="ComboTheme" TargetType="ComboBox">
             <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
             <Setter Property="Background" Value="Transparent"/>
@@ -186,7 +183,6 @@
             </Setter>
         </Style>
 
-        <!-- DatePickerTextBox -->
         <Style x:Key="DatePickerTextBoxStyle" TargetType="{x:Type DatePickerTextBox}">
             <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
             <Setter Property="Background" Value="{DynamicResource InputBg}"/>
@@ -208,7 +204,6 @@
             </Setter>
         </Style>
 
-        <!-- DatePicker -->
         <Style x:Key="DatePickerTheme" TargetType="{x:Type DatePicker}">
             <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
             <Setter Property="Background" Value="{DynamicResource InputBg}"/>
@@ -283,7 +278,6 @@
             </Setter>
         </Style>
 
-        <!-- Primární tlačítko -->
         <Style x:Key="BtnPrimary" TargetType="Button">
             <Setter Property="Height" Value="42"/>
             <Setter Property="Width" Value="140"/>
@@ -323,7 +317,6 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Levý panel -->
         <Border Grid.Column="0" Background="{DynamicResource SidebarGradient}">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="24">
                 <Image Source="/Images/training.png" Width="150" Height="150" Margin="0,0,0,24"/>
@@ -334,7 +327,6 @@
             </StackPanel>
         </Border>
 
-        <!-- Pravý panel -->
         <Border Grid.Column="1"
                 Background="{DynamicResource Surface}"
                 CornerRadius="24"
@@ -360,9 +352,9 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- 0: Trenér -->
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Trenér" Style="{DynamicResource Lbl}"/>
                     <Border Grid.Row="0" Grid.Column="1" Style="{DynamicResource InputHost}">
                         <ComboBox x:Name="cbTrener"
@@ -370,29 +362,37 @@
                                   IsEditable="False"/>
                     </Border>
 
-                    <!-- 1: Datum -->
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Datum" Style="{DynamicResource Lbl}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Tréninková skupina" Style="{DynamicResource Lbl}"/>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{DynamicResource InputHost}">
+                        <ComboBox x:Name="cbTreninkovaSkupina"
+                                  Style="{DynamicResource ComboTheme}"
+                                  IsEditable="False"
+                                  IsEnabled="False">
+                            <ComboBoxItem Content="A" Tag="1"/>
+                            <ComboBoxItem Content="Dorost" Tag="2"/>
+                            <ComboBoxItem Content="Mladší žáci" Tag="3"/>
+                        </ComboBox>
+                    </Border>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Datum" Style="{DynamicResource Lbl}"/>
                     <DatePicker x:Name="dpDatum"
-                                Grid.Row="1" Grid.Column="1"
+                                Grid.Row="2" Grid.Column="1"
                                 Style="{DynamicResource DatePickerTheme}"
                                 SelectedDateFormat="Short"/>
 
-                    <!-- 2: Místo -->
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Místo" Style="{DynamicResource Lbl}"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Místo" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtMisto"
-                             Grid.Row="2" Grid.Column="1"
-                             MaxLength="50"
-                             Style="{DynamicResource Input}"/>
-
-                    <!-- 3: Popis -->
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Popis" Style="{DynamicResource Lbl}"/>
-                    <TextBox x:Name="TxtPopis"
                              Grid.Row="3" Grid.Column="1"
                              MaxLength="50"
                              Style="{DynamicResource Input}"/>
 
-                    <!-- 4: Tlačítka -->
-                    <StackPanel Grid.Row="5" Grid.Column="1"
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Popis" Style="{DynamicResource Lbl}"/>
+                    <TextBox x:Name="TxtPopis"
+                             Grid.Row="4" Grid.Column="1"
+                             MaxLength="50"
+                             Style="{DynamicResource Input}"/>
+
+                    <StackPanel Grid.Row="6" Grid.Column="1"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right"
                                 Margin="0,14,0,0">

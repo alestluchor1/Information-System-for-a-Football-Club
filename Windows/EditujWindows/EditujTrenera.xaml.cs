@@ -3,6 +3,7 @@ using InformacniSystemKlub.Models;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace InformacniSystemKlub.Windows.EditujWindows
 {
@@ -27,6 +28,16 @@ namespace InformacniSystemKlub.Windows.EditujWindows
             TxtPrijmeni.Text = editovanyTrener.Prijmeni;
             TxtTelefonniCislo.Text = editovanyTrener.TelefonniCislo;
             TxtSpecializace.Text = editovanyTrener.Specializace;
+
+            // Nastaví v ComboBoxu aktuální tréninkovou skupinu daného trenéra
+            foreach (ComboBoxItem item in CbTreninkovaSkupina.Items)
+            {
+                if (item.Tag != null && Convert.ToInt32(item.Tag) == editovanyTrener.IdTreninkovaSkupina)
+                {
+                    CbTreninkovaSkupina.SelectedItem = item;
+                    break;
+                }
+            }
         }
 
         /// <summary>
@@ -42,6 +53,13 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                 string tel = TxtTelefonniCislo.Text.Trim();
                 string specializace = TxtSpecializace.Text.Trim();
 
+                ComboBoxItem vybranaPolozka = CbTreninkovaSkupina.SelectedItem as ComboBoxItem;
+
+                if (vybranaPolozka == null)
+                {
+                    throw new Exception("Vyberte tréninkovou skupinu");
+                }
+
                 // Validace
                 InputValidator.ValidujRodneCislo(rodneCislo);
                 InputValidator.ValidujUnikatniRodneCislo(rodneCislo, editovanyTrener.Id); // při editaci, aby neházelo message, že daný trenér editovaný s rodným číslem, už existuje
@@ -55,6 +73,8 @@ namespace InformacniSystemKlub.Windows.EditujWindows
                 editovanyTrener.Prijmeni = prijmeni;
                 editovanyTrener.TelefonniCislo = tel;
                 editovanyTrener.Specializace = specializace;
+                editovanyTrener.IdTreninkovaSkupina = Convert.ToInt32(vybranaPolozka.Tag);
+                editovanyTrener.NazevSkupiny = vybranaPolozka.Content.ToString();
 
                 // Update DB
                 OracleConnection conn = SpravcePripojeniDatabaze.ZiskejSdilenePripojeni();

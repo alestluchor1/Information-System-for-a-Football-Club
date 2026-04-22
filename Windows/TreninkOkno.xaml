@@ -354,9 +354,10 @@
                               Style="{StaticResource CbModern}"
                               Margin="0,0,8,0"
                               SelectionChanged="cbVyberTreninku_SelectionChanged"
-                              SelectedIndex="0">
+                              SelectedIndex="0"
+                              Visibility="Collapsed">
                         <ComboBoxItem Content="Všechny tréninky"/>
-                        <ComboBoxItem Content="Vlastní tréninky"/>
+                        <ComboBoxItem Content="Moje tréninky"/>
                     </ComboBox>
 
                 </WrapPanel>
@@ -410,7 +411,14 @@
                                         HeaderStyle="{StaticResource DgHeaderLeft}"
                                         CellStyle="{StaticResource DgCellLeft}"/>
 
-                    <DataGridTextColumn Header="Rodné číslo trenéra" Binding="{Binding RodneCislo}" Width="150"
+                    <DataGridTextColumn x:Name="RodneCisloTreneraSloupec"
+                                        Header="Rodné číslo trenéra"
+                                        Binding="{Binding RodneCislo}"
+                                        Width="150"
+                                        HeaderStyle="{StaticResource DgHeaderCenter}"
+                                        CellStyle="{StaticResource DgCellCenter}"/>
+
+                    <DataGridTextColumn Header="Tréninková skupina" Binding="{Binding NazevSkupiny}" Width="150"
                                         HeaderStyle="{StaticResource DgHeaderCenter}"
                                         CellStyle="{StaticResource DgCellCenter}"/>
 

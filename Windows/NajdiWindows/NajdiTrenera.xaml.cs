@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace InformacniSystemKlub.Windows.NajdiWindows
 {
@@ -29,6 +30,7 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
             RezimZobrazeni.NastavRezimFormularoveOkno(this, HlavniOkno.jeDarkModeAktivni);
 
             VstupniTreneri = treneri;
+            CbTreninkovaSkupina.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -101,6 +103,15 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
                 var specializace = TxtSpecializace.Text.Trim();
                 InputValidator.ValidujSpecializace(specializace);
                 vysledek = vysledek.Where(t => t.Specializace == specializace);
+            }
+
+            // Tréninková skupina
+            ComboBoxItem vybranaSkupina = CbTreninkovaSkupina.SelectedItem as ComboBoxItem;
+
+            if (vybranaSkupina != null && vybranaSkupina.Tag != null && vybranaSkupina.Tag.ToString() != "-")
+            {
+                int idSkupiny = Convert.ToInt32(vybranaSkupina.Tag);
+                vysledek = vysledek.Where(t => t.IdTreninkovaSkupina == idSkupiny);
             }
 
             return vysledek;

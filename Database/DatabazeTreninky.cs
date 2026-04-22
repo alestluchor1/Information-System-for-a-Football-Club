@@ -42,7 +42,7 @@ namespace InformacniSystemKlub.Database
         }
 
         /// <summary>
-        /// Editace existujícího tréninku pomocí procedury <c>PKG_TRENINKY.SP_UPDATE_TRENINK</c> 
+        /// Editace existujícího tréninku pomocí procedury <c>PKG_TRENINKY.SP_UPDATE_TRENINK</c>
         /// </summary>
         public static void EditujTrenink(OracleConnection conn, Trenink trenink)
         {
@@ -54,6 +54,7 @@ namespace InformacniSystemKlub.Database
                     cmd.BindByName = true;
 
                     cmd.Parameters.Add("v_idtrenink", OracleDbType.Int32).Value = trenink.Id;
+                    cmd.Parameters.Add("v_idclenklubu", OracleDbType.Int32).Value = trenink.IdTrener;
                     cmd.Parameters.Add("v_datum", OracleDbType.Date).Value = trenink.Datum;
                     cmd.Parameters.Add("v_misto", OracleDbType.Varchar2).Value = trenink.Misto;
 
@@ -61,7 +62,6 @@ namespace InformacniSystemKlub.Database
                     {
                         cmd.Parameters.Add("v_popis", OracleDbType.Varchar2).Value = DBNull.Value;
                     }
-
                     else
                     {
                         cmd.Parameters.Add("v_popis", OracleDbType.Varchar2).Value = trenink.Popis;
@@ -98,6 +98,5 @@ namespace InformacniSystemKlub.Database
                 throw new Exception("Chyba při volání PKG_TRENINKY.SP_DELETE_TRENINK: " + ex.Message, ex);
             }
         }
-
     }
 }

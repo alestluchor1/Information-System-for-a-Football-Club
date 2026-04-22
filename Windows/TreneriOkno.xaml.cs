@@ -2,7 +2,6 @@
 using InformacniSystemKlub.Models;
 using InformacniSystemKlub.Windows.EditujWindows;
 using InformacniSystemKlub.Windows.NajdiWindows;
-using InformacniSystemKlub.Windows.PřidáníWindows;
 using InformacniSystemKlub.Windows.PridejWindows;
 using Oracle.ManagedDataAccess.Client;
 using System;
@@ -24,18 +23,92 @@ namespace InformacniSystemKlub.Windows
 
         /// <summary>
         /// Příznak, zda je aktivní vyhledávací mód
-        /// V tomto režimu není umožněno přidávání/odebírání dat
+        /// V tomto režimu není umožněno přidávání/odebírání/editace dat
         /// </summary>
-        private bool jeVyhledavaniAktivni = false; 
+        private bool jeVyhledavaniAktivni = false;
 
         public TreneriOkno()
         {
             InitializeComponent();
             RezimZobrazeni.NastavRezimTabulkoveOkno(this, HlavniOkno.jeDarkModeAktivni);
+
             NactiTreneri();
 
             DgTreneri.ItemsSource = TreneriData;
             NastavViditelnostSloupcuProUzivatele();
+            NastavPravaPodleRole();
+        }
+
+        /// <summary>
+        /// Vrátí roli aktuálně přihlášeného uživatele
+        /// </summary>
+        private string ZiskejRoliUzivatele()
+        {
+            Uzivatel uzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            if (uzivatel == null || string.IsNullOrWhiteSpace(uzivatel.Role))
+            {
+                return "host";
+            }
+
+            string role = uzivatel.Role.Trim().ToLower();
+
+            if (role == "admin")
+            {
+                return "admin";
+            }
+
+            if (role == "trenér" || role == "trener")
+            {
+                return "trener";
+            }
+
+            if (role == "hráč" || role == "hrac")
+            {
+                return "hrac";
+            }
+
+            return "host";
+        }
+
+        /// <summary>
+        /// Nastaví práva tlačítek podle role uživatele
+        /// </summary>
+        private void NastavPravaPodleRole()
+        {
+            string role = ZiskejRoliUzivatele();
+
+            if (role == "admin")
+            {
+                BtnPridat.IsEnabled = jeVyhledavaniAktivni == false;
+                BtnOdebrat.IsEnabled = jeVyhledavaniAktivni == false;
+                BtnEdituj.IsEnabled = jeVyhledavaniAktivni == false;
+                BtnNajdi.IsEnabled = true;
+                return;
+            }
+
+            if (role == "trener")
+            {
+                BtnPridat.IsEnabled = false;
+                BtnOdebrat.IsEnabled = false;
+                BtnEdituj.IsEnabled = false;
+                BtnNajdi.IsEnabled = true;
+                return;
+            }
+
+            if (role == "hrac")
+            {
+                BtnPridat.IsEnabled = false;
+                BtnOdebrat.IsEnabled = false;
+                BtnEdituj.IsEnabled = false;
+                BtnNajdi.IsEnabled = true;
+                return;
+            }
+
+            BtnPridat.IsEnabled = false;
+            BtnOdebrat.IsEnabled = false;
+            BtnEdituj.IsEnabled = false;
+            BtnNajdi.IsEnabled = false;
         }
 
         /// <summary>
@@ -45,12 +118,20 @@ namespace InformacniSystemKlub.Windows
         private void NastavViditelnostSloupcuProUzivatele()
         {
             Uzivatel uzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
-            string role = uzivatel.Role.ToLower();
+
+            if (uzivatel == null || string.IsNullOrWhiteSpace(uzivatel.Role))
+            {
+                RodneCisloSloupec.Visibility = Visibility.Visible;
+                TelefonniCisloSloupec.Visibility = Visibility.Visible;
+                return;
+            }
+
+            string role = uzivatel.Role.Trim().ToLower();
 
             RodneCisloSloupec.Visibility = Visibility.Visible;
             TelefonniCisloSloupec.Visibility = Visibility.Visible;
 
-            if (role == "trener")
+            if (role == "trener" || role == "trenér")
             {
                 RodneCisloSloupec.Visibility = Visibility.Collapsed;
             }
@@ -128,9 +209,28 @@ namespace InformacniSystemKlub.Windows
                         trener.Specializace = "-";
                     }
 
+                    if (reader["IDTRENINKOVASKUPINA"] != DBNull.Value)
+                    {
+                        trener.IdTreninkovaSkupina = Convert.ToInt32(reader["IDTRENINKOVASKUPINA"]);
+                    }
+                    else
+                    {
+                        trener.IdTreninkovaSkupina = 0;
+                    }
+
+                    if (reader["NAZEVSKUPINY"] != DBNull.Value)
+                    {
+                        trener.NazevSkupiny = reader["NAZEVSKUPINY"].ToString();
+                    }
+                    else
+                    {
+                        trener.NazevSkupiny = "-";
+                    }
 
                     TreneriData.Add(trener);
                 }
+
+                reader.Close();
             }
             catch (Exception ex)
             {
@@ -150,6 +250,13 @@ namespace InformacniSystemKlub.Windows
                 return;
             }
 
+            if (ZiskejRoliUzivatele() != "admin")
+            {
+                MessageBox.Show("Pouze admin může upravovat trenéry!", "Přístup odepřen",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             Trener vybranyTrener = DgTreneri.SelectedItem as Trener;
             if (vybranyTrener == null)
             {
@@ -163,7 +270,6 @@ namespace InformacniSystemKlub.Windows
 
             if (result == true)
             {
-
                 DgTreneri.Items.Refresh();
             }
         }
@@ -192,6 +298,7 @@ namespace InformacniSystemKlub.Windows
 
                 DgTreneri.ItemsSource = new ObservableCollection<Trener>(najdiTrenera.FiltrovaniTreneri);
                 jeVyhledavaniAktivni = true;
+                NastavPravaPodleRole();
             }
         }
 
@@ -204,6 +311,7 @@ namespace InformacniSystemKlub.Windows
             {
                 jeVyhledavaniAktivni = false;
                 DgTreneri.ItemsSource = TreneriData;
+                NastavPravaPodleRole();
                 e.Handled = true;
             }
         }
@@ -220,6 +328,12 @@ namespace InformacniSystemKlub.Windows
                 return;
             }
 
+            if (ZiskejRoliUzivatele() != "admin")
+            {
+                MessageBox.Show("Pouze admin může přidávat trenéry!", "Přístup odepřen",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
             Trener pridanyTrener = new Trener();
             var okno = new PridejTrenera(pridanyTrener);
@@ -235,6 +349,7 @@ namespace InformacniSystemKlub.Windows
                 DatabazeTreneri.PridejTrenera(conn, pridanyTrener);
 
                 NactiTreneri();
+                DgTreneri.ItemsSource = TreneriData;
             }
             catch (Exception ex)
             {
@@ -254,11 +369,18 @@ namespace InformacniSystemKlub.Windows
                 return;
             }
 
-            Trener vybranyTrener = (Trener)DgTreneri.SelectedItem;
+            if (ZiskejRoliUzivatele() != "admin")
+            {
+                MessageBox.Show("Pouze admin může mazat trenéry!", "Přístup odepřen",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            Trener vybranyTrener = DgTreneri.SelectedItem as Trener;
 
             if (vybranyTrener == null)
             {
-                MessageBox.Show("Vyberte trenéra !", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Vyberte trenéra!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -276,10 +398,8 @@ namespace InformacniSystemKlub.Windows
                 DatabazeTreneri.OdeberTrenera(conn, vybranyTrener);
 
                 TreneriData.Remove(vybranyTrener);
-               
+
                 MessageBox.Show("Trenér byl smazán", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-
-
             }
             catch (Exception ex)
             {

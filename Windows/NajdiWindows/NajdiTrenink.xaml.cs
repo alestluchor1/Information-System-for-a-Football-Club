@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Media;
+using System.Windows.Controls;
 
 namespace InformacniSystemKlub.Windows.NajdiWindows
 {
@@ -39,9 +39,129 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
             cbTrener.DisplayMemberPath = "Prijmeni";
             cbTrener.SelectedItem = null;
 
+            cbTreninkovaSkupina.SelectedIndex = 0;
             dpDatum.SelectedDate = null;
+
+            NastavTreninkovouSkupinuPodleRole();
         }
 
+        /// <summary>
+        /// Nastaví combobox tréninkové skupiny podle role přihlášeného uživatele
+        /// </summary>
+        private void NastavTreninkovouSkupinuPodleRole()
+        {
+            Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            if (prihlasenyUzivatel == null || string.IsNullOrWhiteSpace(prihlasenyUzivatel.Role))
+            {
+                cbTreninkovaSkupina.SelectedIndex = 0;
+                cbTreninkovaSkupina.IsEnabled = true;
+                return;
+            }
+
+            string role = prihlasenyUzivatel.Role.Trim().ToLower();
+
+            if (role == "hrac" || role == "hráč")
+            {
+                int idSkupiny = ZiskejIdTreninkoveSkupinyPrihlasenehoHrace();
+
+                if (idSkupiny == 1)
+                {
+                    VyberSkupinuVComboBoxu("A");
+                    cbTreninkovaSkupina.IsEnabled = false;
+                    return;
+                }
+
+                if (idSkupiny == 2)
+                {
+                    VyberSkupinuVComboBoxu("Dorost");
+                    cbTreninkovaSkupina.IsEnabled = false;
+                    return;
+                }
+
+                if (idSkupiny == 3)
+                {
+                    VyberSkupinuVComboBoxu("Mladší žáci");
+                    cbTreninkovaSkupina.IsEnabled = false;
+                    return;
+                }
+
+                cbTreninkovaSkupina.SelectedIndex = 0;
+                cbTreninkovaSkupina.IsEnabled = false;
+                return;
+            }
+
+            cbTreninkovaSkupina.SelectedIndex = 0;
+            cbTreninkovaSkupina.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Vybere položku skupiny v ComboBoxu podle textu
+        /// </summary>
+        private void VyberSkupinuVComboBoxu(string nazevSkupiny)
+        {
+            foreach (object item in cbTreninkovaSkupina.Items)
+            {
+                ComboBoxItem polozka = item as ComboBoxItem;
+
+                if (polozka == null || polozka.Content == null)
+                {
+                    continue;
+                }
+
+                string text = polozka.Content.ToString();
+
+                if (string.Equals(text.Trim(), nazevSkupiny.Trim(), StringComparison.OrdinalIgnoreCase))
+                {
+                    cbTreninkovaSkupina.SelectedItem = polozka;
+                    return;
+                }
+            }
+
+            cbTreninkovaSkupina.SelectedIndex = 0;
+        }
+
+        /// <summary>
+        /// Zjistí ID tréninkové skupiny právě přihlášeného hráče
+        /// Nejprve se pokusí vzít skupinu přímo z přihlášeného uživatele
+        /// Když skupinu nelze zjistit, vrací 0
+        /// </summary>
+        private int ZiskejIdTreninkoveSkupinyPrihlasenehoHrace()
+        {
+            Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            if (prihlasenyUzivatel == null)
+            {
+                return 0;
+            }
+
+            if (prihlasenyUzivatel.IdTreninkovaSkupina > 0)
+            {
+                return prihlasenyUzivatel.IdTreninkovaSkupina;
+            }
+
+            if (prihlasenyUzivatel.IdClenKlubu <= 0)
+            {
+                return 0;
+            }
+
+            if (HraciOkno.HraciData == null || HraciOkno.HraciData.Count == 0)
+            {
+                HraciOkno.NactiHrace();
+            }
+
+            foreach (Hrac hrac in HraciOkno.HraciData)
+            {
+                if (hrac.Id == prihlasenyUzivatel.IdClenKlubu)
+                {
+                    return hrac.IdTreninkovaSkupina;
+                }
+            }
+
+            return 0;
+        }
+
+        /// <summary>
         /// Obsluha tlačítka pro spuštění filtrování
         /// Provede filtrování tréninků podle zadaných hodnot a uloží výsledek do vlastnosti <see cref="FiltrovaniTreninky"/>
         /// </summary>
@@ -87,7 +207,7 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
                 vysledek = vysledek.Where(t => t.Id == id);
             }
 
-            // Trenér (vybraný v comboboxu) 
+            // Trenér
             if (cbTrener.SelectedItem != null)
             {
                 Trener vybranyTrener = cbTrener.SelectedItem as Trener;
@@ -99,7 +219,21 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
                 vysledek = vysledek.Where(t => t.IdTrener == vybranyTrener.Id);
             }
 
-            // Datum 
+            // Tréninková skupina
+            ComboBoxItem vybranaSkupinaPolozka = cbTreninkovaSkupina.SelectedItem as ComboBoxItem;
+            if (vybranaSkupinaPolozka != null && vybranaSkupinaPolozka.Content != null)
+            {
+                string vybranaSkupina = vybranaSkupinaPolozka.Content.ToString();
+
+                if (!string.Equals(vybranaSkupina, "Všechny skupiny", StringComparison.OrdinalIgnoreCase))
+                {
+                    vysledek = vysledek.Where(t =>
+                        !string.IsNullOrWhiteSpace(t.NazevSkupiny) &&
+                        string.Equals(NormalizujNazevSkupiny(t.NazevSkupiny), vybranaSkupina.Trim(), StringComparison.OrdinalIgnoreCase));
+                }
+            }
+
+            // Datum
             if (dpDatum.SelectedDate != null)
             {
                 DateTime datum = dpDatum.SelectedDate.Value.Date;
@@ -129,7 +263,6 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
                         return false;
                     }
 
-                    // Porovnání popisu bez ohledu na velikost písmen
                     return t.Popis.IndexOf(popis, StringComparison.OrdinalIgnoreCase) >= 0;
                 });
             }
@@ -137,5 +270,27 @@ namespace InformacniSystemKlub.Windows.NajdiWindows
             return vysledek;
         }
 
+        /// <summary>
+        /// Upraví název skupiny do jednotného tvaru, aby šly správně porovnávat
+        /// hodnoty z databáze a z ComboBoxu.
+        /// Například zápisy "A-Tým" a "A tým" převede na "A"
+        /// </summary>
+        private string NormalizujNazevSkupiny(string nazevSkupiny)
+        {
+            if (string.IsNullOrWhiteSpace(nazevSkupiny))
+            {
+                return "";
+            }
+
+            string vysledek = nazevSkupiny.Trim();
+
+            if (string.Equals(vysledek, "A-Tým", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(vysledek, "A tým", StringComparison.OrdinalIgnoreCase))
+            {
+                return "A";
+            }
+
+            return vysledek;
+        }
     }
 }

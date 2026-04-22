@@ -217,7 +217,6 @@
             </Setter>
         </Style>
 
-        <!-- Primární tlačítko -->
         <Style x:Key="BtnPrimary" TargetType="Button">
             <Setter Property="Height" Value="42"/>
             <Setter Property="Width" Value="140"/>
@@ -296,6 +295,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <!-- 0 -->
@@ -322,7 +322,19 @@
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Specializace" Style="{DynamicResource Lbl}"/>
                     <TextBox x:Name="TxtSpecializace" Grid.Row="5" Grid.Column="1" MaxLength="40" Style="{DynamicResource Input}"/>
 
-                    <!-- 6 Tlačítko -->
+                    <!-- 6 -->
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Tréninková skupina" Style="{DynamicResource Lbl}"/>
+                    <Border Grid.Row="6" Grid.Column="1" Style="{DynamicResource InputHost}">
+                        <ComboBox x:Name="CbTreninkovaSkupina"
+                                  Style="{DynamicResource ComboTheme}">
+                            <ComboBoxItem Tag="-">-</ComboBoxItem>
+                            <ComboBoxItem Tag="1">A-tým</ComboBoxItem>
+                            <ComboBoxItem Tag="2">Dorost</ComboBoxItem>
+                            <ComboBoxItem Tag="3">Mladší žáci</ComboBoxItem>
+                        </ComboBox>
+                    </Border>
+
+                    <!-- 7 Tlačítko -->
                     <Button Grid.Row="7" Grid.Column="1"
                             Content="Filtrovat"
                             Style="{DynamicResource BtnPrimary}"

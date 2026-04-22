@@ -293,6 +293,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <!-- 0 -->
@@ -316,6 +317,17 @@
                     <TextBox x:Name="TxtSpecializace" Grid.Row="4" Grid.Column="1" MaxLength="40" Style="{DynamicResource Input}"/>
 
                     <!-- 5 -->
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Tréninková skupina" Style="{DynamicResource Lbl}"/>
+                    <Border Grid.Row="5" Grid.Column="1" Style="{DynamicResource InputHost}">
+                        <ComboBox x:Name="CbTreninkovaSkupina"
+                                  Style="{DynamicResource ComboTheme}">
+                            <ComboBoxItem Tag="1">A-tým</ComboBoxItem>
+                            <ComboBoxItem Tag="2">Dorost</ComboBoxItem>
+                            <ComboBoxItem Tag="3">Mladší žáci</ComboBoxItem>
+                        </ComboBox>
+                    </Border>
+
+                    <!-- 6 -->
                     <Button Grid.Row="6" Grid.Column="1"
                             Content="Editovat"
                             Style="{DynamicResource BtnPrimary}"

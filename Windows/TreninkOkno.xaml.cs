@@ -43,6 +43,8 @@ namespace InformacniSystemKlub.Windows
 
             DgTreninky.ItemsSource = TreninkyData;
 
+            NastavViditelnostSloupcuPodleRole();
+            NastavViditelnostComboBoxuPodleRole();
             NastavRezimVyberuTreninkuPodleRole();
             AplikujFiltrTreninku();
             NastavPravaPodleRole();
@@ -77,7 +79,6 @@ namespace InformacniSystemKlub.Windows
                         trenink.Id = 0;
                     }
 
-                    // ID trenéra, ke kterému trénink patří
                     if (reader["IDCLENKLUBU"] != DBNull.Value)
                     {
                         trenink.IdTrener = Convert.ToInt32(reader["IDCLENKLUBU"]);
@@ -87,7 +88,6 @@ namespace InformacniSystemKlub.Windows
                         trenink.IdTrener = 0;
                     }
 
-                    // Rodné číslo trenéra
                     if (reader["RODNECISLO"] != DBNull.Value)
                     {
                         trenink.RodneCislo = reader["RODNECISLO"].ToString();
@@ -97,7 +97,6 @@ namespace InformacniSystemKlub.Windows
                         trenink.RodneCislo = "0";
                     }
 
-                    // Příjmení trenéra
                     if (reader["PRIJMENI"] != DBNull.Value)
                     {
                         trenink.Prijmeni = reader["PRIJMENI"].ToString();
@@ -107,7 +106,24 @@ namespace InformacniSystemKlub.Windows
                         trenink.Prijmeni = "-";
                     }
 
-                    // Popis tréninku
+                    if (reader["IDTRENINKOVASKUPINA"] != DBNull.Value)
+                    {
+                        trenink.IdTreninkovaSkupina = Convert.ToInt32(reader["IDTRENINKOVASKUPINA"]);
+                    }
+                    else
+                    {
+                        trenink.IdTreninkovaSkupina = 0;
+                    }
+
+                    if (reader["NAZEVSKUPINY"] != DBNull.Value)
+                    {
+                        trenink.NazevSkupiny = reader["NAZEVSKUPINY"].ToString();
+                    }
+                    else
+                    {
+                        trenink.NazevSkupiny = "-";
+                    }
+
                     if (reader["POPIS"] != DBNull.Value)
                     {
                         trenink.Popis = reader["POPIS"].ToString();
@@ -117,7 +133,6 @@ namespace InformacniSystemKlub.Windows
                         trenink.Popis = "Volitelné nezadáno !";
                     }
 
-                    // Místo konání tréninku
                     if (reader["MISTO"] != DBNull.Value)
                     {
                         trenink.Misto = reader["MISTO"].ToString();
@@ -127,7 +142,6 @@ namespace InformacniSystemKlub.Windows
                         trenink.Misto = "";
                     }
 
-                    // Datum tréninku
                     if (reader["DATUM"] != DBNull.Value)
                     {
                         trenink.Datum = Convert.ToDateTime(reader["DATUM"]);
@@ -146,6 +160,52 @@ namespace InformacniSystemKlub.Windows
             {
                 MessageBox.Show($"Chyba při načítání tréninků: {ex.Message}");
             }
+        }
+
+        /// <summary>
+        /// Nastaví viditelnost sloupců podle role
+        /// </summary>
+        private void NastavViditelnostSloupcuPodleRole()
+        {
+            Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            RodneCisloTreneraSloupec.Visibility = Visibility.Visible;
+
+            if (prihlasenyUzivatel == null || string.IsNullOrWhiteSpace(prihlasenyUzivatel.Role))
+            {
+                return;
+            }
+
+            string role = prihlasenyUzivatel.Role.Trim().ToLower();
+
+            if (role == "hrac" || role == "hráč")
+            {
+                RodneCisloTreneraSloupec.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        /// <summary>
+        /// Nastaví viditelnost ComboBoxu pro výběr tréninků podle role
+        /// </summary>
+        private void NastavViditelnostComboBoxuPodleRole()
+        {
+            Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            if (prihlasenyUzivatel == null || string.IsNullOrWhiteSpace(prihlasenyUzivatel.Role))
+            {
+                cbVyberTreninku.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            string role = prihlasenyUzivatel.Role.Trim().ToLower();
+
+            if (role == "trener" || role == "trenér" || role == "hrac" || role == "hráč")
+            {
+                cbVyberTreninku.Visibility = Visibility.Visible;
+                return;
+            }
+
+            cbVyberTreninku.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
@@ -178,6 +238,13 @@ namespace InformacniSystemKlub.Windows
                 return;
             }
 
+            if (role == "hrac" || role == "hráč")
+            {
+                cbVyberTreninku.SelectedIndex = 1;
+                cbVyberTreninku.IsEnabled = false;
+                return;
+            }
+
             cbVyberTreninku.SelectedIndex = 0;
             cbVyberTreninku.IsEnabled = false;
         }
@@ -189,7 +256,6 @@ namespace InformacniSystemKlub.Windows
         {
             Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
 
-            // Pokud není nikdo přihlášen, přidávání/editace/mazání nejsou povoleny
             if (prihlasenyUzivatel == null || string.IsNullOrWhiteSpace(prihlasenyUzivatel.Role))
             {
                 BtnPridat.IsEnabled = false;
@@ -201,7 +267,6 @@ namespace InformacniSystemKlub.Windows
 
             string role = prihlasenyUzivatel.Role.Trim().ToLower();
 
-            // Hráč má pouze prohlížení a vyhledávání
             if (role == "hrac" || role == "hráč")
             {
                 BtnPridat.IsEnabled = false;
@@ -211,7 +276,6 @@ namespace InformacniSystemKlub.Windows
                 return;
             }
 
-            // Host nemá upravovací práva
             if (role == "host")
             {
                 BtnPridat.IsEnabled = false;
@@ -221,7 +285,6 @@ namespace InformacniSystemKlub.Windows
                 return;
             }
 
-            // Trenér může přidávat vždy, ale editace a mazání závisí na vybraném tréninku
             if (role == "trener" || role == "trenér")
             {
                 BtnPridat.IsEnabled = true;
@@ -234,7 +297,7 @@ namespace InformacniSystemKlub.Windows
                     BtnEdituj.IsEnabled = false;
                     BtnOdebrat.IsEnabled = false;
                 }
-                else if (PatriTreninkPrihlasenemuTrenerovi(vybranyTrenink) == true)
+                else if (PatriTreninkPrihlasenemuTrenerovi(vybranyTrenink))
                 {
                     BtnEdituj.IsEnabled = true;
                     BtnOdebrat.IsEnabled = true;
@@ -248,7 +311,6 @@ namespace InformacniSystemKlub.Windows
                 return;
             }
 
-            // Admin a ostatní vyšší role mají plný přístup
             BtnPridat.IsEnabled = true;
             BtnOdebrat.IsEnabled = true;
             BtnEdituj.IsEnabled = true;
@@ -272,6 +334,22 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
+        /// Zjistí, zda je aktuálně přihlášený uživatel hráč
+        /// </summary>
+        private bool JePrihlasenHrac()
+        {
+            Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            if (prihlasenyUzivatel == null || string.IsNullOrWhiteSpace(prihlasenyUzivatel.Role))
+            {
+                return false;
+            }
+
+            string role = prihlasenyUzivatel.Role.Trim().ToLower();
+            return role == "hrac" || role == "hráč";
+        }
+
+        /// <summary>
         /// Zjistí, zda vybraný trénink patří právě přihlášenému trenérovi
         /// </summary>
         private bool PatriTreninkPrihlasenemuTrenerovi(Trenink trenink)
@@ -283,7 +361,70 @@ namespace InformacniSystemKlub.Windows
                 return false;
             }
 
+            if (prihlasenyUzivatel.IdClenKlubu == 0)
+            {
+                return false;
+            }
+
             return trenink.IdTrener == prihlasenyUzivatel.IdClenKlubu;
+        }
+
+        /// <summary>
+        /// Vrátí ID tréninkové skupiny přihlášeného hráče
+        /// </summary>
+        private int ZiskejIdTreninkoveSkupinyPrihlasenehoHrace()
+        {
+            Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
+
+            if (prihlasenyUzivatel == null)
+            {
+                return 0;
+            }
+
+            if (prihlasenyUzivatel.IdTreninkovaSkupina > 0)
+            {
+                return prihlasenyUzivatel.IdTreninkovaSkupina;
+            }
+
+            if (prihlasenyUzivatel.IdClenKlubu <= 0)
+            {
+                return 0;
+            }
+
+            if (HraciOkno.HraciData == null || HraciOkno.HraciData.Count == 0)
+            {
+                HraciOkno.NactiHrace();
+            }
+
+            foreach (Hrac hrac in HraciOkno.HraciData)
+            {
+                if (hrac.Id == prihlasenyUzivatel.IdClenKlubu)
+                {
+                    return hrac.IdTreninkovaSkupina;
+                }
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Zjistí, zda trénink patří do skupiny přihlášeného hráče
+        /// </summary>
+        private bool PatriTreninkPrihlasenemuHraci(Trenink trenink)
+        {
+            if (trenink == null)
+            {
+                return false;
+            }
+
+            int idSkupinyHrace = ZiskejIdTreninkoveSkupinyPrihlasenehoHrace();
+
+            if (idSkupinyHrace <= 0)
+            {
+                return false;
+            }
+
+            return trenink.IdTreninkovaSkupina == idSkupinyHrace;
         }
 
         /// <summary>
@@ -291,8 +432,7 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void AplikujFiltrTreninku()
         {
-            // Pokud je aktivní vyhledávací mód, filtr přes ComboBox se dočasně neaplikuje
-            if (jeVyhledavaniAktivni == true)
+            if (jeVyhledavaniAktivni)
             {
                 return;
             }
@@ -305,19 +445,37 @@ namespace InformacniSystemKlub.Windows
                 return;
             }
 
-            if (cbVyberTreninku.SelectedIndex == 1 && JePrihlasenTrener() == true)
+            if (cbVyberTreninku.SelectedIndex == 1 && JePrihlasenTrener())
             {
                 ObservableCollection<Trenink> vlastniTreninky = new ObservableCollection<Trenink>();
 
                 foreach (Trenink trenink in TreninkyData)
                 {
-                    if (PatriTreninkPrihlasenemuTrenerovi(trenink) == true)
+                    if (PatriTreninkPrihlasenemuTrenerovi(trenink))
                     {
                         vlastniTreninky.Add(trenink);
                     }
                 }
 
                 DgTreninky.ItemsSource = vlastniTreninky;
+                DgTreninky.SelectedItem = null;
+                NastavPravaPodleRole();
+                return;
+            }
+
+            if (cbVyberTreninku.SelectedIndex == 1 && JePrihlasenHrac())
+            {
+                ObservableCollection<Trenink> skupinoveTreninky = new ObservableCollection<Trenink>();
+
+                foreach (Trenink trenink in TreninkyData)
+                {
+                    if (PatriTreninkPrihlasenemuHraci(trenink))
+                    {
+                        skupinoveTreninky.Add(trenink);
+                    }
+                }
+
+                DgTreninky.ItemsSource = skupinoveTreninky;
                 DgTreninky.SelectedItem = null;
                 NastavPravaPodleRole();
                 return;
@@ -333,7 +491,7 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void cbVyberTreninku_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (inicializaceDokoncena == false)
+            if (!inicializaceDokoncena)
             {
                 return;
             }
@@ -343,11 +501,10 @@ namespace InformacniSystemKlub.Windows
 
         /// <summary>
         /// Obsluha změny výběru v DataGridu
-        /// Podle označeného tréninku znovu nastaví povolení tlačítek
         /// </summary>
         private void DgTreninky_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (inicializaceDokoncena == false)
+            if (!inicializaceDokoncena)
             {
                 return;
             }
@@ -360,7 +517,7 @@ namespace InformacniSystemKlub.Windows
         /// </summary>
         private void BtnEdituj_Click(object sender, RoutedEventArgs e)
         {
-            if (jeVyhledavaniAktivni == true)
+            if (jeVyhledavaniAktivni)
             {
                 MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
                     MessageBoxButton.OK, MessageBoxImage.Information);
@@ -375,8 +532,7 @@ namespace InformacniSystemKlub.Windows
                 return;
             }
 
-            // Pokud je přihlášen trenér, může editovat pouze své vlastní tréninky
-            if (JePrihlasenTrener() == true && PatriTreninkPrihlasenemuTrenerovi(vybranyTrenink) == false)
+            if (JePrihlasenTrener() && !PatriTreninkPrihlasenemuTrenerovi(vybranyTrenink))
             {
                 MessageBox.Show("Můžete editovat pouze své vlastní tréninky!", "Přístup odepřen",
                     MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -395,7 +551,6 @@ namespace InformacniSystemKlub.Windows
 
         /// <summary>
         /// Otevře dialog pro vyhledávání tréninků
-        /// Aktivuje vyhledávací mód, dokud není režim ukončen pomocí CTRL+X
         /// </summary>
         private void BtnNajdi_Click(object sender, RoutedEventArgs e)
         {
@@ -418,29 +573,36 @@ namespace InformacniSystemKlub.Windows
                 DgTreninky.ItemsSource = new ObservableCollection<Trenink>(najdiTrenink.FiltrovaniTreninky);
                 DgTreninky.SelectedItem = null;
                 jeVyhledavaniAktivni = true;
+
+                cbVyberTreninku.SelectedIndex = 0;
+                cbVyberTreninku.IsEnabled = false;
+
                 NastavPravaPodleRole();
             }
         }
 
         /// <summary>
-        /// Metoda slouží k zrušení vyhledávacího módu, pokud se zmáčkne klávesa CTRL + X
+        /// Metoda slouží k zrušení vyhledávacího módu
         /// </summary>
         private void WindowUkonceniFiltrovani(object sender, KeyEventArgs e)
         {
             if (jeVyhledavaniAktivni && (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.X))
             {
                 jeVyhledavaniAktivni = false;
+
+                NastavRezimVyberuTreninkuPodleRole();
                 AplikujFiltrTreninku();
+
                 e.Handled = true;
             }
         }
 
         /// <summary>
-        /// Otevře dialog pro přidání tréninku, uloží nový trénink do databáze a obnoví seznam
+        /// Otevře dialog pro přidání tréninku
         /// </summary>
         private void BtnPridat_Click(object sender, RoutedEventArgs e)
         {
-            if (jeVyhledavaniAktivni == true)
+            if (jeVyhledavaniAktivni)
             {
                 MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
                     MessageBoxButton.OK, MessageBoxImage.Information);
@@ -448,13 +610,6 @@ namespace InformacniSystemKlub.Windows
             }
 
             Trenink pridanyTrenink = new Trenink();
-
-            // Pokud je přihlášen trenér, nový trénink se automaticky přiřadí jemu
-            if (JePrihlasenTrener() == true)
-            {
-                Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
-                pridanyTrenink.IdTrener = prihlasenyUzivatel.IdClenKlubu;
-            }
 
             var okno = new PridejTrenink(pridanyTrenink);
 
@@ -465,8 +620,7 @@ namespace InformacniSystemKlub.Windows
 
             try
             {
-                // Kontrola, že trenér nevkládá trénink pod jiným trenérem
-                if (JePrihlasenTrener() == true)
+                if (JePrihlasenTrener())
                 {
                     Uzivatel prihlasenyUzivatel = HlavniOkno.ZiskejPrihlasenehoUzivatele();
 
@@ -491,18 +645,18 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Smaže vybraný trénink z databáze i z lokální kolekce a aktualizuje zobrazení podle aktuálního filtru
+        /// Smaže vybraný trénink
         /// </summary>
         private void BtnOdebrat_Click(object sender, RoutedEventArgs e)
         {
-            if (jeVyhledavaniAktivni == true)
+            if (jeVyhledavaniAktivni)
             {
                 MessageBox.Show("Vyhledávací mód je aktivní. Ukončete ho pomocí CTRL + X", "Info",
                     MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
-            Trenink vybranyTrenink = (Trenink)DgTreninky.SelectedItem;
+            Trenink vybranyTrenink = DgTreninky.SelectedItem as Trenink;
 
             if (vybranyTrenink == null)
             {
@@ -510,8 +664,7 @@ namespace InformacniSystemKlub.Windows
                 return;
             }
 
-            // Pokud je přihlášen trenér, může mazat pouze své vlastní tréninky
-            if (JePrihlasenTrener() == true && PatriTreninkPrihlasenemuTrenerovi(vybranyTrenink) == false)
+            if (JePrihlasenTrener() && !PatriTreninkPrihlasenemuTrenerovi(vybranyTrenink))
             {
                 MessageBox.Show("Můžete mazat pouze své vlastní tréninky!", "Přístup odepřen",
                     MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -544,7 +697,7 @@ namespace InformacniSystemKlub.Windows
         }
 
         /// <summary>
-        /// Zavře okno a vrátí uživatele na předchozí obrazovku (Hlavní okno)
+        /// Zavře okno a vrátí uživatele na předchozí obrazovku
         /// </summary>
         private void BtnZpet_Click(object sender, RoutedEventArgs e)
         {
