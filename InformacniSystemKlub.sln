@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InformacniSystemKlub", "InformacniSystemKlub.csproj", "{F09710F9-D050-47AB-B8A4-50A7E9617706}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "InformacniSystemKlubSetup", "..\InformacniSystemKlubSetup\InformacniSystemKlubSetup.vdproj", "{BC05E731-41F1-6457-BB3A-CB0FEEF95B2C}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupInformacniSystemKlub", "..\SetupInformacniSystemKlub\SetupInformacniSystemKlub.vdproj", "{07EAA06C-EEC3-1380-DA01-1B2799E3F541}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,8 +17,8 @@ Global
 		{F09710F9-D050-47AB-B8A4-50A7E9617706}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F09710F9-D050-47AB-B8A4-50A7E9617706}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F09710F9-D050-47AB-B8A4-50A7E9617706}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BC05E731-41F1-6457-BB3A-CB0FEEF95B2C}.Debug|Any CPU.ActiveCfg = Debug
-		{BC05E731-41F1-6457-BB3A-CB0FEEF95B2C}.Release|Any CPU.ActiveCfg = Release
+		{07EAA06C-EEC3-1380-DA01-1B2799E3F541}.Debug|Any CPU.ActiveCfg = Debug
+		{07EAA06C-EEC3-1380-DA01-1B2799E3F541}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
