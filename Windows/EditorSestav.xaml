@@ -326,7 +326,7 @@
                                   Style="{StaticResource ComboBoxStyl}"
                                   SelectionChanged="FiltrZmenen">
                             <ComboBoxItem Content="Vše"/>
-                            <ComboBoxItem Content="A-Tým"/>
+                            <ComboBoxItem Content="A"/>
                             <ComboBoxItem Content="Dorost"/>
                             <ComboBoxItem Content="Mladší žáci"/>
                         </ComboBox>
