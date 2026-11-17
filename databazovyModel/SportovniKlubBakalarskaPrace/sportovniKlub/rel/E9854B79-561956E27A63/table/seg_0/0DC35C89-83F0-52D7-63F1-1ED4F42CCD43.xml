@@ -1,0 +1,112 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="0DC35C89-83F0-52D7-63F1-1ED4F42CCD43" name="CLENOVE_KLUBU">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tabulka CLENOVE_KLUBU slouží jako supertyp pro tabulky "HRACI"  a "TRENERI". Tabulka CLENOVE_KLUBU slouží k uchování osobních údajů o hráčích a trenérech
+]]></commentInRDBMS>
+<generatorID>E35D6DF8-17FC-D482-9281-404A4148C46F</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<ordsAlias>clen_klubu</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="idClenKlubu" id="2FE7B5A0-9702-2DE7-A325-07C4747380E5">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Atribut idClenKlubu bude sloužit jako UID a bude nabývat čísel od 1 výše]]></commentInRDBMS>
+<generatorID>D25EA75B-EE71-FDE3-1C90-EE01687B7BA0</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="rodneCislo" id="D7EE43EB-7EDE-1B5D-FB15-B59F24258085">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>275C669C-1702-8206-B431-B94E8B131D6E</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10 CHAR</dataTypeSize>
+<ownDataTypeParameters>10 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="jmeno" id="F722596A-0999-648D-C6C4-527CCAA506D9">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>7CF0691A-26F1-B70C-A6A9-F885EDF4F25F</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 CHAR</dataTypeSize>
+<ownDataTypeParameters>20 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="prijmeni" id="73A43168-84CE-A741-49CE-2AD73B2D9331">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>30DC3B8A-7957-1382-B397-E6247BF1787E</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 CHAR</dataTypeSize>
+<ownDataTypeParameters>20 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="typClena" id="3A7BBC30-15B6-41E6-6F7F-82695D1E792C">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>4BBA9FBC-08E1-7FF1-0642-6B4D501DF8AA</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 CHAR</dataTypeSize>
+<ownDataTypeParameters>20 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="telefonniCislo" id="8F2B03E6-66A8-0514-4467-E1D915FF262F">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>797F9FEA-A74C-3A65-643D-D9A81876B4D3</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>12 CHAR</dataTypeSize>
+<ownDataTypeParameters>12 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="D13C29BD-A686-6B57-018A-BEB970B2782A" name="CLEN_KLUBU_PK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>64A63FDA-3CFE-918E-82F4-B766CFA5AAE9</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2FE7B5A0-9702-2DE7-A325-07C4747380E5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5A495193-481B-42C4-17F5-EC4DD947DA55" name="CLEN_KLUBU_rodneCislo_UN">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>6E946405-E49B-581E-81C0-A073DC041152</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D7EE43EB-7EDE-1B5D-FB15-B59F24258085"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

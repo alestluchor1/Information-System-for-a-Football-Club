@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKArc class="oracle.dbtools.crest.model.design.relational.FKArc" directorySegmentName="seg_0" id="D863001C-F605-F0AD-0902-6DF361BA5C61" name="FKArc_1">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<ownerDesignName>ProjektSportovniKlubTlučhoř</ownerDesignName>
+<mandatory>false</mandatory>
+<reverseArc>true</reverseArc>
+<table>0DC35C89-83F0-52D7-63F1-1ED4F42CCD43</table>
+<discriminatorColumn>3A7BBC30-15B6-41E6-6F7F-82695D1E792C</discriminatorColumn>
+<fkeys>
+<fkeyID>8E634568-0AAD-B968-5856-B674DDC84999</fkeyID>
+<fkeyID>73C88DFA-F4F1-1D85-D8B9-C26A7FC2808A</fkeyID>
+</fkeys>
+</FKArc>

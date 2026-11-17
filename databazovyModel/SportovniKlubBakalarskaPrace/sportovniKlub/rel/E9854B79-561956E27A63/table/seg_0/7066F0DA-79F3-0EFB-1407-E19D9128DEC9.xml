@@ -1,0 +1,79 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="7066F0DA-79F3-0EFB-1407-E19D9128DEC9" name="SPORTOVNI_VYBAVENI">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tabulka SPORTOVNI_VYBAVENI  slouží pro uchování sportovního vybavení pro celý klub]]></commentInRDBMS>
+<generatorID>C17E8589-1507-D17A-A24B-202345C85D05</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="idSportovniVybaveni" id="E18609FC-7897-CD09-973D-602108D1B949">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Atribut idSportovniVybaveni bude sloužit jako UID a bude nabývat čísel od 1 výše]]></commentInRDBMS>
+<generatorID>4C5DCE3E-CEF8-5A5D-F5C4-6EC9CF3A090A</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementMinValue>1</autoIncrementMinValue>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>sekv_sportovni_vybaveni</autoIncrementSequenceName>
+<autoIncrementTriggerName>trig_sekv_sportovni_vybaveni</autoIncrementTriggerName>
+</Column>
+<Column name="nazev" id="FADF6B4A-B8EA-A8A6-7E8D-FC3D432178DA">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>A6305C19-F2F6-A13C-BA62-246DFE68FEB6</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="velikost" id="55BF8FBC-197D-8A98-D429-738188BEDACE">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>3D88C38D-3D3C-BF0C-FA17-D4F70B856301</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>3</dataTypeSize>
+<ownDataTypeParameters>3,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="datumNakupu" id="81B01AC4-566B-7923-87D8-1E9F2433CF3A">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>06BBB2A6-DAB1-74BF-35BA-9C011296071D</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="FB97E75D-E757-5978-C80B-BE0A77C6CC44" name="SPORTOVNI_VYBAVENI_PK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>47DEAE13-74D7-D913-46D5-89B662F1A527</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E18609FC-7897-CD09-973D-602108D1B949"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

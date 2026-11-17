@@ -1,0 +1,175 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="DCC0E377-BE8A-5178-7E0A-8B329599CB5B" name="ZAPASY">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tabulka ZAPASY slouží k uchování údajů o zápasech]]></commentInRDBMS>
+<generatorID>94023718-ABBF-35A6-14FE-D56A31D7B8C8</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<ordsAlias>zapas</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="idZapas" id="9BB0BD88-3FB4-0D3C-7EFE-05377B4171A0">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Atribut idZapas bude sloužit jako UID a bude nabývat čísel od 1 výše]]></commentInRDBMS>
+<generatorID>381D9BAF-4076-F607-6315-6DF3FE35D645</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementMinValue>1</autoIncrementMinValue>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>sekv_zapas</autoIncrementSequenceName>
+<autoIncrementTriggerName>trig_sekv_zapas</autoIncrementTriggerName>
+</Column>
+<Column name="datum" id="2B53B3AE-2897-E9A6-8FA4-DD7FA6253E35">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>EEFE6095-3B40-0D8E-37C1-5A17E9605082</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="domaciTym" id="42953E51-E83D-D875-B6C1-4C6F5514CB8A">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[
+
+
+
+
+
+					]]></commentInRDBMS>
+<generatorID>1B134EE8-00E0-D99D-3AC0-65C1DD2AF7AA</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 CHAR</dataTypeSize>
+<ownDataTypeParameters>30 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="hosteTym" id="A9FC541B-32DF-1416-E975-4FD0772B53A8">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>C6063462-7FD2-1868-374A-94289387BAE5</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 CHAR</dataTypeSize>
+<ownDataTypeParameters>30 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="STAV_ZAPASU_IDSTAV" id="AC6F3FD9-7EC0-E391-C90B-1ACB61A7063C">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 10:21:09 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F5F8F5AA-8267-5202-AECA-3A415FD20BEA" referredColumn="6543B596-A38D-E0EA-3024-603F39625B70"/>
+</associations>
+</Column>
+<Column name="TYP_IDTYPSOUTEZE" id="C823DF17-4392-3BE6-8A6A-876D75AFD85A">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 11:14:25 UTC</createdTime>
+<generatorID>C45497DC-F687-D60C-DC63-B676DCA35538</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="BC3BBDD9-0C5A-D554-1BDC-A166013B0E74" referredColumn="37A025BD-8086-47F0-E967-7D0310E02A65"/>
+</associations>
+</Column>
+<Column name="idTreninkovaSkupina" id="BA199602-4454-45AD-84C9-0CF02F9079F0">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-04-16 00:02:29 UTC</createdTime>
+<generatorID>89CCF00E-DCC6-B005-84D7-09A14FC21023</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="1F0C0763-8C79-C27A-28E0-8BAA495FEFDD" referredColumn="654C0140-0CFA-948F-B0CE-8FED273CF6AB"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="D18DF7EF-DBC7-6C05-8095-445E8CAA2D55" name="ZAPAS_PK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>7CCEB634-B15D-60DB-10C2-26F9C4134C81</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9BB0BD88-3FB4-0D3C-7EFE-05377B4171A0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="AFFFFF35-8CEF-053D-2054-BF54F5A686C7" name="ZAPAS_TYP_SOUTEZ_FK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 10:21:09 UTC</createdTime>
+<generatorID>1F0C52E3-ABB6-A9C0-6D0B-A0B3BBD48AA9</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C823DF17-4392-3BE6-8A6A-876D75AFD85A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="68E0CBA8-6E09-4909-8900-A938CA86784C" name="ZAPAS_STAV_ZAPASU_FK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>110BA5A5-2ED8-E696-F55E-32BE47708F52</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AC6F3FD9-7EC0-E391-C90B-1ACB61A7063C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4CAAE0AE-E391-7429-A982-8F1C8D4AB487" name="ZAPAS_TYP_SOUTEZ_FK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 11:14:25 UTC</createdTime>
+<generatorID>8270E0F7-8697-1EE2-C072-BC2D4D1AFA13</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C823DF17-4392-3BE6-8A6A-876D75AFD85A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="560A8DED-285C-54CE-11C3-1BF9BAF05AD7" name="ZAPASY_TREN_SKUP_FK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-04-16 00:02:29 UTC</createdTime>
+<generatorID>ECD4A3BA-3E5C-177C-3006-718D7A6EB123</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="BA199602-4454-45AD-84C9-0CF02F9079F0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

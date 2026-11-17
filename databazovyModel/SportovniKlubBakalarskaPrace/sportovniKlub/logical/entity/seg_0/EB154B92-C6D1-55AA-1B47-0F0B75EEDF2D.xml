@@ -1,0 +1,60 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="EB154B92-C6D1-55AA-1B47-0F0B75EEDF2D" name="ZDRAVOTNI_STAV">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-03-28 20:35:17 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tabulka ZDRAVOTNI_STAV  slouží jako číselník pro definování o jaký typ se jedná
+]]></commentInRDBMS>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="idZdravotniStav" id="997824CF-B787-4D45-A2F3-7D7DDB48D557">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-03-28 20:35:17 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="nazevStav" id="A9A6331C-D85D-3DD3-BD07-EB3B5D1AB85F">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-03-28 20:35:17 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="7B8D36D7-1E38-B76F-7AC6-BA4C2504B893" name="TRENINKOVA_SKUPINA PK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-03-28 20:35:17 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>997824CF-B787-4D45-A2F3-7D7DDB48D557</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

@@ -1,0 +1,92 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="A552045B-FF56-FF58-02BD-1B2029850CD0" name="VYSLEDKY_ZAPASU">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tabulka VYSLEDKY_ZAPASU slouží k uchování výsledků odehraných zápasů
+]]></commentInRDBMS>
+<generatorID>3AC39394-FB6E-965E-B418-71D00570C23F</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<ordsAlias>vysledek_zapasu</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="vysledek" id="98813989-6C1D-B7A3-53F2-4FEAE7D2F8F3">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>603C41A2-7B9B-6BE5-9A98-A0AA741DCBB0</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>5 CHAR</dataTypeSize>
+<ownDataTypeParameters>5 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="pocetZlutychKaret" id="C7C2B984-4C7B-3970-6439-034863C27EDD">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>BCF192C9-270D-543C-D021-814223CC22F4</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="pocetCervenychKaret" id="75188509-6C7B-84A0-2282-026C6964C8BA">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>95DEEECC-C07F-C174-14DF-CFCBEE7B5B78</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="idZapas" id="486897C0-F155-801F-F50E-AB32BADC7527">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Atribut idZapas bude sloužit jako UID a bude nabývat čísel od 1 výše]]></commentInRDBMS>
+<generatorID>1FAE1A55-3656-91FA-7BDA-D70D98A11F4E</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="257B9D6F-0C63-6A98-DBDD-BBDF8441D05C" referredColumn="9BB0BD88-3FB4-0D3C-7EFE-05377B4171A0"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="5E5367EF-6833-F552-7A29-AC801FF2ACAA" name="VYSLEDEK_ZAPASU_PK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>B8B69BC9-5E85-791E-560A-CE2D4332CB9E</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="486897C0-F155-801F-F50E-AB32BADC7527"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="FE09DDE5-1831-F2E4-E052-139766003228" name="VYSLEDKY_ZAPASU_ZAPASY_FK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>DD7E7315-EC88-40E6-946A-E07528D35479</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="486897C0-F155-801F-F50E-AB32BADC7527"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,86 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="C17E8589-1507-D17A-A24B-202345C85D05" name="SPORTOVNI_VYBAVENI">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-02 19:54:49 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tabulka SPORTOVNI_VYBAVENI  slouží pro uchování sportovního vybavení pro celý klub]]></commentInRDBMS>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="idSportovniVybaveni" id="4C5DCE3E-CEF8-5A5D-F5C4-6EC9CF3A090A">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-02 19:55:04 UTC</createdTime>
+<commentInRDBMS><![CDATA[Atribut idSportovniVybaveni bude sloužit jako UID a bude nabývat čísel od 1 výše]]></commentInRDBMS>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="nazev" id="A6305C19-F2F6-A13C-BA62-246DFE68FEB6">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-02 20:42:23 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="velikost" id="3D88C38D-3D3C-BF0C-FA17-D4F70B856301">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-02 20:43:00 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>3</dataTypeSize>
+<ownDataTypeParameters>3,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="datumNakupu" id="06BBB2A6-DAB1-74BF-35BA-9C011296071D">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-02 20:44:36 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="47DEAE13-74D7-D913-46D5-89B662F1A527" name="SPORTOVNI_VYBAVENI PK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-02 20:31:41 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>4C5DCE3E-CEF8-5A5D-F5C4-6EC9CF3A090A</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

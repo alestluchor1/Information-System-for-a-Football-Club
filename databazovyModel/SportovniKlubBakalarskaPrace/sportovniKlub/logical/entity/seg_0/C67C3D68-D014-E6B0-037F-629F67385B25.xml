@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="C67C3D68-D014-E6B0-037F-629F67385B25" name="TRENINKOVA_SKUPINA">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-03-04 23:03:49 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tabulka TRENINKOVA_SKUPINA slouží jako číselník pro definování o jaký typ se jedná
+]]></commentInRDBMS>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="idTreninkovaSkupina" id="45D28086-D796-DB06-6B66-5E5A1FF8D80E">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-03-04 23:04:06 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="nazevSkupiny" id="6077ABA8-8E05-395D-29A4-54D309DCAFAB">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-03-04 23:05:44 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<ownDataTypeParameters>20,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="5922FE0F-339F-31A8-4246-92469771C15F" name="TRENINKOVA_SKUPINA PK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-03-04 23:04:08 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>45D28086-D796-DB06-6B66-5E5A1FF8D80E</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

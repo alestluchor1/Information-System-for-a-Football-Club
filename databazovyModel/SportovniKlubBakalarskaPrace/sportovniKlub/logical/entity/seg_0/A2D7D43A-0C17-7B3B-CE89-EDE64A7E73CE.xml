@@ -1,0 +1,116 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="A2D7D43A-0C17-7B3B-CE89-EDE64A7E73CE" name="HRAC">
+<createdBy>atluc</createdBy>
+<createdTime>2024-11-20 12:45:29 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tabulka HRACI je subtypem CLENOVE_KLUBU, slouží k uchování specifických údajů pro hráče
+]]></commentInRDBMS>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<hierarchicalParent>E35D6DF8-17FC-D482-9281-404A4148C46F</hierarchicalParent>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="pocetVstrelenychGolu" id="AF8B0EE7-C16B-43DB-3A84-E4792ACF601B">
+<createdBy>atluc</createdBy>
+<createdTime>2024-11-20 12:45:56 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="idOpatreni" id="DDB1DB77-A887-9BDC-97DC-95D75BA81019">
+<createdBy>atluc</createdBy>
+<createdTime>2024-11-20 12:49:14 UTC</createdTime>
+<generatorID>79AF906E-5BE2-AD2C-120C-B66D78853A4D</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>8FE4F0ED-3776-D27F-2D90-89844519FA23</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="pocetZlutychKaret" id="E5F271BA-887C-227A-6127-2B22E8D1B4E3">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2025-10-14 13:37:12 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<ownDataTypeParameters>,3,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="pocetCervenychKaret" id="5BC26348-0C38-1848-A64B-DB73D5B0738D">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2025-10-14 13:38:11 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<ownDataTypeParameters>,3,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="pozice" id="F94A1F7E-456E-EBBF-7152-93485D15479E">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-02 19:44:03 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="idTreninkovaSkupina" id="9C4CB5AE-227E-07B6-4789-B7A59729889D">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-03-04 23:08:57 UTC</createdTime>
+<generatorID>CCB8C948-7D26-85C6-2F81-F759BD4FB6B9</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<referedAttribute>45D28086-D796-DB06-6B66-5E5A1FF8D80E</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="idZdravotniStav" id="F727D84E-D6E8-2142-DC29-EBB8FFBF3D12">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-04-04 11:38:51 UTC</createdTime>
+<generatorID>36C4B0BB-8AFC-D6F0-A7EA-74F164B044B4</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<referedAttribute>997824CF-B787-4D45-A2F3-7D7DDB48D557</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+</Entity>

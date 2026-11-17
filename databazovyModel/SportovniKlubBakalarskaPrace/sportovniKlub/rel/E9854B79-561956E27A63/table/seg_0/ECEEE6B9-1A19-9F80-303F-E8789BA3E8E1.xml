@@ -1,0 +1,217 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="ECEEE6B9-1A19-9F80-303F-E8789BA3E8E1" name="HRACI">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tabulka HRACI je subtypem CLENOVE_KLUBU, slouží k uchování specifických údajů pro hráče
+]]></commentInRDBMS>
+<generatorID>A2D7D43A-0C17-7B3B-CE89-EDE64A7E73CE</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<ordsAlias>hrac</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="idClenKlubu" id="05FE1EC2-2EDA-D3F1-9960-540FAC992C57">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Atribut idClenKlubu bude sloužit jako UID a bude nabývat čísel od 1 výše]]></commentInRDBMS>
+<generatorID>D25EA75B-EE71-FDE3-1C90-EE01687B7BA0</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementMinValue>1</autoIncrementMinValue>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>sekv_hrac_clenklubu</autoIncrementSequenceName>
+<autoIncrementTriggerName>trig_sekv_hrac_clenklubu</autoIncrementTriggerName>
+<associations>
+<colAssociation fkAssociation="73C88DFA-F4F1-1D85-D8B9-C26A7FC2808A" referredColumn="2FE7B5A0-9702-2DE7-A325-07C4747380E5"/>
+</associations>
+</Column>
+<Column name="pocetVstrelenychGolu" id="C81955CD-DA99-F373-415F-6C63AECD5A68">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>AF8B0EE7-C16B-43DB-3A84-E4792ACF601B</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="idOpatreni" id="831BD334-3690-86B0-2D83-DD419F90AC1B">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>DDB1DB77-A887-9BDC-97DC-95D75BA81019</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D0E93843-78A3-27B4-D687-C73772647F84" referredColumn="F5D9B1C1-7F5A-53B7-E2FE-775DF1BD780D"/>
+</associations>
+</Column>
+<Column name="pocetZlutychKaret" id="504D5BDE-222E-88DF-B459-2C7353AB3DB6">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>E5F271BA-887C-227A-6127-2B22E8D1B4E3</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<ownDataTypeParameters>,3,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="pocetCervenychKaret" id="38534E9E-A062-6344-3AAD-6B6C1F57B2AC">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>5BC26348-0C38-1848-A64B-DB73D5B0738D</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<ownDataTypeParameters>,3,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="pozice" id="6E67B383-8F62-FBFD-2FD5-C6FFA94A1CA9">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>F94A1F7E-456E-EBBF-7152-93485D15479E</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="idTreninkovaSkupina" id="B5295BC5-EED8-F683-E843-DC9A25CDDD59">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-03-05 09:36:39 UTC</createdTime>
+<generatorID>9C4CB5AE-227E-07B6-4789-B7A59729889D</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="2EFF84A6-B80D-95F2-7FBD-071CEB2CA627" referredColumn="654C0140-0CFA-948F-B0CE-8FED273CF6AB"/>
+</associations>
+</Column>
+<Column name="idZdravotniStav" id="5A3E6BFD-1D84-0204-97D3-5CE49A456878">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-04-04 11:40:36 UTC</createdTime>
+<generatorID>F727D84E-D6E8-2142-DC29-EBB8FFBF3D12</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="8B81EA03-8083-D838-48EE-C6F81DFF2399" referredColumn="4EC17196-12A6-6D13-D2E4-F14A9772C610"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="E33CA589-B62E-060B-7AB2-D2B4247D1C49" name="HRAC_PK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>64A63FDA-3CFE-918E-82F4-B766CFA5AAE9</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="05FE1EC2-2EDA-D3F1-9960-540FAC992C57"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="14F6BE52-A785-8A99-B851-D299B46CF233" name="HRACI_OPATRENI_FK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 10:21:09 UTC</createdTime>
+<generatorID>79AF906E-5BE2-AD2C-120C-B66D78853A4D</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="831BD334-3690-86B0-2D83-DD419F90AC1B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="67D6FDAC-11D3-1A6B-4CBC-5AB60A1773E0" name="HRACI_CLENOVE_KLUBU_FK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>9E47A056-5C22-D442-BBC2-7768E64B2816</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="05FE1EC2-2EDA-D3F1-9960-540FAC992C57"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C8A9F057-4E13-AE95-92AF-AED03DB41A3F" name="HRAC_TRENINKOVA_SKUPINA_FK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-03-05 09:36:39 UTC</createdTime>
+<generatorID>CCB8C948-7D26-85C6-2F81-F759BD4FB6B9</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B5295BC5-EED8-F683-E843-DC9A25CDDD59"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E7B9F65A-3C1E-2351-250D-5AF5784F8366" name="HRAC_ZDRAVOTNI_STAV_FK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-04-04 11:40:36 UTC</createdTime>
+<generatorID>36C4B0BB-8AFC-D6F0-A7EA-74F164B044B4</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5A3E6BFD-1D84-0204-97D3-5CE49A456878"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="EA0F2E5F-3351-DC3E-74B2-C4C9CA208903" name="HRAC_OPATRENI_FK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-04-18 16:08:15 UTC</createdTime>
+<generatorID>79AF906E-5BE2-AD2C-120C-B66D78853A4D</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="831BD334-3690-86B0-2D83-DD419F90AC1B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+<tableCheckConstraints itemClass="oracle.dbtools.crest.model.design.constraint.TableLevelConstraint">
+<tableCheckConstraint name="CHECK_POCETZLUTYCHKARET" directorySegmentName="seg_0" id="670578CA-A83A-3F12-1114-1FB43BDD2571">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-03-05 10:18:47 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<rule><![CDATA[pocetZlutychKaret >= 0]]></rule>
+</tableCheckConstraint>
+<tableCheckConstraint name="CHECK_POCETCERVENYCHKARET" directorySegmentName="seg_0" id="7A4B3098-0BF1-7E61-7461-A553C7B5B9DA">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-03-05 10:19:21 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<rule><![CDATA[pocetCervenychKaret >= 0]]></rule>
+</tableCheckConstraint>
+<tableCheckConstraint name="CHECK_POCETVSTRELENYCHGOLU" directorySegmentName="seg_0" id="70ACA0DE-4FF7-848B-8A4E-0AC2D1F739C7">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-03-05 10:20:03 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<rule><![CDATA[pocetVstrelenychGolu >= 0]]></rule>
+</tableCheckConstraint>
+</tableCheckConstraints>
+</Table>

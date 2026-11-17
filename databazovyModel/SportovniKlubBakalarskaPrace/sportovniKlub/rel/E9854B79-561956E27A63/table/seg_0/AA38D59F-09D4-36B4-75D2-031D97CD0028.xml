@@ -1,0 +1,99 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="AA38D59F-09D4-36B4-75D2-031D97CD0028" name="TRENERI">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tabulka TRENERI je subtypem CLENOVE_KLUBU
+Jsou ukládané specifické údaje pro trenéry
+]]></commentInRDBMS>
+<generatorID>DBD290AE-ADFC-4EE0-A642-E99AEA1337BC</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<ordsAlias>trener</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="idClenKlubu" id="A7E90CA8-79D2-FA91-D9E2-9457E05BDF36">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Atribut idClenKlubu bude sloužit jako UID a bude nabývat čísel od 1 výše]]></commentInRDBMS>
+<generatorID>D25EA75B-EE71-FDE3-1C90-EE01687B7BA0</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementMinValue>1</autoIncrementMinValue>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>sekv_trener_clenklubu</autoIncrementSequenceName>
+<autoIncrementTriggerName>trig_sekv_trener_clenklubu</autoIncrementTriggerName>
+<associations>
+<colAssociation fkAssociation="8E634568-0AAD-B968-5856-B674DDC84999" referredColumn="2FE7B5A0-9702-2DE7-A325-07C4747380E5"/>
+</associations>
+</Column>
+<Column name="specializace" id="F3DCE394-C10A-9CAB-C7E6-999AD2090BF7">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>BD3061C3-B7F4-AE05-658F-60C6482B1A5B</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>40 CHAR</dataTypeSize>
+<ownDataTypeParameters>40 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="idTreninkovaSkupina" id="F22115EC-D412-C2B7-2A9A-D1D359009368">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-04-18 16:08:15 UTC</createdTime>
+<generatorID>95E8A11E-1621-DD72-520C-B15CE903B0ED</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="4ADF9FF8-4744-CA45-6A02-7E6EA619F447" referredColumn="654C0140-0CFA-948F-B0CE-8FED273CF6AB"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="FCB7371D-0C2D-5E0E-FD66-7CED24696423" name="TRENER_PK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>64A63FDA-3CFE-918E-82F4-B766CFA5AAE9</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A7E90CA8-79D2-FA91-D9E2-9457E05BDF36"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="281A676A-1FE2-4C43-5106-5110A1312A02" name="TRENERI_CLENOVE_KLUBU_FK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>82181338-F472-B39D-A16E-C4CCD1366056</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A7E90CA8-79D2-FA91-D9E2-9457E05BDF36"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9A131C37-C9F4-8F74-B257-9F7809801880" name="TRENERI_TRENINKOVA_SKUP_FK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-04-18 16:08:15 UTC</createdTime>
+<generatorID>80810928-A5AD-281F-EF38-FE247BC2B1AC</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F22115EC-D412-C2B7-2A9A-D1D359009368"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

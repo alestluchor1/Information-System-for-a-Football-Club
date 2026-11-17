@@ -1,0 +1,51 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="4465C650-1A22-B206-A37F-FFC6BCD32FDB" name="ZDRAVOTNI_STAV">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-04-04 11:40:36 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tabulka ZDRAVOTNI_STAV  slouží jako číselník pro definování o jaký typ se jedná
+]]></commentInRDBMS>
+<generatorID>EB154B92-C6D1-55AA-1B47-0F0B75EEDF2D</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="idZdravotniStav" id="4EC17196-12A6-6D13-D2E4-F14A9772C610">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-04-04 11:40:36 UTC</createdTime>
+<generatorID>997824CF-B787-4D45-A2F3-7D7DDB48D557</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="nazevStav" id="A8EE63AC-D94E-9AC1-9310-1F58C6ED2AC2">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-04-04 11:40:36 UTC</createdTime>
+<generatorID>A9A6331C-D85D-3DD3-BD07-EB3B5D1AB85F</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="D0CB9AD7-90A5-5764-2AB2-252299A334ED" name="ZDRAVOTNI_STAV_PK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-04-04 11:40:36 UTC</createdTime>
+<generatorID>7B8D36D7-1E38-B76F-7AC6-BA4C2504B893</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4EC17196-12A6-6D13-D2E4-F14A9772C610"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

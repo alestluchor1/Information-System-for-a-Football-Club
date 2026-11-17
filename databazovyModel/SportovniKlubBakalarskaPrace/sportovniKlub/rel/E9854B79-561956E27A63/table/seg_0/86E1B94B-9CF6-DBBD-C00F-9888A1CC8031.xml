@@ -1,0 +1,69 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="86E1B94B-9CF6-DBBD-C00F-9888A1CC8031" name="TYP_SOUTEZE">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tabulka TYP_SOUTEZ slouží jako číselník pro definování konkrétní soutěže
+Bude nabývat hodnot: LIGA, POHÁR, DIVIZE, KRAJ, OKRES]]></commentInRDBMS>
+<generatorID>B3AC0C02-EB46-EFC8-1AFD-2200D6AC5F0C</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<ordsAlias>typ_soutez</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="idTypSouteze" id="37A025BD-8086-47F0-E967-7D0310E02A65">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Atribut idTypSouteze bude sloužit jako UID a bude nabývat čísel od 1 výše.]]></commentInRDBMS>
+<generatorID>3B1264EB-D941-AF88-E7B1-6B09E2338902</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementMinValue>1</autoIncrementMinValue>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>sekv_typsouteze</autoIncrementSequenceName>
+<autoIncrementTriggerName>trig_sekv_typsouteze</autoIncrementTriggerName>
+</Column>
+<Column name="nazevSouteze" id="DDF3C135-F518-B899-D73C-371430DA17D5">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>79978FF3-E4F6-C871-9DF6-7AA508298048</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>6 CHAR</dataTypeSize>
+<ownDataTypeParameters>6 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="A729A81E-A6E5-E151-F9F7-0FDEC15DF64A" name="TYP_SOUTEZ_PK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>D1FBD613-3744-E90B-BAC9-6798F133C072</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="37A025BD-8086-47F0-E967-7D0310E02A65"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F6DABF85-5A55-6E25-8E57-33130527D979" name="TYP_SOUTEZ_nazevSouteze_UN">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>1B29DFAB-CE8F-D1FA-BCCF-14630DE6AA9C</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DDF3C135-F518-B899-D73C-371430DA17D5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

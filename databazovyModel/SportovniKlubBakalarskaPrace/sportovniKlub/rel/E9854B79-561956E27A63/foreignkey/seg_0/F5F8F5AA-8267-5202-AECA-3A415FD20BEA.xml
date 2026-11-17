@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="F5F8F5AA-8267-5202-AECA-3A415FD20BEA" containerWithKeyObject="DCC0E377-BE8A-5178-7E0A-8B329599CB5B" localFKIndex="68E0CBA8-6E09-4909-8900-A938CA86784C" name="ZAPAS_STAV_ZAPASU_FK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>110BA5A5-2ED8-E696-F55E-32BE47708F52</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<referredTableLongName>STAV_ZAPASU</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>BCFECADC-B23A-000E-1E36-20B1A9705F67</referredTableID>
+<keyObject>04CA863B-8AC5-9731-F4C6-926A93B3EB96</keyObject>
+<referredKeyID>04CA863B-8AC5-9731-F4C6-926A93B3EB96</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>idStav</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

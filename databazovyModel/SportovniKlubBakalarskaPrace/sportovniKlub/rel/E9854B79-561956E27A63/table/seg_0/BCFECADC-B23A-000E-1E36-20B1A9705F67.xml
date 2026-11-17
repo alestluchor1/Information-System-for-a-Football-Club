@@ -1,0 +1,68 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="BCFECADC-B23A-000E-1E36-20B1A9705F67" name="STAV_ZAPASU">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tabulka STAV_ZAPASU slouží jako číselník pro definování stavu zápasu
+Bude nabývat hodnot: ODEHRÁNO, BUDE SE HRÁT]]></commentInRDBMS>
+<generatorID>C8B6942F-C6D3-ED55-394C-00483CEED6E9</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="idStav" id="6543B596-A38D-E0EA-3024-603F39625B70">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Atribut idStav bude sloužit jako UID a bude nabývat čísel od 1 výše]]></commentInRDBMS>
+<generatorID>F108264F-8A97-33BA-6324-594D6F39249E</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementMinValue>1</autoIncrementMinValue>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>sekv_stavzapasu</autoIncrementSequenceName>
+<autoIncrementTriggerName>trig_sekv_stavzapasu</autoIncrementTriggerName>
+</Column>
+<Column name="stavZapasu" id="4CD08C13-B864-E4E3-EF3A-51B879CB81E0">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>75EF50E8-9D60-5B08-49EA-D0D26CA99008</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>12 CHAR</dataTypeSize>
+<ownDataTypeParameters>12 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="04CA863B-8AC5-9731-F4C6-926A93B3EB96" name="STAV_ZAPASU_PK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>98365BBE-F89E-8D99-C186-1522C31967D3</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6543B596-A38D-E0EA-3024-603F39625B70"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4927B3D4-FAC9-56FC-106E-EC3D34999FE4" name="STAV_ZAPASU_stavZapasu_UN">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>4D4A7D02-E625-F26F-20E1-4F5D43DA4B1A</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4CD08C13-B864-E4E3-EF3A-51B879CB81E0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

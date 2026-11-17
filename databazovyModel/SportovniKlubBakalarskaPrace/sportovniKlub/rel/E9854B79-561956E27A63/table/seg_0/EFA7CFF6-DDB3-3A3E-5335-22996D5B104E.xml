@@ -1,0 +1,62 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="EFA7CFF6-DDB3-3A3E-5335-22996D5B104E" name="ROLE">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 11:14:25 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tabulka ROLE slouží jako číselník pro definování role uživatelského účtu
+]]></commentInRDBMS>
+<generatorID>CF612FFB-80EA-8301-C0C6-52EB94949EE2</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="idRole" id="172FDB7F-F6CE-02B8-0FC2-6A41D6F159B0">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 11:14:25 UTC</createdTime>
+<generatorID>858EA197-03A1-E000-F371-1019B88ED76F</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="nazevRole" id="916BB8FE-0B38-E146-C02D-57BC9634E85E">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 11:14:25 UTC</createdTime>
+<generatorID>0AC8E27A-99D3-0247-3338-438A1AC75AB7</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>6</dataTypeSize>
+<ownDataTypeParameters>6,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="E5A35C0F-5315-6167-D007-FA9B96817047" name="ROLE_PK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 11:14:25 UTC</createdTime>
+<generatorID>A21FA701-85B9-8380-A284-D448F287CD4D</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="172FDB7F-F6CE-02B8-0FC2-6A41D6F159B0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6F0EF2F0-422D-46EE-A97E-31FFE7E36C7F" name="ROLE_NAZEVROLE_UN">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 11:14:25 UTC</createdTime>
+<generatorID>8BC4993E-20D4-8B1B-9A10-5E804DFABF08</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="916BB8FE-0B38-E146-C02D-57BC9634E85E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

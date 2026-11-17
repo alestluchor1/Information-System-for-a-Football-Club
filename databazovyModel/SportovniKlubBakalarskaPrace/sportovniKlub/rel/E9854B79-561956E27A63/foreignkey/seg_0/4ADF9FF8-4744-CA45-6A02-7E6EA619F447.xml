@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="4ADF9FF8-4744-CA45-6A02-7E6EA619F447" containerWithKeyObject="AA38D59F-09D4-36B4-75D2-031D97CD0028" localFKIndex="9A131C37-C9F4-8F74-B257-9F7809801880" name="TRENERI_TRENINKOVA_SKUP_FK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-04-18 16:08:15 UTC</createdTime>
+<generatorID>80810928-A5AD-281F-EF38-FE247BC2B1AC</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<referredTableLongName>TRENINKOVA_SKUPINA</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>3B162835-B2ED-AA45-AAFD-EE59C0F488ED</referredTableID>
+<keyObject>5D05D220-2371-8ECE-49B0-6FC2E8293DA0</keyObject>
+<referredKeyID>5D05D220-2371-8ECE-49B0-6FC2E8293DA0</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>idTreninkovaSkupina</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

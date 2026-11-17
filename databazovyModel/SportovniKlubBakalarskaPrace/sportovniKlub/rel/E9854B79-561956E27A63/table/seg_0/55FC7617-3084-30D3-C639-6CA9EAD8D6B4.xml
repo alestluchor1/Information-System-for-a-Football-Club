@@ -1,0 +1,105 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="55FC7617-3084-30D3-C639-6CA9EAD8D6B4" name="DISCIPLINARNI_OPATRENI">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tabulka DISCIPLINARNI_OPATRENI slouží pro uchování disciplinárních opatření, která jsou udělována hráčům]]></commentInRDBMS>
+<generatorID>17900FB4-E04B-2E7C-49E0-472BA8510309</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="idOpatreni" id="F5D9B1C1-7F5A-53B7-E2FE-775DF1BD780D">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<commentInRDBMS><![CDATA[Atribut idOpatreni bude sloužit jako UID a bude nabývat čísel od 1 výše]]></commentInRDBMS>
+<generatorID>8FE4F0ED-3776-D27F-2D90-89844519FA23</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementMinValue>1</autoIncrementMinValue>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>sekv_opatreni</autoIncrementSequenceName>
+<autoIncrementTriggerName>trig_sekv_opatreni</autoIncrementTriggerName>
+</Column>
+<Column name="ukonceniDatumOpatreni" id="05393B97-3B4F-3BBB-AE7B-7C4375F87ECB">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>B546993B-BB74-E6E9-0111-C7B4831F81DF</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="duvod" id="D8418777-2C50-AE4A-4995-959DEC303915">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>61B42EA9-B29B-84E1-87FD-C9D8D56B5328</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 CHAR</dataTypeSize>
+<ownDataTypeParameters>50 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ZAPAS_idZapas" id="2D9B3661-7A74-F120-7085-7C800A2F607D">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 11:14:25 UTC</createdTime>
+<generatorID>F208B47D-2573-B9B5-2782-646E663AF4A1</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A9EAF1EB-9F0F-F27A-C416-FBD8EBF1ADF0" referredColumn="9BB0BD88-3FB4-0D3C-7EFE-05377B4171A0"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="37EBE781-903B-B9F4-6547-D0391F7B8281" name="DISCIPLINARNI_OPATRENI_PK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-03 16:46:24 UTC</createdTime>
+<generatorID>D6FBF1D7-534E-7DA6-2760-482D150A8C3B</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F5D9B1C1-7F5A-53B7-E2FE-775DF1BD780D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="256015EB-8278-FE33-3A06-41B01F62BC1D" name="OPATRENI_ZAPAS_FK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 10:21:09 UTC</createdTime>
+<generatorID>EA298FE0-2D19-ED94-F40D-F2DB458537AE</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2D9B3661-7A74-F120-7085-7C800A2F607D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="14A848F2-CB61-4007-36A9-DD394D3065F0" name="OPATRENI_ZAPAS_FK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 11:14:25 UTC</createdTime>
+<generatorID>924C0206-057B-AD3F-62A8-150FAEC38FA5</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2D9B3661-7A74-F120-7085-7C800A2F607D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="9C2CC188-FE98-342D-49FC-51AE8AFB3042" containerWithKeyObject="22B8E161-64A9-9E6D-BE33-7949F6D5554A" localFKIndex="4083D360-95A7-BDEB-B717-2FF0A542A384" name="UZIVATELSKY_UCET_ROLE_FK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 11:14:25 UTC</createdTime>
+<generatorID>36A9B610-7EC2-D65F-9519-FF7FF19DDF73</generatorID>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<referredTableLongName>ROLE</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>EFA7CFF6-DDB3-3A3E-5335-22996D5B104E</referredTableID>
+<keyObject>E5A35C0F-5315-6167-D007-FA9B96817047</keyObject>
+<referredKeyID>E5A35C0F-5315-6167-D007-FA9B96817047</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>idRole</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

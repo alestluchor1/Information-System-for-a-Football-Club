@@ -1,0 +1,72 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="CF612FFB-80EA-8301-C0C6-52EB94949EE2" name="ROLE">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 11:07:32 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tabulka ROLE slouží jako číselník pro definování role uživatelského účtu
+]]></commentInRDBMS>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="idRole" id="858EA197-03A1-E000-F371-1019B88ED76F">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 11:07:39 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="nazevRole" id="0AC8E27A-99D3-0247-3338-438A1AC75AB7">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 11:07:47 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>6</dataTypeSize>
+<ownDataTypeParameters>6,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="A21FA701-85B9-8380-A284-D448F287CD4D" name="ROLE PK">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 11:07:46 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>858EA197-03A1-E000-F371-1019B88ED76F</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="8BC4993E-20D4-8B1B-9A10-5E804DFABF08" name="UNI_nazevRole">
+<createdBy>Aleš Tlučhoř</createdBy>
+<createdTime>2026-02-27 11:08:00 UTC</createdTime>
+<ownerDesignName>sportovniKlub</ownerDesignName>
+<engineerTo>
+<item key="E9854B79-C9D0-99C1-31EE-561956E27A63" value="true"/>
+</engineerTo>
+<newElementsIDs>0AC8E27A-99D3-0247-3338-438A1AC75AB7</newElementsIDs>
+<usedAttributes>
+<attributeRef>0AC8E27A-99D3-0247-3338-438A1AC75AB7</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

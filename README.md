@@ -1,108 +1,242 @@
-# ⚽ Informační systém fotbalového klubu
 
-Moderní desktopová aplikace vytvořená v rámci bakalářské práce pro správu sportovního fotbalového klubu.
+<div align="center">
 
-## 👨‍🎓 Autor
+# ⚽ Systém pro správu sportovního fotbalového klubu
 
-**Aleš Tlučhoř**  
-Univerzita Pardubice  
-Obor: **Informační technologie**  
-Rok: **2026**
+### Bakalářská práce | 2026
 
-## 📘 Název bakalářské práce
+Desktopová aplikace pro komplexní správu fotbalového klubu vytvořená v jazyce C# s využitím WPF a databáze Oracle.
 
-**Systém pro správu sportovního fotbalového klubu**
+**Aleš Tlučhoř**
 
-Cílem práce je navrhnout a implementovat moderní informační systém pro správu sportovního fotbalového klubu. Systém umožní efektivní správu tréninkových skupin, hráčů, trenérů, tréninků a zápasů. Systém dále umožní trenérům navrhovat sestavy týmu na zápas například podle individuálních výkonových statistik hráče, zdravotního stavu apod. Systém bude umožňovat přístup k jednotlivým funkcím podle rolí. Součástí práce je také analýza stávajících řešení, návrh architektury aplikace, výběr vhodných technologií a testování výsledné implementace.
+[Fakulta elektrotechniky a informatiky](https://fei.upce.cz/) · [Univerzita Pardubice](https://www.upce.cz/)
 
-## 🇬🇧 Thesis Goal in English
+<br>
 
-The aim of the thesis is to design and implement a modern information system for the administration of a sports football club. The system enables effective management of training groups, players, coaches, training sessions and matches. It also allows coaches to design team line-ups for a match, for example according to individual player performance statistics, health condition, etc. The system provides access to selected functions according to user roles. The thesis also includes an analysis of existing solutions, application architecture design, selection of appropriate technologies and testing of the final implementation.
+<a href="https://theses.cz/id/v8fbqf/">
+  <img src="https://img.shields.io/badge/📘_BAKALÁŘSKÁ_PRÁCE-Theses.cz-2962FF?style=for-the-badge" alt="Bakalářská práce na Theses.cz">
+</a>
 
-## 🧩 Funkce systému
+<br><br>
 
-Aplikace obsahuje zejména tyto části:
+![C#](https://img.shields.io/badge/C%23-.NET_8-512BD4?logo=dotnet)
+![WPF](https://img.shields.io/badge/UI-WPF-blue)
+![Database](https://img.shields.io/badge/Database-Oracle-F80000?logo=oracle)
+![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?logo=windows)
+![Status](https://img.shields.io/badge/Bakalářská_práce-Úspěšně_obhájena-brightgreen)
 
-- evidence hráčů
-- evidence trenérů
-- evidence tréninků
-- evidence disciplinárních opatření
-- evidence hráčských kontraktů
-- evidence sportovního vybavení
-- evidence zápasů
-- evidence nominací na zápas
-- evidence statistik hráčů v zápase
-- kalendář plánovaných tréninků
-- editor sestav na hrací ploše
-- filtrování a vyhledávání záznamů
-- registrace nového uživatele
-- správa uživatelských účtů podle rolí
-- přepínání mezi světlým a tmavým režimem
-- export vybraných dat do CSV
-- zasílání e-mailových oznámení
+</div>
+
+---
+
+## 📖 O projektu
+
+Cílem bakalářské práce bylo navrhnout a implementovat informační systém pro správu sportovního fotbalového klubu.
+
+Aplikace soustřeďuje důležité informace o hráčích, trenérech, tréninkových skupinách, trénincích a zápasech na jedno místo. Umožňuje také evidenci hráčských kontraktů, disciplinárních opatření, statistik a sportovního vybavení.
+
+Důležitou součástí systému je řízení přístupu podle uživatelských rolí a grafický editor sestav, který trenérům umožňuje navrhovat rozestavení hráčů na fotbalovém hřišti.
+
+Výsledkem je funkční desktopová aplikace s moderním uživatelským rozhraním a cloudovou databází Oracle.
+
+V bakalářské práci se dále řeší analýza, funkční a nefunkční požadavky, implementace a uživatelské testování.
+
+🎓 **Bakalářská práce byla úspěšně obhájena v roce 2026 na Univerzitě Pardubice.**
+
+## ✨ Hlavní funkce systému
+
+| Modul | Popis |
+|---|---|
+| ⚽ Hráči | Evidence hráčů, statistik, pozic a zdravotního stavu |
+| 🧑‍🏫 Trenéři | Evidence trenérů a jejich specializací |
+| 🏃 Tréninky | Plánování a správa tréninkových jednotek |
+| 📅 Kalendář | Přehled plánovaných tréninků |
+| 🏆 Zápasy | Evidence zápasů, výsledků a statistik |
+| 👥 Nominace | Sestavování nominací hráčů na zápasy |
+| 📝 Kontrakty | Evidence hráčských smluv a výstupních klauzulí |
+| 🟥 Disciplinární opatření | Evidence trestů a jejich platnosti |
+| 🎽 Sportovní vybavení | Správa klubového vybavení |
+| 📋 Editor sestav | Grafický návrh rozestavení hráčů na hřišti |
+| ✉️ Notifikace | Odesílání e-mailových oznámení členům klubu |
+| ⚙️ Nastavení | Správa uživatelských účtů a oprávnění |
+
+Další funkce zahrnují registraci uživatelů, vyhledávání a filtrování záznamů, řazení tabulek, export vybraných dat do CSV a přepínání mezi světlým a tmavým režimem.
 
 ## 👥 Uživatelské role
 
-Aplikace podporuje tyto role:
+Systém využívá princip **RBAC (Role-Based Access Control)**, tedy řízení přístupu na základě uživatelských rolí.
 
-- **administrátor**
-- **trenér**
-- **hráč**
-- **host**
+- **Administrátor** – plná správa systému, uživatelů a oprávnění.
+- **Trenér** – správa tréninků, hráčů a příprava zápasů.
+- **Hráč** – přístup k vybraným informacím a funkcím.
+- **Host** – omezený přístup k systému.
 
-Každá role má odlišná oprávnění a přístup pouze k vybraným částem systému.
+Každá role má vlastní oprávnění, která určují dostupné části aplikace.
 
-## 🔐 Testovací účty
+### 🔑 Testovací účty
 
-Pro testovací účely lze použít následující uživatelské účty:
+Pro vyzkoušení aplikace jsou připraveny následující testovací účty:
 
-### Administrátor
-- **Role:** admin
-- **Uživatelské jméno:** `admin`
-- **Heslo:** `pardubice`
+| Role | Uživatelské jméno | Heslo |
+|---|---|---|
+| 🔴 Administrátor | `admin` | `pardubice` |
+| 🟣 Trenér | `trener` | `pardubice` |
+| 🔵 Hráč | `hrac` | `pardubice` |
 
-### Trenér
-- **Role:** trenér
-- **Uživatelské jméno:** `trener`
-- **Heslo:** `pardubice`
+**Poznámka:** Všechny testovací účty používají stejné heslo. Jednotlivé účty mají rozdílná oprávnění, takže je možné vyzkoušet aplikaci z pohledu různých uživatelských rolí.
 
-### Hráč
-- **Role:** hráč
-- **Uživatelské jméno:** `hrac`
-- **Heslo:** `pardubice`
+## 🧩 Editor sestav
+
+Jednou ze zajímavějších součástí projektu je grafický editor fotbalových sestav.
+
+Umožňuje trenérovi vybírat hráče ze seznamu a umisťovat je přímo na hrací plochu. Hráče lze přesouvat a vytvářet různé varianty rozestavení.
+
+Při výběru hráčů lze využít filtry podle tréninkové skupiny, zdravotního stavu, disciplinárních opatření nebo individuálních statistik.
 
 ## 🛠️ Použité technologie
 
-Projekt využívá tyto technologie:
+| Technologie | Využití |
+|---|---|
+| **C#** | Programovací jazyk a aplikační logika |
+| **.NET 8** | Vývojová platforma |
+| **WPF** | Tvorba desktopového uživatelského rozhraní |
+| **XAML** | Návrh grafických oken a ovládacích prvků |
+| **Oracle Database** | Ukládání a správa dat |
+| **Oracle Autonomous Database** | Provoz databáze v Oracle Cloud Infrastructure |
+| **Oracle.ManagedDataAccess.Core** | Připojení aplikace k databázi Oracle |
+| **Oracle SQL Developer** | Správa databáze a práce s SQL |
+| **Oracle SQL Developer Data Modeler** | Návrh ERD a relačního modelu |
+| **Microsoft Visual Studio 2022** | Vývojové prostředí |
+| **Git a GitHub** | Správa verzí zdrojového kódu |
 
-- **C#**
-- **WPF**
-- **.NET 8**
-- **Oracle Database**
-- **Oracle Managed Data Access**
-- **Visual Studio**
+### Použité knihovny
 
-## 🗄️ Databáze
+- `Oracle.ManagedDataAccess.Core` – komunikace s databází Oracle.
+- `Extended.Wpf.Toolkit` – rozšířené ovládací prvky pro WPF.
+- `FontAwesome.WPF` – ikony v uživatelském rozhraní.
 
-Aplikace je napojena na databázi **Oracle Autonomous Database**.
+## 🗄️ Databáze a její návrh
 
-## 💿 Instalační balíček
+Databázová část projektu využívá **Oracle Autonomous Database**, provozovanou v prostředí Oracle Cloud Infrastructure (OCI). Desktopová aplikace se k databázi připojuje vzdáleně.
 
-Součástí projektu je také vytvořený instalační balíček aplikace:
+Databázový model byl vytvořen v programu Oracle SQL Developer Data Modeler. Na základě návrhu byl vytvořen DDL skript, který sloužil k vytvoření databázových tabulek, vazeb a integritních omezení.
 
-- **MSI instalační soubor**
-- **setup.exe**
-- **LICENSE.txt**
+Databáze využívá primární a cizí klíče, unikátní omezení, kontrolní podmínky, sekvence .
 
-Instalační balíček umožňuje snadnou instalaci aplikace na cílovém počítači bez nutnosti ručně kopírovat jednotlivé soubory.
+## 🔐 Zabezpečení
 
-## 📄 Licence
+Aplikace obsahuje přihlašování a registraci uživatelů. Hesla jsou ukládána v podobě hashů se solí, nikoliv v původní čitelné podobě.
 
-Tento projekt je licencován pod licencí **MIT**.
+Přístup k jednotlivým částem aplikace je omezen podle uživatelských rolí, což umožňuje oddělení oprávnění jednotlivých uživatelů.
 
-Součástí projektu je soubor `LICENSE.txt`, který obsahuje úplné znění licence.  
-Copyright © 2026 **Aleš Tlučhoř**
+---
 
-## ℹ️ Poznámka
+## 🖥️ Ukázky aplikace
 
-Projekt vznikl jako součást bakalářské práce na Univerzitě Pardubice.
+### Hlavní okno – světlý a tmavý režim
+
+<div align="center">
+  <img src="GitImages/hlavniOkno_light.png" width="49%" alt="Hlavní okno aplikace – světlý režim">
+  <img src="GitImages/hlavniOkno_dark.png" width="49%" alt="Hlavní okno aplikace – tmavý režim">
+</div>
+
+<p align="center">
+  <em>Uživatelské rozhraní hlavního menu v obou barevných režimech.</em>
+</p>
+
+### Přihlašovací formulář
+
+<div align="center">
+  <img src="GitImages/prihlasovaci_formular.png" width="75%" alt="Přihlašovací formulář aplikace">
+</div>
+
+<p align="center">
+  <em>Přihlašování uživatelů do informačního systému.</em>
+</p>
+
+## 📐 Databázový model
+
+### ERD diagram
+
+<div align="center">
+  <img src="GitImages/erd_diagram.png" width="90%" alt="ERD diagram databáze">
+</div>
+
+<p align="center">
+  <em>Konceptuální návrh databáze – entity a jejich vzájemné vztahy.</em>
+</p>
+
+### Relační model
+
+<div align="center">
+  <img src="GitImages/relacni_model.png" width="90%" alt="Relační model databáze">
+</div>
+
+<p align="center">
+  <em>Relační model databáze včetně tabulek, atributů a vazeb.</em>
+</p>
+
+---
+
+## 📦 Zdrojové soubory a dokumentace
+
+GitHub repozitář je určen především pro zdrojové soubory aplikace a ukázky jejího fungování.
+
+Kompletní bakalářská práce a související materiály jsou dostupné na portálu **Theses.cz**.
+
+<div align="center">
+
+<a href="https://theses.cz/id/v8fbqf/">
+  <img src="https://img.shields.io/badge/OTEVŘÍT_BAKALÁŘSKOU_PRÁCI-Theses.cz-2962FF?style=for-the-badge" alt="Otevřít bakalářskou práci">
+</a>
+
+</div>
+
+Mezi doprovodné materiály projektu patří:
+
+- 📘 Kompletní bakalářská práce ve formátu PDF.
+- 📊 Prezentační soubor v PowerPointu k obhajobě.
+- 💿 Instalační balíček aplikace.
+- 🗄️ Databázový model vytvořený v Oracle SQL Developer Data Modeler.
+- 📄 DDL skript pro vytvoření databázové struktury.
+
+## 🚀 Spuštění projektu
+
+Pro otevření a spuštění zdrojového kódu je potřeba:
+
+1. Naklonovat tento GitHub repozitář.
+2. Otevřít řešení `.sln` v Microsoft Visual Studio 2022.
+3. Mít nainstalovaný .NET 8 SDK a podporu WPF.
+4. Obnovit potřebné balíčky NuGet.
+5. Nastavit vlastní připojení k databázi Oracle a údaje pro SMTP komunikaci.
+6. Sestavit projekt a spustit aplikaci.
+
+**Poznámka:** Pro připojení k databázi je potřeba funkční instance Oracle Database a odpovídající přístupové údaje.
+
+---
+
+## 👨‍🎓 Autor
+
+<div align="center">
+
+### Aleš Tlučhoř
+
+**Univerzita Pardubice**
+
+Fakulta elektrotechniky a informatiky (FEI)
+
+Studijní obor: Informační technologie
+
+**Bakalářská práce – 2026**
+
+<badge color="success">Úspěšně obhájena</badge>
+
+</div>
+
+---
+
+<div align="center">
+
+**Děkuji za návštěvu projektu! ⚽**
+
+</div>
